@@ -63,7 +63,7 @@ public class RegisterController {
 		BeanUtils.copyProperties(form, user);
 		registerService.insert(user);
 
-		return "redirect:/login";
+		return "redirect:/showLogin";
 
 	}
 
