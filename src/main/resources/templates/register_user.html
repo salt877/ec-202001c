@@ -1,14 +1,23 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html lang="ja"
 	  xmlns:th="http://www.thymeleaf.org"
 	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+=======
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+>>>>>>> feature/register
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<<<<<<< HEAD
 <title>RakuRaku&nbsp;Coffee</title>
 <link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
 <link href="../static/css/coffee.css" rel="stylesheet" th:href="@{/css/coffee.css}">
+=======
+<title>ネットでピザ注文</title>
+<link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
+>>>>>>> feature/register
 <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -28,7 +37,12 @@
 							class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="item_list.html"> <!-- 企業ロゴ --> <img
+<<<<<<< HEAD
 						alt="main log" src="../static/img_coffee/header_logo.png" height="35">
+=======
+						alt="main log" src="../static/img_coffee/header_logo.png" 
+						th:src="@{/img_coffee/header_logo.png}" height="35">
+>>>>>>> feature/register
 					</a>
 				</div>
 
@@ -48,56 +62,58 @@
 		<div class="row">
 			<div class="col-lg-offset-3 col-lg-6 col-md-offset-2 col-md-8 col-sm-10 col-xs-12">
 				<div class="well">
-					<form method="post" action="item_list.html">
+					<form method="post" action="item_list.html" th:action="@{/register}" th:object="${registerForm}">
 						<fieldset>
 							<legend>ユーザ登録</legend>
 							<div class="form-group">
-								<label for="inputName">名前:</label><label
-									class="control-label" style="color: red" for="inputError">名前を入力してください</label>
-								<input type="text" id="inputName" class="form-control"
+								<label for="inputName">名前:</label>
+								<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" 
+								class="control-label" style="color: red" for="inputError">名前を入力してください</label>
+								<input type="text" id="inputName" class="form-control" th:field="*{name}"
 									placeholder="Name">
 							</div>
 							<div class="form-group">
-								<label for="inputEmail">メールアドレス:</label><label
-									class="control-label" style="color: red" for="inputError">メールアドレスを入力してください</label>
-								<input type="text" id="inputEmail" class="form-control"
+								<label for="inputEmail">メールアドレス:</label>
+								<label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" 
+								class="control-label" style="color: red" for="inputError">メールアドレスを入力してください</label>
+								<input type="text" id="inputEmail" class="form-control" th:field="*{email}"
 									placeholder="Email">
 							</div>
 							<div class="form-group">
 								<label for="inputZipcode">郵便番号:</label>
-								<label
+								<label 
 									class="control-label" style="color: red" for="inputError">郵便番号を入力してください</label>
 									<input type="button" value="住所検索">
-								<input type="text" id="inputZipcode" class="form-control"
+								<input type="text" id="inputZipcode" class="form-control" th:field="*{zipcode}"
 									placeholder="Zipcode">
 								
 							</div>
 							<div class="form-group">
 								<label for="inputAddress">住所:</label>
-								<label
+								<label th:if="${#fields.hasErrors('address')}" th:errors="*{address}"
 									class="control-label" style="color: red" for="inputError">住所を入力してください</label>
-								<input type="text" id="inputAddress" class="form-control"
+								<input type="text" id="inputAddress" class="form-control" th:field="*{address}"
 									placeholder="Address">
 							</div>
 							<div class="form-group">
 								<label for="inputTel">電話番号:</label>
-								<label
+								<label th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"
 									class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
-								<input type="text" id="inputTel" class="form-control"
+								<input type="text" id="inputTel" class="form-control" th:field="*{telephone}"
 									placeholder="Tel">
 							</div>
 							<div class="form-group">
 								<label for="inputPassword">パスワード:</label>
-								<label
+								<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
 									class="control-label" style="color: red" for="inputError">パスワードを入力してください</label>
-								<input type="text" id="inputPassword" class="form-control"
+								<input type="text" id="inputPassword" class="form-control" th:field="*{password}"
 									placeholder="Password">
 							</div>
 							<div class="form-group">
 								<label for="inputConfirmationPassword">確認用パスワード:</label>
-								<label
+								<label th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" 
 									class="control-label" style="color: red" for="inputError">確認用パスワードを入力してください</label>
-								<input type="text" id="inputConfirmationPassword" class="form-control"
+								<input type="text" id="inputConfirmationPassword" class="form-control" th:field="*{confirmPassword}"
 									placeholder="Confirmation Password">
 							</div>
 							<div class="form-group">
