@@ -45,6 +45,7 @@ public class RegisterController {
 		return "register_user";
 	}
 
+	@RequestMapping("/register")
 	public String registerUser(@Validated RegisterForm form, BindingResult result) {
 
 		// メールアドレスが重複している場合
@@ -60,7 +61,6 @@ public class RegisterController {
 		
 		User user = new User();
 		BeanUtils.copyProperties(form, user);
-
 		registerService.insert(user);
 
 		return "redirect:/login";
