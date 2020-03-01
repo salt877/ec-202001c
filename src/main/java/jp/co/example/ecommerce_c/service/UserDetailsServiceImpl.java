@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.example.ecommerce_c.domain.LoginUser;
+import jp.co.example.ecommerce_c.domain.User;
 import jp.co.example.ecommerce_c.repository.UserRepository;
 
 /**
@@ -28,6 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		@Autowired
 		private UserRepository userRepository;
 		
+		// DBから検索をし、ログイン情報を構成して返す
 		@Override
 		public UserDetails loadUserByUsername(String email)
 				throws UsernameNotFoundException {
