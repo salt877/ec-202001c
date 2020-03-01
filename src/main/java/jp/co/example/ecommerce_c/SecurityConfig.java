@@ -51,8 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests() // 認可に関する設定
-			.antMatchers("/").permitAll() //「/」などのパスは全てのユーザに許可
-			.anyRequest().authenticated(); // それ以外のパスは認証が必要
+			.antMatchers("/").permitAll(); //「/」などのパスは全てのユーザに許可
+//			.anyRequest().authenticated(); // それ以外のパスは認証が必要
 
 		http.formLogin() // ログインに関する設定
 			.loginPage("/showLogin") // ログイン画面に遷移させるパス(ログイン認証が必要なパスを指定してかつログインされていないとこのパスに遷移される)
