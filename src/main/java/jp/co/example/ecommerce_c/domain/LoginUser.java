@@ -7,6 +7,12 @@ import org.springframework.security.core.userdetails.User;
 
 import jp.co.example.ecommerce_c.domain.User;
 
+/**
+ * ユーザのログイン情報を格納するエンティティ.
+ * 
+ * @author katsuya.fujishima
+ *
+ */
 public class LoginUser extends User{
 
 	private static final long SerialVersionUID = 1L;
