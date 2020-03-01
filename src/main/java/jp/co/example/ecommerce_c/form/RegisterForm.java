@@ -11,8 +11,6 @@ import javax.validation.constraints.NotBlank;
  */
 public class RegisterForm {
 
-	/** id */
-	private Integer id;
 	/** 登録ユーザ名 */
 	@NotBlank(message = "お名前を入力して下さい")
 	private String name;
@@ -34,14 +32,6 @@ public class RegisterForm {
 	/** 確認用パスワード */
 	@NotBlank(message = "確認用パスワードを入力して下さい")
 	private String confirmPassword;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;
