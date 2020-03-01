@@ -45,6 +45,13 @@ public class RegisterController {
 		return "register_user";
 	}
 
+	/**
+	 * ユーザ情報を登録します.
+	 * 
+	 * @param form	 ユーザ情報用フォーム
+	 * @param result　エラー格納オブジェクト
+	 * @return　ログイン画面へリダイレクト
+	 */
 	@RequestMapping("/register")
 	public String registerUser(@Validated RegisterForm form, BindingResult result) {
 
@@ -63,7 +70,7 @@ public class RegisterController {
 		BeanUtils.copyProperties(form, user);
 		registerService.insert(user);
 
-		return "redirect:/login";
+		return "redirect:/showLogin";
 
 	}
 
