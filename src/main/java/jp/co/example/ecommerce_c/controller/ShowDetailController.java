@@ -7,9 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.domain.Item;
-import com.example.domain.Topping;
-import com.example.service.ShowDetailService;
+import jp.co.example.ecommerce_c.domain.Item;
+import jp.co.example.ecommerce_c.domain.Topping;
+import jp.co.example.ecommerce_c.service.ShowDetailService;
 
 /**
  * 商品詳細を管理するコントローラ.

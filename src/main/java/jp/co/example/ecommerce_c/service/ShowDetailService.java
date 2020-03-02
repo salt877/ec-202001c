@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.domain.Item;
-import com.example.domain.Topping;
-import com.example.repository.ItemRepository;
-import com.example.repository.ToppingRepository;
+import jp.co.example.ecommerce_c.domain.Item;
+import jp.co.example.ecommerce_c.domain.Topping;
+import jp.co.example.ecommerce_c.repository.ItemRepository;
+import jp.co.example.ecommerce_c.repository.ToppingRepository;
 
 /**
  * 商品詳細を操作するサービス.
