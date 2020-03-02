@@ -1,5 +1,11 @@
 package jp.co.example.ecommerce_c.domain;
 
+/**
+ * 注文トッピングを表すドメイン.
+ * 
+ * @author hatakeyamakouta
+ *
+ */
 public class OrderTopping {
 
 	/** id(主キー) */
@@ -43,6 +49,4 @@ public class OrderTopping {
 		return "OrderTopping [id=" + id + ", toppingId=" + toppingId + ", orderItemId=" + orderItemId + ", topping="
 				+ topping + "]";
 	}
-	
-	
 }
