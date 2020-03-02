@@ -40,9 +40,9 @@ public class RegisterUserController {
 	 * 
 	 * @return ユーザ登録画面
 	 */
-	@RequestMapping("/registration")
-	public String showRegistration() {
-		return "RegisterUser_user";
+	@RequestMapping("/showRegisterUser")
+	public String showRegisterUser() {
+		return "register_user";
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class RegisterUserController {
 	 * @param result　エラー格納オブジェクト
 	 * @return　ログイン画面へリダイレクト
 	 */
-	@RequestMapping("/RegisterUser")
+	@RequestMapping("/registerUser")
 	public String registerUser(@Validated RegisterUserForm form, BindingResult result) {
 
 		// メールアドレスが重複している場合
@@ -63,7 +63,7 @@ public class RegisterUserController {
 
 		// エラーがあれば登録画面に戻る
 		if (result.hasErrors()) {
-			return showRegistration();
+			return showRegisterUser();
 		}
 		
 		User user = new User();

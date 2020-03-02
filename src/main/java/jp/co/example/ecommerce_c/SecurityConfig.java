@@ -58,7 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.loginPage("/showLogin") // ログイン画面に遷移させるパス(ログイン認証が必要なパスを指定してかつログインされていないとこのパスに遷移される)
 			.loginProcessingUrl("/login") // ログインボタンを押した際に遷移させるパス
 			.failureUrl("/showLogin?error=true") //ログイン失敗に遷移させるパス
-			.defaultSuccessUrl("/showList", false) // 第1引数:デフォルトでログイン成功時に遷移させるパス
+			.defaultSuccessUrl("/", false) // 第1引数:デフォルトでログイン成功時に遷移させるパス
 			                                        // 第2引数: true :認証後常に第1引数のパスに遷移 
 			                                        //         false:認証されてなくて一度ログイン画面に飛ばされてもログインしたら指定したURLに遷移
 			.usernameParameter("email") // 認証時に使用するユーザ名のリクエストパラメータ名
@@ -66,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.logout() // ログアウトに関する設定
 			.logoutRequestMatcher(new AntPathRequestMatcher("/logout**")) // ログアウトさせる際に遷移させるパス
-			.logoutSuccessUrl("/showList") // ログアウト後に遷移させるパス
+			.logoutSuccessUrl("/") // ログアウト後に遷移させるパス
 			.deleteCookies("JSESSIONID") // ログアウト後、Cookieに保存されているセッションIDを削除
 			.invalidateHttpSession(true); // true:ログアウト後、セッションを無効にする false:セッションを無効にしない
 		
