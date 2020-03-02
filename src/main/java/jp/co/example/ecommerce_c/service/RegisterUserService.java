@@ -15,7 +15,7 @@ import jp.co.example.ecommerce_c.repository.UserRepository;
  */
 @Service
 @Transactional
-public class RegisterService {
+public class RegisterUserService {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -25,7 +25,7 @@ public class RegisterService {
 	 * 
 	 * @param user ユーザ情報
 	 */
-	public void insert(User user) {
+	public void resister(User user) {
 		userRepository.insert(user);
 	}
 
@@ -33,7 +33,7 @@ public class RegisterService {
 	 * @param email メールアドレス
 	 * @return ユーザ情報 存在しない場合はnullを返します
 	 */
-	public User findByEmail(String email) {
+	public User searchUserByEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
 

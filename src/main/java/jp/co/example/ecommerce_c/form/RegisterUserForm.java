@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
  * @author rinashioda
  *
  */
-public class RegisterForm {
+public class RegisterUserForm {
 
 	/** 登録ユーザ名 */
 	@NotBlank(message = "お名前を入力して下さい")
