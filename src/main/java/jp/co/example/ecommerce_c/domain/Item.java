@@ -2,25 +2,38 @@ package jp.co.example.ecommerce_c.domain;
 
 import java.util.List;
 
+/**
+ * 商品情報を表すドメイン.
+ * 
+ * @author hatakeyamakouta
+ *
+ */
 public class Item {
-	
+
+	/** id(主キー) */
 	private Integer id;
 	
+	/** 商品名 */
 	private String name;
 	
+	/** 商品説明 */
 	private String description;
 	
+	/** Mサイズの価格 */
 	private Integer priceM;
 	
+	/** Lサイズの価格 */
 	private Integer priceL;
 	
+	/** 商品写真へのパス */
 	private String imagePath;
 	
+	/** 削除フラグ */
 	private Boolean deleted;
+	
+	/** トッピングリスト */
+	private List<Topping> toppingList;
 
-	private List<topping> toppingList;
-	
-	
 	public Integer getId() {
 		return id;
 	}
@@ -77,18 +90,17 @@ public class Item {
 		this.deleted = deleted;
 	}
 
-	public List<topping> getToppingList() {
+	public List<Topping> getToppingList() {
 		return toppingList;
 	}
 
-	public void setToppingList(List<topping> toppingList) {
+	public void setToppingList(List<Topping> toppingList) {
 		this.toppingList = toppingList;
 	}
 
 	@Override
 	public String toString() {
 		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", priceM=" + priceM + ", priceL="
-				+ priceL + ", imagePath=" + imagePath + ", deleted=" + deleted + "]";
+				+ priceL + ", imagePath=" + imagePath + ", deleted=" + deleted + ", toppingList=" + toppingList + "]";
 	}
-
 }
