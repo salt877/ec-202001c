@@ -53,7 +53,7 @@ public class RegisterUserController {
 	 * @return　ログイン画面へリダイレクト
 	 */
 	@RequestMapping("/RegisterUser")
-	public String RegisterUserUser(@Validated RegisterUserForm form, BindingResult result) {
+	public String registerUser(@Validated RegisterUserForm form, BindingResult result) {
 
 		// メールアドレスが重複している場合
 		User duplicationUser = registerUserService.searchUserByEmail(form.getEmail());
@@ -68,7 +68,7 @@ public class RegisterUserController {
 		
 		User user = new User();
 		BeanUtils.copyProperties(form, user);
-		registerUserService.register(user);
+		registerUserService.registerUser(user);
 
 		return "redirect:/showLogin";
 

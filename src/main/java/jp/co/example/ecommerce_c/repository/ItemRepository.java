@@ -52,7 +52,7 @@ public class ItemRepository {
 	 * @param name 商品名
 	 * @return 検索された商品の一覧
 	 */
-	public List<Item> seachByItemName(String name) {
+	public List<Item> findByItemName(String name) {
 		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name LIKE :name ORDER BY id DESC";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 

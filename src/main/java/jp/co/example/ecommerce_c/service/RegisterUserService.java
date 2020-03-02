@@ -25,7 +25,7 @@ public class RegisterUserService {
 	 * 
 	 * @param user ユーザ情報
 	 */
-	public void register(User user) {
+	public void registerUser(User user) {
 		userRepository.insert(user);
 	}
 

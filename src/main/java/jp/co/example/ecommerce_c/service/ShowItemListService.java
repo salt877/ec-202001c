@@ -15,7 +15,7 @@ import jp.co.example.ecommerce_c.repository.ItemRepository;
 
 @Service
 @Transactional
-public class ShowItemService {
+public class ShowItemListService {
 
 	@Autowired
 	private ItemRepository itemRepository;
@@ -37,7 +37,7 @@ public class ShowItemService {
 	 * @return　検索された商品の情報一覧
 	 */
 	public List<Item> searchByItemName(String name){
-		return itemRepository.seachByItemName(name);
+		return itemRepository.findByItemName(name);
 	}
 	
 	/**
