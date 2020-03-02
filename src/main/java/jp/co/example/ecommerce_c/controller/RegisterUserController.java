@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jp.co.example.ecommerce_c.domain.User;
 import jp.co.example.ecommerce_c.form.RegisterUserForm;
 import jp.co.example.ecommerce_c.service.RegisterUserService;
-import jp.co.example.ecommerce_c.service.RegisterUserUserService;
 
 /**
  * ユーザ情報を操作するコントローラー.
@@ -21,10 +20,10 @@ import jp.co.example.ecommerce_c.service.RegisterUserUserService;
  */
 @Controller
 @RequestMapping("/")
-public class RegisterUserUserController {
+public class RegisterUserController {
 
 	@Autowired
-	private RegisterUserUserService RegisterUserUserService;
+	private RegisterUserService registerUserService;
 
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
@@ -54,10 +53,10 @@ public class RegisterUserUserController {
 	 * @return　ログイン画面へリダイレクト
 	 */
 	@RequestMapping("/RegisterUser")
-	public String RegisterUserUser(@Validated RegisterUserForm form, BindingResult result) {
+	public String registerUser(@Validated RegisterUserForm form, BindingResult result) {
 
 		// メールアドレスが重複している場合
-		User duplicationUser = RegisterUserService.findByEmail(form.getEmail());
+		User duplicationUser = registerUserService.searchUserByEmail(form.getEmail());
 		if (duplicationUser != null) {
 			result.rejectValue("email", "", "そのメールアドレスはすでに使われています");
 		}
@@ -69,7 +68,7 @@ public class RegisterUserUserController {
 		
 		User user = new User();
 		BeanUtils.copyProperties(form, user);
-		RegisterUserService.(user);
+		registerUserService.registerUser(user);
 
 		return "redirect:/showLogin";
 
