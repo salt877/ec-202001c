@@ -1,6 +1,7 @@
 package jp.co.example.ecommerce_c.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,13 +20,23 @@ public class RegisterUserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	/**
 	 * ユーザ情報を登録します.
 	 * 
+	 * パスワードのハッシュ化をしてから登録
+	 * 
 	 * @param user ユーザ情報
 	 */
 	public void registerUser(User user) {
+		
+		//パスワードのハッシュ化
+		String encodePassword = passwordEncoder.encode(user.getPassword());
+		user.setPassword(encodePassword);
+		
 		userRepository.insert(user);
 	}
 
