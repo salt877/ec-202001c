@@ -36,7 +36,7 @@ public class OrderItemRepository {
 	/**
 	 * idが一致する商品を削除するメソッド.
 	 * 
-	 * @param orderItemId
+	 * @param orderItemId カート内の商品ID
 	 */
 	public void deleteItemById(Integer orderItemId) {
 		String sql = "DELETE FROM order_items WHERE id = :orderItemId";
