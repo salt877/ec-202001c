@@ -25,7 +25,6 @@ public class ShowDetailController {
 	private ShowDetailService showDetailService;
 	
 	/**
-	 * ???リクエストスコープよりアプリケーションスコープのが良い???
 	 * 商品詳細画面を出力.
 	 *
 	 * @param id リクエストパラメータで送られてくる商品ID
