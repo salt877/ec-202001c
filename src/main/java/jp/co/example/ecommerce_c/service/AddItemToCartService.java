@@ -63,18 +63,18 @@ public class AddItemToCartService {
 		List<Integer> formToppingList = addItemToCartForm.getToppingList();
 		//orderToppingを複数格納する為のorderToppingListを作成
 		List<OrderTopping> orderToppingList = new ArrayList<>();
+		OrderItem checkOrderItem = orderItemRepository.save(orderItem);
+
 		//配列を回しリストに詰める
 		for(int i = 0; i < formToppingList.size(); i++) {
 			OrderTopping orderTopping = new OrderTopping();
 			orderTopping.setToppingId(formToppingList.get(i));
-			orderTopping.setOrderItemId(orderItem.getItem().getId());
+			orderTopping.setOrderItemId(orderItem.getId());
 			orderTopping.setTopping(toppingRepository.findById(formToppingList.get(i)));
 			orderToppingRepository.insert(orderTopping);
 			orderToppingList.add(orderTopping);
 		}
-		//注文したトッピングリストを格納し、DBに登録
 		orderItem.setList(orderToppingList);
-		orderItemRepository.insert(orderItem);
 		
 		
 		Integer itemPrice;	
