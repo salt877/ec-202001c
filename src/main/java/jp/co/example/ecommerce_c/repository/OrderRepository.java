@@ -27,8 +27,7 @@ import jp.co.example.ecommerce_c.domain.Topping;
  */
 @Repository
 public class OrderRepository {
-	
-	
+
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 
@@ -55,6 +54,7 @@ public class OrderRepository {
 				order.setPaymentMethod(rs.getInt("payment_method"));
 				orderItemList = new ArrayList<OrderItem>();
 				orderList.add(order);
+				order.setOrderItemList(orderItemList);
 			}
 			if (rs.getInt("oi_id") != 0) {
 				OrderItem orderItem = new OrderItem();
@@ -75,7 +75,7 @@ public class OrderRepository {
 				item.setDeleted(rs.getBoolean("deleted"));
 				orderItem.setItem(item);
 				orderToppingList = new ArrayList<OrderTopping>();
-				if(rs.getInt("ot_id") != 0) {
+				if (rs.getInt("ot_id") != 0) {
 					OrderTopping orderTopping = new OrderTopping();
 					orderTopping.setId(rs.getInt("ot_id"));
 					orderTopping.setToppingId(rs.getInt("topping_id"));
@@ -90,14 +90,13 @@ public class OrderRepository {
 				}
 				orderItem.setList(orderToppingList);
 				orderItemList.add(orderItem);
-				order.setOrderItemList(orderItemList);
 			}
 			beforeOrderId = nowOrderId;
 		}
 		return orderList;
 	};
-	
-	private static final RowMapper<Order> ORDER_ROW_MAPPER = (rs, i) ->{
+
+	private static final RowMapper<Order> ORDER_ROW_MAPPER = (rs, i) -> {
 		Order order = new Order();
 		order.setId(rs.getInt("id"));
 		order.setUserId(rs.getInt("user_id"));
@@ -113,7 +112,7 @@ public class OrderRepository {
 		order.setPaymentMethod(rs.getInt("payment_method"));
 		return order;
 	};
-	
+
 	/**
 	 * 引数のuserIdとstatusに一致した注文情報を取得する.
 	 * 
@@ -126,7 +125,7 @@ public class OrderRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
 		return template.query(sql, param, ORDER_ROW_MAPPER);
 	}
-		
+
 	/**
 	 * ordersテーブルに注文情報を挿入する.
 	 * 
@@ -140,13 +139,13 @@ public class OrderRepository {
 				+ ":destinationTel, :deliveryTime, :paymentMethod);";
 		template.update(insertSql, param);
 	}
-	
-	public List<Order> findByUserIdAndStatusForOrder(Integer userId, Integer status){
+
+	public List<Order> findByUserIdAndStatusForOrder(Integer userId, Integer status) {
 		String insertSql = "SELECT o.id o_id, user_id, status, total_price, order_date, destination_name, destination_email, destination_zipcode, destination_address, destination_tel, delivery_time, payment_method, i.id i_id, i.name i_name, description, i.price_m i_price_m, i.price_l i_price_l, image_path, deleted, oi.id oi_id, item_id, order_id, quantity, size, ot.id ot_id, topping_id, order_item_id, t.id t_id, t.name t_name, t.price_m t_price_M, t.price_l t_price_L FROM orders o FULL OUTER JOIN order_items oi ON o.id = order_id FULL OUTER JOIN items i ON item_id = i.id FULL OUTER JOIN order_toppings ot ON oi.id = order_item_id FULL OUTER JOIN toppings t ON topping_id = t.id WHERE user_id = :userId AND status = :status ORDER BY order_item_id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
 		return template.query(insertSql, param, ORDER_RESULT_SET_EXTRACTOR);
 	}
-	
+
 	public void update(Order order) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 		String updateSql = "UPDATE orders SET total_price = :totalPrice WHERE user_id = :userId AND status = :status;";
