@@ -18,7 +18,7 @@ public class AddItemToCartColler {
 		
 	@RequestMapping("")
 	public String addItem(AddItemToCartForm addItemToCartForm, @AuthenticationPrincipal LoginUser loginUser) {
-		addItemToCartService.addItem(addItemToCartForm, 1); //loginUser.getUser().getId()
+		addItemToCartService.addItem(addItemToCartForm, 1);
 		return "redirect:/show-item-in-cart";
 	}
 }

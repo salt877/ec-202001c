@@ -40,7 +40,7 @@ public class AddItemToCartService {
 	
 	public void addItem(AddItemToCartForm addItemToCartForm, Integer userId) {
 		List<Order> orderList = orderRepository.findByUserIdAndStatus(userId, 0);
-		Order order = orderList.get(0);
+		Order order = null;
 		if(orderList.size() == 0) {
 			order = new Order();
 			order.setUserId(userId);
