@@ -100,9 +100,9 @@
 								</div>
 							</td>
 							<td>
-								<form th:action="@{/shopping-cart/delete}" method="post">
+								<form th:action="@{/delete}" method="post">
 									<div class="text-center">
-										<button type="submit" name="deleteIndex" class="btn btn-primary">削除</button>
+										<button type="submit" name="orderItemId" th:value="${orderItem.id}" class="btn btn-primary">削除</button>
 									</div>
 								</form>
 							</td>

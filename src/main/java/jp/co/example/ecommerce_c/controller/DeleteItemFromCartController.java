@@ -13,6 +13,7 @@ import jp.co.example.ecommerce_c.service.DeleteItemFromCartService;
  *
  */
 @Controller
+@RequestMapping("/delete")
 public class DeleteItemFromCartController {
 	
 	@Autowired
@@ -24,6 +25,7 @@ public class DeleteItemFromCartController {
 	 * @param orderItemId カート内の商品ID
 	 * @return カート画面
 	 */
+	@RequestMapping("")
 	public String deleteItem(Integer orderItemId) {
 		deleteItemFromCartService.deleteItemFromCart(orderItemId);
 		return "redirect:/show-item-in-cart";
