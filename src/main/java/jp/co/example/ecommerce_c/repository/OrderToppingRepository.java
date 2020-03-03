@@ -2,6 +2,7 @@ package jp.co.example.ecommerce_c.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
@@ -25,5 +26,16 @@ public class OrderToppingRepository {
 		String insertSql = "INSERT INTO order_toppings(topping_id, order_item_id) VALUES(:toppingId, :orderItemId);";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(orderTopping);
 		template.update(insertSql, param);
+	}
+	
+	/**
+	 * orderItemIdが一致するトッピングを削除するメソッド.
+	 * 
+	 * @param orderItemId カート内の商品ID
+	 */
+	public void deleteItemById(Integer orderItemId) {
+		String sql = "DELETE FROM order_toppings WHERE order_item_id = :orderItemId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
+		template.update(sql, param);
 	}
 }
