@@ -29,6 +29,6 @@ public class ShowItemInCartService {
 	 * @return 注文状態が注文前であり引数のuserIdに一致した注文
 	 */
 	public List<Order> showItemInCart(Integer userId){
-		return orderRepository.findByUserIdAndStatus(userId, 0);
+		return orderRepository.findByUserIdAndStatusForOrder(userId, 0);
 	}
 }
