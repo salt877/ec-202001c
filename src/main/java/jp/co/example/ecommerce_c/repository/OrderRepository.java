@@ -36,6 +36,7 @@ public class OrderRepository {
 		List<OrderItem> orderItemList = null;
 		List<OrderTopping> orderToppingList = null;
 		int beforeOrderId = 0;
+		int beforeOrderItemId = 0;
 		while (rs.next()) {
 			int nowOrderId = rs.getInt("o_id");
 			if (nowOrderId != beforeOrderId) {
@@ -56,7 +57,8 @@ public class OrderRepository {
 				order.setOrderItemList(orderItemList);
 				orderList.add(order);
 			}
-			if (rs.getInt("oi_id") != 0) {
+			int nowOrderItemId = rs.getInt("oi_id");
+			if (nowOrderItemId != beforeOrderItemId) {
 				OrderItem orderItem = new OrderItem();
 				orderItem.setId(rs.getInt("oi_id"));
 				orderItem.setItemId(rs.getInt("oi_item_id"));
@@ -92,6 +94,7 @@ public class OrderRepository {
 				orderToppingList.add(orderTopping);
 			}
 			beforeOrderId = nowOrderId;
+			beforeOrderItemId = nowOrderItemId;
 		}
 		return orderList;
 	};
