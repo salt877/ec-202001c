@@ -2,6 +2,7 @@ package jp.co.example.ecommerce_c.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
@@ -31,4 +32,16 @@ public class OrderItemRepository {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(orderItem);
 		template.update(insertSql, param);
 	}
+	
+	/**
+	 * idが一致する商品を削除するメソッド.
+	 * 
+	 * @param orderItemId
+	 */
+	public void deleteItemById(Integer orderItemId) {
+		String sql = "DELETE FROM order_items WHERE id = :orderItemId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
+		template.update(sql, param);
+	}
+	
 }
