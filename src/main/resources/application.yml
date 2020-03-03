@@ -4,3 +4,8 @@ spring:
     url: jdbc:postgresql://localhost:5432/ec-202001c
     username: postgres
     password: postgres
+  
+  mail:    host: smtp.gmail.com
+    port: 587
+    username: rakuraku.coffee.202001c@gmail.com
+    password: kmgmmnavsbdkcqrn
