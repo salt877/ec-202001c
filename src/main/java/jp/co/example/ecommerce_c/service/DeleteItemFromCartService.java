@@ -26,7 +26,7 @@ public class DeleteItemFromCartService {
 	/**
 	 * カートの中から商品を削除するメソッド.
 	 * 
-	 * @param orderItemId
+	 * @param orderItemId カート内の商品ID
 	 */
 	public void deleteItemFromCart(Integer orderItemId) {
 		orderItemRepository.deleteItemById(orderItemId);
