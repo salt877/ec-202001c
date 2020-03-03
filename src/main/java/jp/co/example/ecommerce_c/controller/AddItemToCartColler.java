@@ -10,7 +10,7 @@ import jp.co.example.ecommerce_c.form.AddItemToCartForm;
 import jp.co.example.ecommerce_c.service.AddItemToCartService;
 
 @Controller
-@RequestMapping("/add-item-to-cart")
+@RequestMapping("/addItemToCart")
 public class AddItemToCartColler {
 
 	@Autowired

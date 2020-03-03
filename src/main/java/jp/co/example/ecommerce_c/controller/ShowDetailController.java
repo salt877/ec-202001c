@@ -18,7 +18,7 @@ import jp.co.example.ecommerce_c.service.ShowDetailService;
  *
  */
 @Controller
-@RequestMapping("/show-detail")
+@RequestMapping("/showDetail")
 public class ShowDetailController {
 
 	@Autowired
