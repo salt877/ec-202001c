@@ -21,6 +21,7 @@ public class OrderToppingRepository {
 	private NamedParameterJdbcTemplate template;
 	
 	public void insert(OrderTopping orderTopping) {
+		System.out.println(orderTopping);
 		String insertSql = "INSERT INTO order_toppings(topping_id, order_item_id) VALUES(:toppingId, :orderItemId);";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(orderTopping);
 		template.update(insertSql, param);
