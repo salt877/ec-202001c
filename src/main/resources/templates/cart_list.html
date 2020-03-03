@@ -95,7 +95,7 @@
 								</ul>
 							</td>
 							<td>
-								<div class="text-center"> <!-- th:text="${orderItem.quantity} * ${orderItem.item.priceM} + ${orderItem.getSubTotal()}" -->
+								<div class="text-center" th:text="${orderItem.quantity} * ${orderItem.item.priceM} + ${orderItem.getSubTotal()} + '円'">
 									3,280円
 								</div>
 							</td>

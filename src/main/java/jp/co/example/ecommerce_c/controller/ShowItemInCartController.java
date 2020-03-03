@@ -28,7 +28,8 @@ public class ShowItemInCartController {
 		int userId = 1;
 		List<Order> orderList = showItemInCartService.showItemInCart(userId);
 		Order order = orderList.get(0);
-		System.out.println(orderList.size());
+		System.out.println(order.getOrderItemList().size());
+		System.out.println(order);
 		model.addAttribute("order", order);
 		return "cart_list";
 	}

@@ -2,6 +2,7 @@ package jp.co.example.ecommerce_c.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_c.service.DeleteItemFromCartService;
 
@@ -25,7 +26,7 @@ public class DeleteItemFromCartController {
 	 */
 	public String deleteItem(Integer orderItemId) {
 		deleteItemFromCartService.deleteItemFromCart(orderItemId);
-		return "/show-item-in-cart";
+		return "redirect:/show-item-in-cart";
 	}
 
 }

@@ -40,9 +40,8 @@ public class AddItemToCartService {
 	
 	public void addItem(AddItemToCartForm addItemToCartForm, Integer userId) {
 		List<Order> orderList = orderRepository.findByUserIdAndStatus(userId, 0);
-		Order order = null;
 		if(orderList.size() == 0) {
-			order = new Order();
+			Order order = new Order();
 			order.setUserId(userId);
 			order.setStatus(0);
 			order.setTotalPrice(0);
@@ -50,6 +49,8 @@ public class AddItemToCartService {
 			orderList = orderRepository.findByUserIdAndStatus(userId, 0);
 			order = orderList.get(0);
 		}
+		orderList = orderRepository.findByUserIdAndStatus(userId, 0);
+		Order order = orderList.get(0);
 		//orderItemの中身を作成(商品id, サイズ, 数量をコピー可能) 注文id, 商品, 注文したトッピングリストを詰めていく
 		OrderItem orderItem = new OrderItem();
 		BeanUtils.copyProperties(addItemToCartForm, orderItem);
