@@ -17,7 +17,7 @@ public class ItemRepository {
 	/**
 	 * Itemオブジェクトを生成するローマッパー.
 	 */
-	private static final RowMapper<Item> ITEM_ROW_MAPPER = (rs,i) -> {
+	private static final RowMapper<Item> ITEM_ROW_MAPPER = (rs, i) -> {
 		Item item = new Item();
 		item.setId(rs.getInt("id"));
 		item.setName(rs.getString("name"));
@@ -28,10 +28,10 @@ public class ItemRepository {
 		item.setDeleted(rs.getBoolean("deleted"));
 		return item;
 	};
-		
+
 	@Autowired
 	private NamedParameterJdbcTemplate template;
-	
+
 	/**
 	 * 商品一覧情報をID順で取得します.
 	 * 
@@ -59,7 +59,7 @@ public class ItemRepository {
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 		return itemList;
 	}
-	
+
 	/**
 	 * idから商品詳細情報を取得する
 	 * 
