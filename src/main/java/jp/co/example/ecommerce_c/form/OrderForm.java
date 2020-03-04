@@ -24,11 +24,11 @@ public class OrderForm {
 	/** 合計金額(税抜) */
 	private Integer totalPrice;
 	
-	/** 注文日 */
-	private Date orderDate;
-	
 	/** 宛先氏名 */
 	private String destinationName;
+	
+	/** 注文日 */
+	private Date orderDate;
 	
 	/** 宛先Eメール */
 	private String destinationEmail;
@@ -40,10 +40,13 @@ public class OrderForm {
 	private String destinationAddress;
 	
 	/** 宛先電話TEL */
-	private String destinationTel;
+	private String destinationTel;	
+
+	/** 配送希望日 */
+	private Date deliveryDate;
 	
 	/** 配送時間 */
-	private Timestamp deliveryTime;
+	private Integer deliveryTime;
 	
 	/** 支払方法 */
 	private Integer paymentMethod;
@@ -72,20 +75,20 @@ public class OrderForm {
 		this.totalPrice = totalPrice;
 	}
 
-	public Date getOrderDate() {
-		return orderDate;
-	}
-
-	public void setOrderDate(Date orderDate) {
-		this.orderDate = orderDate;
-	}
-
 	public String getDestinationName() {
 		return destinationName;
 	}
 
 	public void setDestinationName(String destinationName) {
 		this.destinationName = destinationName;
+	}
+
+	public Date getOrderDate() {
+		return orderDate;
+	}
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
 	}
 
 	public String getDestinationEmail() {
@@ -120,11 +123,19 @@ public class OrderForm {
 		this.destinationTel = destinationTel;
 	}
 
-	public Timestamp getDeliveryTime() {
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	public Integer getDeliveryTime() {
 		return deliveryTime;
 	}
 
-	public void setDeliveryTime(Timestamp deliveryTime) {
+	public void setDeliveryTime(Integer deliveryTime) {
 		this.deliveryTime = deliveryTime;
 	}
 
@@ -138,11 +149,12 @@ public class OrderForm {
 
 	@Override
 	public String toString() {
-		return "OrderForm [userId=" + userId + ", status=" + status + ", totalPrice=" + totalPrice + ", orderDate="
-				+ orderDate + ", destinationName=" + destinationName + ", destinationEmail=" + destinationEmail
-				+ ", destinationZipcode=" + destinationZipcode + ", destinationAddress=" + destinationAddress
-				+ ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime + ", paymentMethod="
-				+ paymentMethod + "]";
+		return "OrderForm [userId=" + userId + ", status=" + status + ", totalPrice=" + totalPrice
+				+ ", destinationName=" + destinationName + ", orderDate=" + orderDate + ", destinationEmail="
+				+ destinationEmail + ", destinationZipcode=" + destinationZipcode + ", destinationAddress="
+				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryDate=" + deliveryDate
+				+ ", deliveryTime=" + deliveryTime + ", paymentMethod=" + paymentMethod + "]";
 	}
+
 	
 }

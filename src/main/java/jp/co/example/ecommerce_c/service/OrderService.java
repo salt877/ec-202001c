@@ -1,5 +1,8 @@
 package jp.co.example.ecommerce_c.service;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -9,6 +12,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import jp.co.example.ecommerce_c.domain.Order;
+import jp.co.example.ecommerce_c.domain.OrderItem;
 import jp.co.example.ecommerce_c.form.OrderForm;
 import jp.co.example.ecommerce_c.repository.OrderRepository;
 
@@ -43,10 +47,25 @@ public class OrderService {
 	}
 	
 	public void order(OrderForm orderForm) {
-		List<Order> orderList = orderRepository.findByUserIdAndStatus(orderForm.getUserId(), orderForm.getStatus());
+		List<Order> orderList = orderRepository.findByUserIdAndStatusForOrder(1, 0);
 		Order order = orderList.get(0);
 		BeanUtils.copyProperties(orderForm, order);
+		order.setUserId(1);
+		order.setOrderDate(Date.valueOf(LocalDate.now()));
+		Timestamp deliveryTime = new Timestamp(orderForm.getDeliveryDate().getTime());
+		deliveryTime.setHours(orderForm.getDeliveryTime());
+		order.setDeliveryTime(deliveryTime);
+		Integer totalPrice = 0;
+		List<OrderItem> orderItemList = order.getOrderItemList();
+		for(OrderItem orderItem : orderItemList) {
+			if(orderItem.getSize() == 'M') {
+				totalPrice = totalPrice + orderItem.getItem().getPriceM() + orderItem.getSubTotal();
+			}else {
+				totalPrice = totalPrice + orderItem.getItem().getPriceL() + orderItem.getSubTotal();
+			}
+		}
+		System.out.println(totalPrice);
+		order.setTotalPrice(totalPrice);
 		orderRepository.updateOrder(order);
 	}
-
 }
