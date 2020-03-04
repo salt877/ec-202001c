@@ -11,6 +11,12 @@ import org.springframework.stereotype.Repository;
 
 import jp.co.example.ecommerce_c.domain.Item;
 
+/**
+ * itemsテーブルを操作するリポジトリ.
+ * 
+ * @author hatakeyamakouta
+ *
+ */
 @Repository
 public class ItemRepository {
 
@@ -38,11 +44,8 @@ public class ItemRepository {
 	 * @return 商品一覧
 	 */
 	public List<Item> findAll() {
-
 		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY id";
-
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
-
 		return itemList;
 	}
 
@@ -55,7 +58,6 @@ public class ItemRepository {
 	public List<Item> findByItemName(String name) {
 		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name LIKE :name ORDER BY id DESC";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
-
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 		return itemList;
 	}
@@ -71,10 +73,4 @@ public class ItemRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		return template.queryForObject(sql, param, ITEM_ROW_MAPPER);
 	}
-	
-		
-	}
-	
-	
-
-
+}

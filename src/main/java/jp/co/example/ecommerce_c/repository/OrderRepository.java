@@ -99,35 +99,35 @@ public class OrderRepository {
 		return orderList;
 	};
 
-	private static final RowMapper<Order> ORDER_ROW_MAPPER = (rs, i) -> {
-		Order order = new Order();
-		order.setId(rs.getInt("id"));
-		order.setUserId(rs.getInt("user_id"));
-		order.setStatus(rs.getInt("status"));
-		order.setTotalPrice(rs.getInt("total_price"));
-		order.setOrderDate(rs.getDate("order_date"));
-		order.setDestinationName(rs.getString("destination_name"));
-		order.setDestinationEmail(rs.getString("destination_email"));
-		order.setDestinationZipcode(rs.getString("destination_zipcode"));
-		order.setDestinationAddress(rs.getString("destination_address"));
-		order.setDestinationTel(rs.getString("destination_tel"));
-		order.setDeliveryTime(rs.getTimestamp("delivery_time"));
-		order.setPaymentMethod(rs.getInt("payment_method"));
-		return order;
-	};
+//	private static final RowMapper<Order> ORDER_ROW_MAPPER = (rs, i) -> {
+//		Order order = new Order();
+//		order.setId(rs.getInt("id"));
+//		order.setUserId(rs.getInt("user_id"));
+//		order.setStatus(rs.getInt("status"));
+//		order.setTotalPrice(rs.getInt("total_price"));
+//		order.setOrderDate(rs.getDate("order_date"));
+//		order.setDestinationName(rs.getString("destination_name"));
+//		order.setDestinationEmail(rs.getString("destination_email"));
+//		order.setDestinationZipcode(rs.getString("destination_zipcode"));
+//		order.setDestinationAddress(rs.getString("destination_address"));
+//		order.setDestinationTel(rs.getString("destination_tel"));
+//		order.setDeliveryTime(rs.getTimestamp("delivery_time"));
+//		order.setPaymentMethod(rs.getInt("payment_method"));
+//		return order;
+//	};
 
-	/**
-	 * 引数のuserIdとstatusに一致した注文情報を取得する.
-	 * 
-	 * @param userId ユーザーid
-	 * @param status 注文状態(0.注文前 1.未入金 2.入金済 3.発送済 4.配送完了 9.キャンセル)
-	 * @return 引数のuserIdとstatusに一致した注文情報
-	 */
-	public List<Order> findByUserIdAndStatus(Integer userId, Integer status) {
-		String sql = "SELECT id, user_id, status, total_price, order_date, destination_name, destination_email, destination_zipcode, destination_address, destination_tel, delivery_time, payment_method FROM orders WHERE user_id = :userId AND status = :status;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
-		return template.query(sql, param, ORDER_ROW_MAPPER);
-	}
+//	/**
+//	 * 引数のuserIdとstatusに一致した注文情報を取得する.
+//	 * 
+//	 * @param userId ユーザーid
+//	 * @param status 注文状態(0.注文前 1.未入金 2.入金済 3.発送済 4.配送完了 9.キャンセル)
+//	 * @return 引数のuserIdとstatusに一致した注文情報
+//	 */
+//	public List<Order> findByUserIdAndStatus(Integer userId, Integer status) {
+//		String sql = "SELECT id, user_id, status, total_price, order_date, destination_name, destination_email, destination_zipcode, destination_address, destination_tel, delivery_time, payment_method FROM orders WHERE user_id = :userId AND status = :status;";
+//		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
+//		return template.query(sql, param, ORDER_ROW_MAPPER);
+//	}
 
 	/**
 	 * ordersテーブルに注文情報を挿入する.
@@ -166,12 +166,22 @@ public class OrderRepository {
 		return template.query(insertSql, param, ORDER_RESULT_SET_EXTRACTOR);
 	}
 
+	/**
+	 * 合計金額を変更する.
+	 * 
+	 * @param order orderインスタンス
+	 */
 	public void update(Order order) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 		String updateSql = "UPDATE orders SET total_price = :totalPrice WHERE user_id = :userId AND status = :status;";
 		template.update(updateSql, param);
 	}
 
+	/**
+	 * 注文確定時に、テーブルのデータを更新する.
+	 * 
+	 * @param order orderインスタンス
+	 */
 	public void updateOrder(Order order) {
 		if (order.getPaymentMethod() == 1) {
 			SqlParameterSource param = new BeanPropertySqlParameterSource(order);
@@ -184,6 +194,13 @@ public class OrderRepository {
 		}
 	}
 	
+	/**
+	 * 合計金額から引数の金額を引きデータを更新する
+	 * 
+	 * @param userId userId
+	 * @param status 注文状態(0.注文前 1.未入金 2.入金済 3.発送済 4.配送完了 9.キャンセル)
+	 * @param price　金額
+	 */
 	public void subtractTotalPrice(Integer userId, Integer status, Integer price) {
 		String updateSql = "UPDATE orders SET total_price = total_price - :price WHERE user_id = :userId AND status = :status;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("price", price).addValue("userId", userId).addValue("status", 0);
