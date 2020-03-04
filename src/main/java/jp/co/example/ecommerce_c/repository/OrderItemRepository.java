@@ -63,5 +63,4 @@ public class OrderItemRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
 		template.update(sql, param);
 	}
-	
 }

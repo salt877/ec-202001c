@@ -165,5 +165,11 @@ public class OrderRepository {
 			String insertSql = "UPDATE orders SET status = 2, total_price = :totalPrice, order_date = :orderDate, destination_name = :destinationName, destination_email = :destinationEmail, destination_zipcode = :destinationZipcode, destination_address = :destinationAddress, destination_tel = :destinationTel, delivery_time = :deliveryTime, payment_method = :paymentMethod WHERE user_id = :userId AND status = 0;";
 			template.update(insertSql, param);
 		}
-	}	
+	}
+	
+	public void subtractTotalPrice(Integer userId, Integer status, Integer price) {
+		String updateSql = "UPDATE orders SET total_price = total_price - :price WHERE user_id = :userId AND status = :status;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("price", price).addValue("userId", userId).addValue("status", 0);
+		template.update(updateSql, param);
+	}
 }

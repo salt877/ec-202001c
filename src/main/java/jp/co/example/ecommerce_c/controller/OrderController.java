@@ -24,15 +24,12 @@ public class OrderController {
 	
 	@RequestMapping("")
 	public String order(OrderForm orderForm, BindingResult result) {
-		if(result.hasErrors()) {
-			return "order_confirm";
-		}
 		orderService.order(orderForm);
 		return "redirect:/order/toFinished";
 	}
 	
 	@RequestMapping("/toFinished")
 	public String toFinished() {
-		return "order_confirm";
+		return "order_finished";
 	}
 }
