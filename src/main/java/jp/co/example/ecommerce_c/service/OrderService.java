@@ -1,10 +1,15 @@
 package jp.co.example.ecommerce_c.service;
 
+import java.util.List;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 
 import jp.co.example.ecommerce_c.domain.Order;
+import jp.co.example.ecommerce_c.form.OrderForm;
+import jp.co.example.ecommerce_c.repository.OrderRepository;
 
 /**
  * 注文情報に関するサービスクラス.
@@ -16,6 +21,9 @@ public class OrderService {
 	
 	@Autowired
 	private MailSender sender;
+	
+	@Autowired
+	private OrderRepository orderRepository;
 	
 	public void sendMail(Order order) {
 		SimpleMailMessage msg = new SimpleMailMessage();
@@ -30,6 +38,13 @@ public class OrderService {
 				+ "お客様のご注文を承りましたのでお知らせいたします。"
 				);
 		this.sender.send(msg);
+	}
+	
+	public void order(OrderForm orderForm) {
+		List<Order> orderList = orderRepository.findByUserIdAndStatus(orderForm.getUserId(), orderForm.getStatus());
+		Order order = orderList.get(0);
+		BeanUtils.copyProperties(orderForm, order);
+		orderRepository.updateOrder(order);
 	}
 
 }

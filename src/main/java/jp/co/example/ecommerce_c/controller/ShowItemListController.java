@@ -61,7 +61,7 @@ public class ShowItemListController {
 		
 		model.addAttribute("itemList1", itemList1);
 
-		Page<Item> itemPage = showItemListService.showListPaging(page, VIEW_SIZE, itemList2);
+		Page<Item> itemPage = showItemListService.showListPaging(page, VIEW_SIZE, itemList);
 		model.addAttribute("itemPage", itemPage);
 
 
