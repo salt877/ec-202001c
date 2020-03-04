@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja"
-	  xmlns:th="http://www.thymeleaf.org"
-	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,12 +19,12 @@
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-						<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span> <span class="icon-bar"></span>
+						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="item_list.html" th:href="@{/}"> <!-- 企業ロゴ --> 
-						<img alt="main log" src="../static/img_coffee/header_logo.png" 
-						th:src="@{/img_coffee/header_logo.png}" height="35">
-					</a>
+					<a class="navbar-brand" href="item_list.html" th:href="@{/}"> <!-- 企業ロゴ -->
+						<img alt="main log" src="../static/img_coffee/header_logo.png" th:src="@{/img_coffee/header_logo.png}" height="35"></a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -52,27 +50,18 @@
 					<tbody>
 						<tr>
 							<th>
-								<div class="text-center">
-									商品名
-								</div>
+								<div class="text-center">商品名</div>
 							</th>
 							<th>
-								<div class="text-center">
-									サイズ、価格(税抜)、数量
-								</div>
+								<div class="text-center">サイズ、価格(税抜)、数量</div>
 							</th>
 							<th>
-								<div class="text-center">
-									トッピング、価格(税抜)
-								</div>
+								<div class="text-center">トッピング、価格(税抜)</div>
 							</th>
 							<th>
-								<div class="text-center">
-									小計
-								</div>
+								<div class="text-center">小計</div>
 							</th>
-							<th>
-							</th>
+							<th></th>
 						</tr>
 						<tr th:each="orderItem : ${order.orderItemList}">
 							<td>
@@ -81,13 +70,10 @@
 									<span th:text="${orderItem.item.name}">じゃがバターベーコン</span>
 								</div>
 							</td>
-							<td>
-								<span class="price" th:text="${orderItem.size}">&nbsp;Ｌ</span>&nbsp;&nbsp;
-								<span th:switch="${orderItem.size}">
-									<span th:case="M" th:text="${orderItem.item.priceM}"></span>
-									<span th:case="L" th:text="${orderItem.item.priceL}"></span>	
-								</span>
-								&nbsp;&nbsp;<span th:text="${orderItem.quantity} + '個'">1個</span>
+							<td><span class="price" th:text="${orderItem.size}">&nbsp;Ｌ</span>&nbsp;&nbsp;
+								<span th:switch="${orderItem.size}"> <span th:case="M" th:text="${orderItem.item.priceM}"></span>
+								<span th:case="L" th:text="${orderItem.item.priceL}"></span></span> &nbsp;&nbsp;
+								<span th:text="${orderItem.quantity} + '個'">1個</span>
 							</td>
 							<td>
 								<ul th:each="orderTopping : ${orderItem.list}">
@@ -95,9 +81,7 @@
 								</ul>
 							</td>
 							<td>
-								<div class="text-center" th:text="${orderItem.quantity} * (${orderItem.item.priceM} + ${orderItem.getSubTotal()}) + '円'">
-									3,280円
-								</div>
+								<div class="text-center" th:text="${orderItem.quantity} * (${orderItem.item.priceM} + ${orderItem.getSubTotal()}) + '円'"> 3,280円</div>
 							</td>
 							<td>
 								<form th:action="@{/delete}" method="post">
@@ -115,8 +99,8 @@
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 				<div class="form-group text-center">
-					消費税：<span id="total-price" th:text="${order.totalPrice} * 0.1">消費税：8,000円</span>円<br>
-					ご注文金額合計：<span id="total-price" th:text="${order.totalPrice} * 1.1">ご注文金額合計：38,000円 (税込)</span>円（税込）
+					<span id="total-price" th:text="'消費税：' + ${#numbers.formatInteger(order.totalPrice * 0.1, 3, 'COMMA')} + '円'">消費税：8,000円</span><br>
+					<span id="total-price" th:text="'ご注文金額合計：' + ${#numbers.formatInteger(order.totalPrice * 1.1, 3, 'COMMA')} + '円（税込）'">ご注文金額合計：38,000円(税込)</span>
 				</div>
 			</div>
 		</div>
@@ -124,7 +108,8 @@
 		<div class="row">
 			<div class="col-xs-offset-5 col-xs-3">
 				<div class="form-group">
-					<form action="order_confirm.html" th:action="@{/show-order-confirm}">
+					<form action="order_confirm.html"
+						th:action="@{/show-order-confirm}">
 						<input class="form-control btn btn-warning btn-block" type="submit" value="注文に進む">
 					</form>
 				</div>
