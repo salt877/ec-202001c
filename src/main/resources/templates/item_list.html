@@ -92,7 +92,7 @@
 			<table class="table table-striped"> 
 				
 					<tbody>
-						<tr th:each="itemList : ${itemList1}">
+						<tr th:each="itemList : ${AllItemList}">
 							<th th:each="item : ${itemList}">
 								<a href="item_detail.html" th:href="@{'/showDetail?id=' + ${item.id}}">
 								<img src="../static/img_coffee/1.jpg" th:src="${'/img_coffee/'+item.imagePath}"
