@@ -92,16 +92,15 @@
 			<table class="table table-striped"> 
 				
 					<tbody>
-						<tr th:each="item:${itemPage.content}">
-							<th>
+						<tr th:each="itemList : ${itemList1}">
+							<th th:each="item : ${itemList}">
 								<a href="item_detail.html" th:href="@{'/showDetail?id=' + ${item.id}}">
-									<img src="../static/img_coffee/1.jpg" th:src="${'/img_coffee/'+item.imagePath}"
+								<img src="../static/img_coffee/1.jpg" th:src="${'/img_coffee/'+item.imagePath}"
 										class="img-responsive img-rounded" width="200" height="600">
 								</a><br>
 								<a href="item_detail.html" th:text="${item.name}" th:href="@{'/showDetail?id=' + ${item.id}}">じゃがバターベーコン</a><br>
 								<span class="price">&nbsp;М&nbsp;</span> <span th:text="${item.priceM}+'円(税抜)'">&nbsp;&nbsp;1,380円(税抜)</span><br>
 								<span class="price">&nbsp;Ｌ</span> <span th:text="${item.priceL}+'円(税抜)'">&nbsp;&nbsp;2,380円(税抜)</span><br>
-						
 							</th>
 						</tr>
 					</tbody>
