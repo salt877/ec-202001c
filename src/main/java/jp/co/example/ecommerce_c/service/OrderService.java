@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.stereotype.Service;
 
 import jp.co.example.ecommerce_c.domain.Order;
 import jp.co.example.ecommerce_c.form.OrderForm;
@@ -17,6 +18,7 @@ import jp.co.example.ecommerce_c.repository.OrderRepository;
  * @author katsuya.fujishima
  *
  */
+@Service
 public class OrderService {
 	
 	@Autowired
