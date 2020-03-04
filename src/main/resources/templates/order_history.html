@@ -50,56 +50,58 @@
 		</nav>
 
 		<!-- table -->
-		<div class="row">
-			<div
-				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
-				<h3 class="text-center">注文履歴</h3>
-				<table class="table table-striped">
-					<tbody>
-						<tr>
-							<th>
-								<div class="text-center">商品名</div>
-							</th>
-							<th>
-								<div class="text-center">サイズ、価格(税抜)、数量</div>
-							</th>
-							<th>
-								<div class="text-center">トッピング、価格(税抜)</div>
-							</th>
-							<th>
-								<div class="text-center">小計</div>
-							</th>
-						</tr>
-						<tr th:each="orderItem : ${orderHistory.orderItemList}">
-							<td>
-								<div class="center">
-									<img src="../static/img_coffee/1.jpg"
-										class="img-responsive img-rounded" width="100" height="300"
-										th:src="${'/img_coffee/' + orderItem.item.imagePath}"><br>
-									<span th:text="${orderItem.item.name}">じゃがバターベーコン</span>
-								</div>
-							</td>
-							<td><span class="price" th:text="${orderItem.size}">&nbsp;Ｌ</span>&nbsp;&nbsp;
-								<span th:switch="${orderItem.size}"> <span th:case="M"
-									th:text="${orderItem.item.priceM}"></span> <span th:case="L"
-									th:text="${orderItem.item.priceL}"></span></span>&nbsp;&nbsp; <span
-								th:text="${orderItem.quantity} + '個'">1個</span></td>
-							<td>
-								<ul th:each="orderTopping : ${orderItem.list}">
-									<li
-										th:text="${orderTopping.topping.name} + '　' + ${orderTopping.topping.priceM} + '円'">ピーマン300円</li>
-								</ul>
-							</td>
-							<td>
-								<div class="text-center"
-									th:text="${orderItem.quantity} * ${orderItem.item.priceM} + ${orderItem.getSubTotal()} + '円'">3,280円</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+		<h3 class="text-center" th:if="${orderHistorySize} == 0" th:text="注文履歴が存在しません"></h3>
+		<div th:unless="${orderHistorySize} == 0">
+			<div class="row">
+				<div
+					class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+					<h3 class="text-center">注文履歴</h3>
+					<table class="table table-striped">
+						<tbody>
+							<tr>
+								<th>
+									<div class="text-center">商品名</div>
+								</th>
+								<th>
+									<div class="text-center">サイズ、価格(税抜)、数量</div>
+								</th>
+								<th>
+									<div class="text-center">トッピング、価格(税抜)</div>
+								</th>
+								<th>
+									<div class="text-center">小計</div>
+								</th>
+							</tr>
+							<tr th:each="orderItem : ${orderHistory.orderItemList}">
+								<td>
+									<div class="center">
+										<img src="../static/img_coffee/1.jpg"
+											class="img-responsive img-rounded" width="100" height="300"
+											th:src="${'/img_coffee/' + orderItem.item.imagePath}"><br>
+										<span th:text="${orderItem.item.name}">じゃがバターベーコン</span>
+									</div>
+								</td>
+								<td><span class="price" th:text="${orderItem.size}">&nbsp;Ｌ</span>&nbsp;&nbsp;
+									<span th:switch="${orderItem.size}"> <span th:case="M"
+										th:text="${orderItem.item.priceM}"></span> <span th:case="L"
+										th:text="${orderItem.item.priceL}"></span></span>&nbsp;&nbsp; <span
+									th:text="${orderItem.quantity} + '個'">1個</span></td>
+								<td>
+									<ul th:each="orderTopping : ${orderItem.list}">
+										<li
+											th:text="${orderTopping.topping.name} + '　' + ${orderTopping.topping.priceM} + '円'">ピーマン300円</li>
+									</ul>
+								</td>
+								<td>
+									<div class="text-center"
+										th:text="${orderItem.quantity} * ${orderItem.item.priceM} + ${orderItem.getSubTotal()} + '円'">3,280円</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
-		</div>
-		<!-- 
+			<!-- 
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 				<div class="form-group text-center">
@@ -247,6 +249,7 @@
 			</div>
 		</form>
  -->
+		</div>
 	</div>
 	<!-- end container -->
 	<script

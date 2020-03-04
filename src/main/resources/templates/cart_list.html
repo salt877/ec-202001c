@@ -54,9 +54,7 @@
 
 
 		<!-- table -->
-		<h1>
-			<span th:if="${orderSize} == 0" th:text="カートに商品がありません"></span>
-		</h1>
+		<h3 class="text-center" th:if="${orderSize} == 0" th:text="カートに商品がありません"></h3>
 		<div th:unless="${orderSize} == 0">
 			<div class="row">
 				<div
