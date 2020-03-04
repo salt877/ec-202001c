@@ -93,6 +93,16 @@ $(function() {
 				</div>
 			</div>
 		</div>
+		
+		<form method="post" th:action="@{/sort}">
+		<select name="sort">		
+		<option>並び順を変更する</option>
+		<option th:value="1">Mサイズの価格が安い順</option>
+		<option th:value="2">Mサイズの価格が高い順</option>
+		<option th:value="3">Lサイズの価格が安い順</option>
+		<option th:value="4">Lサイズの価格が高い順</option>
+		</select>
+		</form>
 
 		<!-- table -->
 		<div class="row">
