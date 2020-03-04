@@ -120,7 +120,7 @@
 				<div class="col-xs-offset-2 col-xs-8">
 					<div class="form-group text-center">
 						<span id="total-price"
-							th:text="'消費税：' + ${#numbers.formatInteger(order.totalPrice * 0.1, 3, 'COMMA')} + '円'">消費税：8,000円</span><br>
+							th:text="'消費税：' + ${#numbers.formatInteger(order.totalPrice * 0.1, 2, 'COMMA')} + '円'">消費税：8,000円</span><br>
 						<span id="total-price"
 							th:text="'ご注文金額合計：' + ${#numbers.formatInteger(order.totalPrice * 1.1, 3, 'COMMA')} + '円（税込）'">ご注文金額合計：38,000円(税込)</span>
 					</div>
