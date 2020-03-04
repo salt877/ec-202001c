@@ -25,6 +25,11 @@ public class OrderToppingRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 
+	/**
+	 * order_toppingsテーブルにデータを挿入する.
+	 * 
+	 * @param orderTopping 挿入するインスタンス
+	 */
 	public void insert(OrderTopping orderTopping) {
 		String insertSql = "INSERT INTO order_toppings(topping_id, order_item_id) VALUES(:toppingId, :orderItemId);";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(orderTopping);
