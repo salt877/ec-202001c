@@ -38,48 +38,61 @@ public class AddItemToCartService {
 	@Autowired
 	private OrderToppingRepository orderToppingRepository;
 	
+	/**
+	 * ショッピングカートに商品を追加するメソッド.
+	 * 
+	 * @param addItemToCartForm リクエストパラメータから送られてくる値
+	 * @param userId ログイン中のユーザーid
+	 */
 	public void addItem(AddItemToCartForm addItemToCartForm, Integer userId) {
-		List<Order> orderList = orderRepository.findByUserIdAndStatus(userId, 0);
+		
+		//ordersテーブルからログイン中のユーザーidを元にstatusが0(注文前)のデータを検索する
+		//データがなければ必要条件をセットしデータを挿入する、再度ログイン中のユーザーidを元にstatusが0(注文前)のデータを検索する
+		//orderListに入った1件のオブジェクトを取得する
+		List<Order> orderList = orderRepository.findByUserIdAndStatusForOrder(userId, 0);
 		if(orderList.size() == 0) {
 			Order order = new Order();
 			order.setUserId(userId);
 			order.setStatus(0);
 			order.setTotalPrice(0);
 			orderRepository.insert(order);
-			orderList = orderRepository.findByUserIdAndStatus(userId, 0);
-			order = orderList.get(0);
+			orderList = orderRepository.findByUserIdAndStatusForOrder(userId, 0);
 		}
-		orderList = orderRepository.findByUserIdAndStatus(userId, 0);
 		Order order = orderList.get(0);
-		//orderItemの中身を作成(商品id, サイズ, 数量をコピー可能) 注文id, 商品, 注文したトッピングリストを詰めていく
+		
+		
+		//注文された商品(orderItem)をorder_itemsテーブルに挿入しorderにセットする
+		//orderItemの情報を入れる(商品id, サイズ, 数量はaddItemToCartFormから取得可能) 注文id, 商品, 注文したトッピングリストを取得しorderにセットする
 		OrderItem orderItem = new OrderItem();
 		BeanUtils.copyProperties(addItemToCartForm, orderItem);
 		//注文idをセット
 		orderItem.setOrderId(order.getId());
+		//order_itemsテーブルに挿入する為のフィールド変数へのセットが出来た為データ挿入
+		//挿入したデータの戻り値を受け取る(別途使用)
+		OrderItem OrderItemForGetId = orderItemRepository.save(orderItem);
 		//商品をセット
 		orderItem.setItem(itemRepository.findById(orderItem.getItemId()));
-		//orderToppingの中身を作成
+		//orderToppingのリストを作成する
 		//商品詳細画面でクリックされたチェックボックスのトッピングidをformToppingListに格納する
 		List<Integer> formToppingList = addItemToCartForm.getToppingList();
 		if(formToppingList == null) {
 			formToppingList = new ArrayList<>();
-		}
+		}		
 		//orderToppingを複数格納する為のorderToppingListを作成
+		//配列を回し、order_toppingsテーブルにデータ挿入、orderToppingListをセットする
+		//orderItemにorderToppingListをセットする
 		List<OrderTopping> orderToppingList = new ArrayList<>();
-		OrderItem checkOrderItem = orderItemRepository.save(orderItem);
-
-		//配列を回しリストに詰める
 		for(int i = 0; i < formToppingList.size(); i++) {
 			OrderTopping orderTopping = new OrderTopping();
 			orderTopping.setToppingId(formToppingList.get(i));
-			orderTopping.setOrderItemId(checkOrderItem.getId());
+			orderTopping.setOrderItemId(OrderItemForGetId.getId());
 			orderTopping.setTopping(toppingRepository.findById(formToppingList.get(i)));
 			orderToppingRepository.insert(orderTopping);
 			orderToppingList.add(orderTopping);
 		}
 		orderItem.setList(orderToppingList);
 		
-		
+		//注文商品の合計金額を計算する
 		Integer itemPrice;	
 		
 		if(orderItem.getSize() == 'M') {

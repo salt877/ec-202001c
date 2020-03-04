@@ -25,13 +25,16 @@ public class ShowItemInCartController {
 
 	@RequestMapping("")
 	public String showItemInCart(Model model) {
-		int userId = 1;
-		List<Order> orderList = showItemInCartService.showItemInCart(userId);
-		System.out.println("orderList:" + orderList);
-		Order order = orderList.get(0);
-		System.out.println("order.getOrderItemList().size():" + order.getOrderItemList().size());
+		int userId = 1; //userIdに変える
+		Order order = null;
+		try {
+			order = showItemInCartService.showItemInCart(userId).get(0);
+		}catch(Exception e) {
+			model.addAttribute("orderSize", 0);
+			model.addAttribute("order", order);
+			return "cart_list";
+		}
 		model.addAttribute("orderSize", order.getOrderItemList().size());
-		System.out.println("order:" + order);
 		model.addAttribute("order", order);
 		return "cart_list";
 	}

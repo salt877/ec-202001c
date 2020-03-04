@@ -38,7 +38,7 @@ public class ShowDetailService {
 	}
 	
 	/**
-	 * 全てのトッピング詳細.
+	 * 全てのトッピング詳細を取得する.
 	 * 
 	 * @return トッピング詳細全件
 	 */

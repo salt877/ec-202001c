@@ -24,23 +24,32 @@ public class OrderItemRepository {
 
 	@Autowired
 	private NamedParameterJdbcTemplate template;
-	
+
 	private SimpleJdbcInsert insert;
-	
+
+	/**
+	 * テーブルにデータ挿入時、挿入したオブジェクトのidを取得する為に必要なメソッド.
+	 */
 	@PostConstruct
 	public void init() {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert((JdbcTemplate) template.getJdbcOperations());
 		SimpleJdbcInsert withTableName = simpleJdbcInsert.withTableName("order_items");
 		insert = withTableName.usingGeneratedKeyColumns("id");
 	}
-	
+
+	/**
+	 * orderItemsテーブルにデータを挿入する.
+	 * 
+	 * @param orderItem 挿入するインスタンス
+	 * @return 挿入したインスタンス
+	 */
 	public OrderItem save(OrderItem orderItem) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(orderItem);
 		Number key = insert.executeAndReturnKey(param);
 		orderItem.setId(key.intValue());
 		return orderItem;
 	}
-	
+
 	/**
 	 * order_itemsテーブルに注文商品を挿入する.
 	 * 
@@ -52,7 +61,7 @@ public class OrderItemRepository {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(orderItem);
 		template.update(insertSql, param);
 	}
-	
+
 	/**
 	 * idが一致する商品を削除するメソッド.
 	 * 
