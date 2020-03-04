@@ -136,15 +136,32 @@ public class OrderRepository {
 	 */
 	public void insert(Order order) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
-		String insertSql = "INSERT INTO orders(user_id, status, total_price, order_date, destination_name, destination_email, destination_zipcode, "
-				+ "destination_address, destination_tel, delivery_time, payment_method) "
-				+ "VALUES(:userId, :status, :totalPrice, :orderDate, :destinationName, :destinationEmail, :destinationZipcode, :destinationAddress, "
-				+ ":destinationTel, :deliveryTime, :paymentMethod);";
+		String insertSql = "INSERT INTO orders(user_id, status, total_price, order_date, destination_name, destination_email, destination_zipcode, destination_address, destination_tel, delivery_time, payment_method) VALUES(:userId, :status, :totalPrice, :orderDate, :destinationName, :destinationEmail, :destinationZipcode, :destinationAddress, :destinationTel, :deliveryTime, :paymentMethod)";
 		template.update(insertSql, param);
 	}
 
+	/**
+	 * 引数のuserIdとstatusに一致した注文情報を取得する.
+	 * 
+	 * @param userId ユーザーid
+	 * @param status 注文状態(0.注文前 1.未入金 2.入金済 3.発送済 4.配送完了 9.キャンセル)
+	 * @return 引数のuserIdとstatusに一致した注文情報
+	 */
 	public List<Order> findByUserIdAndStatusForOrder(Integer userId, Integer status) {
 		String insertSql = "SELECT o.id o_id, o.user_id o_user_id, o.status o_status, o.total_price o_total_price, o.order_date o_order_date, o.destination_name o_destination_name, o.destination_email o_destination_email, o.destination_zipcode o_destination_zipcode, o.destination_address o_destination_address, o.destination_tel o_destination_tel, o.delivery_time o_delivery_time, o.payment_method o_payment_method, i.id i_id, i.name i_name, i.description i_description, i.price_m i_price_m, i.price_l i_price_l, i.image_path i_image_path, i.deleted i_deleted, oi.id oi_id, oi.item_id oi_item_id, oi.order_id oi_order_id, oi.quantity oi_quantity, oi.size oi_size, ot.id ot_id, ot.topping_id ot_topping_id, ot.order_item_id ot_order_item_id, t.id t_id, t.name t_name, t.price_m t_price_M, t.price_l t_price_L FROM orders o LEFT JOIN order_items oi ON o.id = oi.order_id LEFT JOIN items i ON oi.item_id = i.id LEFT JOIN order_toppings ot ON oi.id = ot.order_item_id LEFT JOIN toppings t ON topping_id = t.id WHERE o.user_id = :userId AND o.status = :status ORDER BY oi.id DESC;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
+		return template.query(insertSql, param, ORDER_RESULT_SET_EXTRACTOR);
+	}
+
+	/**
+	 * 引数のuserIdに一致した注文履歴情報を取得する.
+	 * 
+	 * @param userId ユーザーid
+	 * @param status 注文状態(0.注文前 1.未入金 2.入金済 3.発送済 4.配送完了 9.キャンセル)
+	 * @return 引数のuserIdに一致した注文履歴情報
+	 */
+	public List<Order> findByUserIdAndStatusForOrderHistory(Integer userId, Integer status) {
+		String insertSql = "SELECT o.id o_id, o.user_id o_user_id, o.status o_status, o.total_price o_total_price, o.order_date o_order_date, o.destination_name o_destination_name, o.destination_email o_destination_email, o.destination_zipcode o_destination_zipcode, o.destination_address o_destination_address, o.destination_tel o_destination_tel, o.delivery_time o_delivery_time, o.payment_method o_payment_method, i.id i_id, i.name i_name, i.description i_description, i.price_m i_price_m, i.price_l i_price_l, i.image_path i_image_path, i.deleted i_deleted, oi.id oi_id, oi.item_id oi_item_id, oi.order_id oi_order_id, oi.quantity oi_quantity, oi.size oi_size, ot.id ot_id, ot.topping_id ot_topping_id, ot.order_item_id ot_order_item_id, t.id t_id, t.name t_name, t.price_m t_price_M, t.price_l t_price_L FROM orders o LEFT JOIN order_items oi ON o.id = oi.order_id LEFT JOIN items i ON oi.item_id = i.id LEFT JOIN order_toppings ot ON oi.id = ot.order_item_id LEFT JOIN toppings t ON topping_id = t.id WHERE o.user_id = :userId AND o.status != :status ORDER BY oi.id DESC;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
 		return template.query(insertSql, param, ORDER_RESULT_SET_EXTRACTOR);
 	}
@@ -154,9 +171,9 @@ public class OrderRepository {
 		String updateSql = "UPDATE orders SET total_price = :totalPrice WHERE user_id = :userId AND status = :status;";
 		template.update(updateSql, param);
 	}
-	
+
 	public void updateOrder(Order order) {
-		if(order.getPaymentMethod() == 1) {
+		if (order.getPaymentMethod() == 1) {
 			SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 		}
 	}
