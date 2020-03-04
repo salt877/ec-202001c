@@ -186,18 +186,18 @@ public class OrderRepository {
 		return order;
 	};
 
-	/**
-	 * 引数のuserIdとstatusに一致した注文情報を取得する.
-	 * 
-	 * @param userId ユーザーid
-	 * @param status 注文状態(0.注文前 1.未入金 2.入金済 3.発送済 4.配送完了 9.キャンセル)
-	 * @return 引数のuserIdとstatusに一致した注文情報
-	 */
-	public List<Order> findByUserIdAndStatus(Integer userId, Integer status) {
-		String sql = "SELECT id, user_id, status, total_price, order_date, destination_name, destination_email, destination_zipcode, destination_address, destination_tel, delivery_time, payment_method FROM orders WHERE user_id = :userId AND status = :status;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
-		return template.query(sql, param, ORDER_ROW_MAPPER);
-	}
+//	/**
+//	 * 引数のuserIdとstatusに一致した注文情報を取得する.
+//	 * 
+//	 * @param userId ユーザーid
+//	 * @param status 注文状態(0.注文前 1.未入金 2.入金済 3.発送済 4.配送完了 9.キャンセル)
+//	 * @return 引数のuserIdとstatusに一致した注文情報
+//	 */
+//	public List<Order> findByUserIdAndStatus(Integer userId, Integer status) {
+//		String sql = "SELECT id, user_id, status, total_price, order_date, destination_name, destination_email, destination_zipcode, destination_address, destination_tel, delivery_time, payment_method FROM orders WHERE user_id = :userId AND status = :status;";
+//		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
+//		return template.query(sql, param, ORDER_ROW_MAPPER);
+//	}
 
 	/**
 	 * ordersテーブルに注文情報を挿入する.
@@ -236,27 +236,45 @@ public class OrderRepository {
 		return template.query(insertSql, param, ORDERHISTORY_RESULT_SET_EXTRACTOR);
 	}
 
+	/**
+	 * 合計金額を変更する.
+	 * 
+	 * @param order orderインスタンス
+	 */
 	public void update(Order order) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 		String updateSql = "UPDATE orders SET total_price = :totalPrice WHERE user_id = :userId AND status = :status;";
 		template.update(updateSql, param);
 	}
 
+	/**
+	 * 注文確定時に、テーブルのデータを更新する.
+	 * 
+	 * @param order orderインスタンス
+	 */
 	public void updateOrder(Order order) {
 		if (order.getPaymentMethod() == 1) {
 			SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 			String insertSql = "UPDATE orders SET status = 1, total_price = :totalPrice, order_date = :orderDate, destination_name = :destinationName, destination_email = :destinationEmail, destination_zipcode = :destinationZipcode, destination_address = :destinationAddress, destination_tel = :destinationTel, delivery_time = :deliveryTime, payment_method = :paymentMethod WHERE user_id = :userId AND status = 0;";
 			template.update(insertSql, param);
-		}else {
+		} else {
 			SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 			String insertSql = "UPDATE orders SET status = 2, total_price = :totalPrice, order_date = :orderDate, destination_name = :destinationName, destination_email = :destinationEmail, destination_zipcode = :destinationZipcode, destination_address = :destinationAddress, destination_tel = :destinationTel, delivery_time = :deliveryTime, payment_method = :paymentMethod WHERE user_id = :userId AND status = 0;";
 			template.update(insertSql, param);
 		}
 	}
-	
+
+	/**
+	 * 合計金額から引数の金額を引きデータを更新する
+	 * 
+	 * @param userId userId
+	 * @param status 注文状態(0.注文前 1.未入金 2.入金済 3.発送済 4.配送完了 9.キャンセル)
+	 * @param price  金額
+	 */
 	public void subtractTotalPrice(Integer userId, Integer status, Integer price) {
 		String updateSql = "UPDATE orders SET total_price = total_price - :price WHERE user_id = :userId AND status = :status;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("price", price).addValue("userId", userId).addValue("status", 0);
+		SqlParameterSource param = new MapSqlParameterSource().addValue("price", price).addValue("userId", userId)
+				.addValue("status", 0);
 		template.update(updateSql, param);
 	}
 }

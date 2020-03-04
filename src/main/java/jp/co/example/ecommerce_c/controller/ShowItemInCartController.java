@@ -1,5 +1,7 @@
 package jp.co.example.ecommerce_c.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,11 +25,11 @@ public class ShowItemInCartController {
 
 	@RequestMapping("")
 	public String showItemInCart(Model model) {
-		int userId = 1;
+		int userId = 1; //userIdに変える
 		Order order = null;
 		try {
 			order = showItemInCartService.showItemInCart(userId).get(0);
-		} catch (Exception e) {
+		}catch(Exception e) {
 			model.addAttribute("orderSize", 0);
 			model.addAttribute("order", order);
 			return "cart_list";

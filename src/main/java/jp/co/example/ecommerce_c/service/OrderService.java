@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.example.ecommerce_c.domain.Order;
 import jp.co.example.ecommerce_c.domain.OrderItem;
@@ -23,6 +24,7 @@ import jp.co.example.ecommerce_c.repository.OrderRepository;
  *
  */
 @Service
+@Transactional
 public class OrderService {
 	
 	@Autowired
@@ -46,15 +48,26 @@ public class OrderService {
 		this.sender.send(msg);
 	}
 	
+	/**
+	 * 注文確定をする為、ordersテーブルを更新する.
+	 * 
+	 * @param orderForm 注文確認画面にてリクエストパラメータから送られた値
+	 */
 	public void order(OrderForm orderForm) {
-		List<Order> orderList = orderRepository.findByUserIdAndStatusForOrder(1, 0);
+		
+		//ordersテーブルからログインしているユーザーのid、statusが0(未入金)のデータを取得(1件)
+		List<Order> orderList = orderRepository.findByUserIdAndStatusForOrder(1, 0); //userIdに今後変える
 		Order order = orderList.get(0);
+		
+		//注文確認画面にて送られたリクエストパラメータの値をorderにセットする
 		BeanUtils.copyProperties(orderForm, order);
-		order.setUserId(1);
+		//注文日を現在日で取得しセットする
 		order.setOrderDate(Date.valueOf(LocalDate.now()));
+		//配送日時をセットする
 		Timestamp deliveryTime = new Timestamp(orderForm.getDeliveryDate().getTime());
 		deliveryTime.setHours(orderForm.getDeliveryTime());
 		order.setDeliveryTime(deliveryTime);
+		//合計金額をセットする
 		Integer totalPrice = 0;
 		List<OrderItem> orderItemList = order.getOrderItemList();
 		for(OrderItem orderItem : orderItemList) {
@@ -64,8 +77,9 @@ public class OrderService {
 				totalPrice = totalPrice + orderItem.getItem().getPriceL() + orderItem.getSubTotal();
 			}
 		}
-		System.out.println(totalPrice);
 		order.setTotalPrice(totalPrice);
+	
+		//ordersテーブルの情報を更新する
 		orderRepository.updateOrder(order);
-	}
+	}	
 }
