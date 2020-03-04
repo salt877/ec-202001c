@@ -1,9 +1,7 @@
 package jp.co.example.ecommerce_c.controller;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,7 +25,7 @@ public class ShowItemListController {
 	private ShowItemListService showItemListService;
 
 	// 1ページに表示する商品数は9個
-	private static final int VIEW_SIZE = 9;
+	//private static final int VIEW_SIZE = 9;
 
 	/**
 	 * 商品一覧画面を出力します.
@@ -102,7 +100,7 @@ public class ShowItemListController {
 	}
 
 	/**
-	 * ページングのリンクに使うページ数をスコープに格納
+	 * ページングのリンクに使うページ数をスコープに格納します.
 	 * 
 	 * @param model    モデル
 	 * @param itemPage ぺージング情報
@@ -119,29 +117,108 @@ public class ShowItemListController {
 		}
 		return pageNumbers;
 	}
-	@RequestMapping("/sort")
-	public String sortItemList(String aaa,Model model) {
-		
-		List<Item> itemList =showItemListService.orderByLowerMsizePrice();
-		model.addAttribute("AllItemList", itemList);
-		
-		
+
+	/**
+	 * Mサイズの商品を価格が安い順番で表示します.
+	 * 
+	 * @param model リクエストスコープ
+	 * @return 商品一覧画面
+	 */
+	@RequestMapping("/LowerPriceM")
+	public String LowerMsize(Model model) {
+		List<Item> itemList = showItemListService.orderByLowerMsizePrice();
+
+		// 横に3件ずつ表示する
+		List<List<Item>> AllItemList = new ArrayList<>();
+		List<Item> threeItem = new ArrayList<>();
+		for (int i = 0; i < itemList.size(); i++) {
+			threeItem.add(itemList.get(i));
+			if (i % 3 == 2 || itemList.size() == 0 || itemList.size() == 1
+					|| (itemList.size() == i / 3 * 3 && i >= itemList.size() / 3 * 3)
+					|| (itemList.size() == i / 3 * 3 + 1 && i >= itemList.size() / 3 * 3)) {
+				AllItemList.add(threeItem);
+				threeItem = new ArrayList<>();
+			}
+		}
+		model.addAttribute("AllItemList", AllItemList);
 		return "item_list";
-	}		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
+	/**
+	 * Mサイズの商品を価格が高い順番で表示します.
+	 * 
+	 * @param model リクエストスコープ
+	 * @return 商品一覧画面
+	 */
+	@RequestMapping("/HigherPriceM")
+	public String HigherMsize(Model model) {
+		List<Item> itemList = showItemListService.orderByHigherMsizePrice();
 
+		// 横に3件ずつ表示する
+		List<List<Item>> AllItemList = new ArrayList<>();
+		List<Item> threeItem = new ArrayList<>();
+		for (int i = 0; i < itemList.size(); i++) {
+			threeItem.add(itemList.get(i));
+			if (i % 3 == 2 || itemList.size() == 0 || itemList.size() == 1
+					|| (itemList.size() == i / 3 * 3 && i >= itemList.size() / 3 * 3)
+					|| (itemList.size() == i / 3 * 3 + 1 && i >= itemList.size() / 3 * 3)) {
+				AllItemList.add(threeItem);
+				threeItem = new ArrayList<>();
+			}
+		}
+		model.addAttribute("AllItemList", AllItemList);
+		return "item_list";
+	}
+
+	/**
+	 * Lサイズの商品を価格が安い順番で表示します.
+	 * 
+	 * @param model リクエストスコープ
+	 * @return 商品一覧画面
+	 */
+	@RequestMapping("/LowerPriceL")
+	public String LowerLsize(Model model) {
+		List<Item> itemList = showItemListService.orderByLowerLsizePrice();
+
+		// 横に3件ずつ表示する
+		List<List<Item>> AllItemList = new ArrayList<>();
+		List<Item> threeItem = new ArrayList<>();
+		for (int i = 0; i < itemList.size(); i++) {
+			threeItem.add(itemList.get(i));
+			if (i % 3 == 2 || itemList.size() == 0 || itemList.size() == 1
+					|| (itemList.size() == i / 3 * 3 && i >= itemList.size() / 3 * 3)
+					|| (itemList.size() == i / 3 * 3 + 1 && i >= itemList.size() / 3 * 3)) {
+				AllItemList.add(threeItem);
+				threeItem = new ArrayList<>();
+			}
+		}
+		model.addAttribute("AllItemList", AllItemList);
+		return "item_list";
+	}
+
+	/**
+	 * Lサイズの商品を価格が高い順番で表示します.
+	 * 
+	 * @param model リクエストスコープ
+	 * @return 商品一覧画面
+	 */
+	@RequestMapping("/HigherPriceL")
+	public String HigherLsize(Model model) {
+		List<Item> itemList = showItemListService.orderByHigherLsizePrice();
+
+		// 横に3件ずつ表示する
+		List<List<Item>> AllItemList = new ArrayList<>();
+		List<Item> threeItem = new ArrayList<>();
+		for (int i = 0; i < itemList.size(); i++) {
+			threeItem.add(itemList.get(i));
+			if (i % 3 == 2 || itemList.size() == 0 || itemList.size() == 1
+					|| (itemList.size() == i / 3 * 3 && i >= itemList.size() / 3 * 3)
+					|| (itemList.size() == i / 3 * 3 + 1 && i >= itemList.size() / 3 * 3)) {
+				AllItemList.add(threeItem);
+				threeItem = new ArrayList<>();
+			}
+		}
+		model.addAttribute("AllItemList", AllItemList);
+		return "item_list";
+	}
+}

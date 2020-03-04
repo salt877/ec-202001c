@@ -71,61 +71,56 @@ public class ItemRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		return template.queryForObject(sql, param, ITEM_ROW_MAPPER);
 	}
-	
+
 	/**
-	 * Mサイズの価格が安い順番で商品一覧を表示します.
+	 * Mサイズの価格が安い順番で取得します.
 	 * 
-	 * @param priceM Mサイズの価格
-	 * @return　商品一覧
+	 * @return 商品一覧
 	 */
-	public List<Item> orderByLowerMsizePrice(){
-		
+	public List<Item> orderByLowerMsizePrice() {
+
 		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY price_m";
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
-		
+
 		return itemList;
 	}
+
 	/**
-	 * Mサイズの価格が高い順番で商品一覧を表示します.
+	 * Mサイズの価格が高い順番で取得します.
 	 * 
-	 * @param priceM　Mサイズの価格
-	 * @return　商品一覧
+	 * @return 商品一覧
 	 */
-	public List<Item> orderByHigherMsizePrice(){
-		
+	public List<Item> orderByHigherMsizePrice() {
+
 		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY price_m DESC";
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
-		
+
 		return itemList;
 	}
+
 	/**
-	 * Lサイズの価格が安い順番で商品一覧を表示します.
+	 * Lサイズの価格が安い順番で取得します.
 	 * 
-	 * @param priceL　Lサイズの価格
-	 * @return　商品一覧
+	 * @return 商品一覧
 	 */
-	public List<Item> orderByLowerLsizePrice(){
-		
+	public List<Item> orderByLowerLsizePrice() {
+
 		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY price_l";
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
-		
+
 		return itemList;
 	}
+
 	/**
-	 * Lサイズの価格が高い順番で商品一覧を表示します.
+	 * Lサイズの価格が高い順番で取得します.
 	 * 
-	 * @param priceL　Lサイズの価格
-	 * @return　商品一覧
+	 * @return 商品一覧
 	 */
-	public List<Item> orderByHigherLsizePrice(){
-		
+	public List<Item> orderByHigherLsizePrice() {
+
 		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY price_l DESC";
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
-		
+
 		return itemList;
-	}	
 	}
-	
-	
-
-
+}
