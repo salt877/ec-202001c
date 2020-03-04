@@ -27,12 +27,10 @@ public class ShowItemInCartController {
 	public String showItemInCart(Model model) {
 		int userId = 1;
 		List<Order> orderList = showItemInCartService.showItemInCart(userId);
-		System.out.println("orderList:" + orderList);
 		Order order = orderList.get(0);
-		System.out.println("order.getOrderItemList().size():" + order.getOrderItemList().size());
 		model.addAttribute("orderSize", order.getOrderItemList().size());
-		System.out.println("order:" + order);
 		model.addAttribute("order", order);
+		System.out.println(order);
 		return "cart_list";
 	}
 }
