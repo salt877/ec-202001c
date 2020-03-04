@@ -26,8 +26,14 @@ public class ShowItemInCartController {
 	@RequestMapping("")
 	public String showItemInCart(Model model) {
 		int userId = 1; //userIdに変える
-		List<Order> orderList = showItemInCartService.showItemInCart(userId);
-		Order order = orderList.get(0);
+		Order order = null;
+		try {
+			order = showItemInCartService.showItemInCart(userId).get(0);
+		}catch(Exception e) {
+			model.addAttribute("orderSize", 0);
+			model.addAttribute("order", order);
+			return "cart_list";
+		}
 		model.addAttribute("orderSize", order.getOrderItemList().size());
 		model.addAttribute("order", order);
 		return "cart_list";
