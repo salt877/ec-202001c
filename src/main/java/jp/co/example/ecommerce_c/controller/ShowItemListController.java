@@ -33,9 +33,9 @@ public class ShowItemListController {
 	 * @param model      モデル
 	 * @param page       出力したいページ数
 	 * @param searchName 検索文字列
-	 * @param model モデル
-	 * @param       page 出力したいページ数
-	 * @param       searchName 検索文字列
+	 * @param model      モデル
+	 * @param page       出力したいページ数
+	 * @param searchName 検索文字列
 	 * @return 商品一覧画面
 	 */
 	@RequestMapping("/")
@@ -48,40 +48,53 @@ public class ShowItemListController {
 
 		List<Item> itemList = showItemListService.showList();
 
-		List<List<Item>> itemList1 = new ArrayList<>();
-		List<Item> itemList2 = new ArrayList<>();
+		List<List<Item>> AllItemList = new ArrayList<>();
+		List<Item> threeItem = new ArrayList<>();
 
 		for (int i = 0; i < itemList.size(); i++) {
-			itemList2.add(itemList.get(i));
-			if (i % 3 == 2) {
-				itemList1.add(itemList2);
-				itemList2 = new ArrayList<>();
+			threeItem.add(itemList.get(i));
+			if (i % 3 == 2 || itemList.size() == 0 || itemList.size() == 1
+					|| (itemList.size() == i / 3 * 3 && i >= itemList.size() / 3 * 3)
+					|| (itemList.size() == i / 3 * 3 + 1 && i >= itemList.size() / 3 * 3)) {
+				AllItemList.add(threeItem);
+				threeItem = new ArrayList<>();
 			}
 		}
-		
-		model.addAttribute("itemList1", itemList1);
-
-		Page<Item> itemPage = showItemListService.showListPaging(page, VIEW_SIZE, itemList2);
-		model.addAttribute("itemPage", itemPage);
-
+		model.addAttribute("AllItemList", AllItemList);
 
 		// 商品名検索機能
 		if (searchName != null) {
 			itemList = showItemListService.searchByItemName(searchName);
 			model.addAttribute("searchName", searchName);
+			// 検索結果を横並びにする
+			List<List<Item>> searchItemList = new ArrayList<>();
+			for (int i = 0; i < itemList.size(); i++) {
+				threeItem.add(itemList.get(i));
+				if (i % 3 == 2 || i == 1 && itemList.size() <= 3
+						|| (itemList.size() == i / 3 * 3 && i >= itemList.size() / 3 * 3)
+						|| (itemList.size() == i / 3 * 3 + 1 && i >= itemList.size() / 3 * 3)) {
+					searchItemList.add(threeItem);
+					threeItem = new ArrayList<>();
+				}
+			}
+			model.addAttribute("AllItemList", searchItemList);
 		}
 		if (itemList.size() == 0) {
+			model.addAttribute("searchName", searchName);
 			model.addAttribute("message", "該当する商品がありません");
 			itemList = showItemListService.showList();
 		}
 
-		//ページング
-	//	Page<Item> itemPage1 = showItemListService.showListPaging(page, VIEW_SIZE, itemList);
+		// ページング
+		// Page<Item> itemPage1 = showItemListService.showListPaging(page, VIEW_SIZE,
+		// itemList);
+		Page<Item> itemPage = showItemListService.showListPaging(page, VIEW_SIZE, threeItem);
+		model.addAttribute("itemPage", itemPage);
 
 		List<Integer> pageNumbers = calcPageNumbers(model, itemPage);
 		model.addAttribute("pageNumbers", pageNumbers);
 
-		//オートコンプリート
+		// オートコンプリート
 		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
 		model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
 
