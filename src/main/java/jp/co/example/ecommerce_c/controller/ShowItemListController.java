@@ -1,7 +1,9 @@
 package jp.co.example.ecommerce_c.controller;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,10 +43,10 @@ public class ShowItemListController {
 	@RequestMapping("/")
 	public String showItemList(Model model, Integer page, String searchName) {
 
-		// ページング機能を追加
-		if (page == null) {
-			page = 1;
-		}
+//		// ページング機能を追加
+//		if (page == null) {
+//			page = 1;
+//		}
 
 		List<Item> itemList = showItemListService.showList();
 
@@ -85,14 +87,12 @@ public class ShowItemListController {
 			itemList = showItemListService.showList();
 		}
 
-		// ページング
-		// Page<Item> itemPage1 = showItemListService.showListPaging(page, VIEW_SIZE,
-		// itemList);
-		Page<Item> itemPage = showItemListService.showListPaging(page, VIEW_SIZE, threeItem);
-		model.addAttribute("itemPage", itemPage);
-
-		List<Integer> pageNumbers = calcPageNumbers(model, itemPage);
-		model.addAttribute("pageNumbers", pageNumbers);
+//		// ページング
+//		Page<Item> itemPage = showItemListService.showListPaging(page, VIEW_SIZE, AllItemList);
+//		model.addAttribute("itemPage", itemPage);
+//
+//		List<Integer> pageNumbers = calcPageNumbers(model, itemPage);
+//		model.addAttribute("pageNumbers", pageNumbers);
 
 		// オートコンプリート
 		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
@@ -119,5 +119,29 @@ public class ShowItemListController {
 		}
 		return pageNumbers;
 	}
+	@RequestMapping("/sort")
+	public String sortItemList(String aaa,Model model) {
+		
+		List<Item> itemList =showItemListService.orderByLowerMsizePrice();
+		model.addAttribute("AllItemList", itemList);
+		
+		
+		return "item_list";
+	}		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
-}
+

@@ -48,24 +48,24 @@ public class ShowItemListService {
 	 * @param itemList 絞り込み対象リスト
 	 * @return 1ページに表示されるサイズ分の商品一覧情報
 	 */
-	public Page<Item> showListPaging(int page, int size, List<Item> itemList) {
-
-		page--;
-
-		int startItemCount = page * size;
-
-		List<Item> list;
-
-		if (itemList.size() < startItemCount) {
-			list = Collections.emptyList();
-		} else {
-			int toIndex = Math.min(startItemCount + size, itemList.size());
-			list = itemList.subList(startItemCount, toIndex);
-		}
-
-		Page<Item> itemPage = new PageImpl<Item>(list, PageRequest.of(page, size), itemList.size());
-		return itemPage;
-	}
+//	public Page<List<Item>> showListPaging(int page, int size, List<List<Item>> AllItemList) {
+//
+//		page--;
+//
+//		int startItemCount = page * size;
+//
+//		List<List<Item>> list;
+//
+//		if (AllItemList.size() < startItemCount) {
+//			list = Collections.emptyList();
+//		} else {
+//			int toIndex = Math.min(startItemCount + size, AllItemList.size());
+//			list = AllItemList.subList(startItemCount, toIndex);
+//		}
+//
+//		Page<List<Item>> itemPage = new PageImpl<List<Item>>(list, PageRequest.of(page, size), AllItemList.size());
+//		return itemPage;
+//	}
 	
 	/**
 	 * オートコンプリート機能.
@@ -85,7 +85,23 @@ public class ShowItemListService {
 			itemListForAutocomplete.append("\"");
 		}
 		return itemListForAutocomplete;
-	}	
+	}
+
+	
+	public List<Item> orderByLowerMsizePrice(){
+		return itemRepository.orderByHigherMsizePrice();
+	}
+	public List<Item> orderByHigherMsizePrice(){
+		return itemRepository.orderByHigherMsizePrice();
+	}
+	public List<Item> orderByLowerLsizePrice(){
+		return itemRepository.orderByHigherMsizePrice();
+	}
+	public List<Item> orderByHigherLsizePrice(){
+		return itemRepository.orderByHigherMsizePrice();
+	}
+	
+	
 	}
 	
 	
