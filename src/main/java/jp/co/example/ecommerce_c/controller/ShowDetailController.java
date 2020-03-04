@@ -18,14 +18,13 @@ import jp.co.example.ecommerce_c.service.ShowDetailService;
  *
  */
 @Controller
-@RequestMapping("/show-detail")
+@RequestMapping("/showDetail")
 public class ShowDetailController {
 
 	@Autowired
 	private ShowDetailService showDetailService;
 	
 	/**
-	 * ???リクエストスコープよりアプリケーションスコープのが良い???
 	 * 商品詳細画面を出力.
 	 *
 	 * @param id リクエストパラメータで送られてくる商品ID
