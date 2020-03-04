@@ -2063,7 +2063,7 @@ th {
 .table {
   width: 100%;
   max-width: 100%;
-  margin-bottom: 0px;
+  margin-bottom: 20px;
 }
 .table > thead > tr > th,
 .table > tbody > tr > th,
@@ -2077,7 +2077,7 @@ th {
   border-top: 1px solid #ddd;
 }
 .table > thead > tr > th {
-  vertical-align: center;
+  vertical-align: bottom;
   border-bottom: 2px solid #ddd;
 }
 .table > caption + thead > tr:first-child > th,

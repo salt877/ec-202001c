@@ -33,6 +33,9 @@ public class ShowItemListController {
 	 * @param model      モデル
 	 * @param page       出力したいページ数
 	 * @param searchName 検索文字列
+	 * @param model モデル
+	 * @param       page 出力したいページ数
+	 * @param       searchName 検索文字列
 	 * @return 商品一覧画面
 	 */
 	@RequestMapping("/")
@@ -42,15 +45,8 @@ public class ShowItemListController {
 		if (page == null) {
 			page = 1;
 		}
-		List<Item> itemList = null;
 
-		// 商品名検索機能
-		if (searchName == null) {
-			itemList = showItemListService.showList();
-		} else {
-			itemList = showItemListService.searchByItemName(searchName);
-			model.addAttribute("searchName", searchName);
-		}
+		List<Item> itemList = showItemListService.showList();
 
 		List<List<Item>> itemList1 = new ArrayList<>();
 		List<Item> itemList2 = new ArrayList<>();
@@ -68,8 +64,26 @@ public class ShowItemListController {
 		Page<Item> itemPage = showItemListService.showListPaging(page, VIEW_SIZE, itemList2);
 		model.addAttribute("itemPage", itemPage);
 
+
+		// 商品名検索機能
+		if (searchName != null) {
+			itemList = showItemListService.searchByItemName(searchName);
+			model.addAttribute("searchName", searchName);
+		}
+		if (itemList.size() == 0) {
+			model.addAttribute("message", "該当する商品がありません");
+			itemList = showItemListService.showList();
+		}
+
+		//ページング
+	//	Page<Item> itemPage1 = showItemListService.showListPaging(page, VIEW_SIZE, itemList);
+
 		List<Integer> pageNumbers = calcPageNumbers(model, itemPage);
 		model.addAttribute("pageNumbers", pageNumbers);
+
+		//オートコンプリート
+		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
+		model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
 
 		return "item_list";
 	}

@@ -44,7 +44,7 @@ public class ShowItemListService {
 	 * ページング機能.
 	 * 
 	 * @param page 表示させたいページ数
-	 * @param size 1ページに表示させる従業員数
+	 * @param size 1ページに表示させる商品数
 	 * @param itemList 絞り込み対象リスト
 	 * @return 1ページに表示されるサイズ分の商品一覧情報
 	 */
@@ -66,5 +66,27 @@ public class ShowItemListService {
 		Page<Item> itemPage = new PageImpl<Item>(list, PageRequest.of(page, size), itemList.size());
 		return itemPage;
 	}
-
-}
+	
+	/**
+	 * オートコンプリート機能.
+	 * 
+	 * @param itemList 商品一覧
+	 * @return　オートコンプリート用JavaScriptの配列の文字列
+	 */
+	public StringBuilder getItemListForAutocomplete(List<Item> itemList) {
+		StringBuilder itemListForAutocomplete = new StringBuilder();
+		for (int i = 0; i < itemList.size(); i++) {
+			if (i != 0) {
+				itemListForAutocomplete.append(",");
+			}
+			Item item = itemList.get(i);
+			itemListForAutocomplete.append("\"");
+			itemListForAutocomplete.append(item.getName());
+			itemListForAutocomplete.append("\"");
+		}
+		return itemListForAutocomplete;
+	}	
+	}
+	
+	
+	
