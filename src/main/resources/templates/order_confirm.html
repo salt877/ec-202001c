@@ -109,7 +109,7 @@
 									<div class="text-center">お名前</div>
 								</td>
 								<td>
- 									<span th:errors="*{destinationName}" style="color:red"></span>
+ 									<div th:errors="*{destinationName}" style="color:red"></div>
  									<input type="text" name="destinationName" th:field="*{destinationName}">
 								</td>
 							</tr>
@@ -118,7 +118,7 @@
 									<div class="text-center">メールアドレス</div>
 								</td>
 								<td>
-									<span th:errors="*{destinationEmail}" style="color:red"></span>
+									<div th:errors="*{destinationEmail}" style="color:red"></div>
 									<input type="text" name="destinationEmail" th:field="*{destinationEmail}">
 								</td>
 							</tr>
@@ -127,8 +127,8 @@
 									<div class="text-center">郵便番号</div>
 								</td>
 								<td>
-									<span th:errors="*{destinationZipcode}" style="color:red"></span>
-									<input type="text" name="destinationZipcode" th:field="*{destinationZipcode}">&nbsp;&nbsp;
+									<div th:errors="*{destinationZipcode}" style="color:red"></div>
+									<input type="text" name="destinationZipcode" th:field="*{destinationZipcode}" placeholder="○○○-○○○○">&nbsp;&nbsp;
 									<button type="button" id="inputZipcode" class="form-control" name="destinationZipcode">住所検索</button>
 								</td>
 							</tr>
@@ -137,8 +137,8 @@
 									<div class="text-center">住所</div>
 								</td>
 								<td>
-									<span th:errors="*{destinationAddress}" style="color:red"></span>
-									<input name="destinationAddress"  th:field="*{destinationAddress}">
+									<div th:errors="*{destinationAddress}" style="color:red"></div>
+									<input size="60" name="destinationAddress"  th:field="*{destinationAddress}" >
 								</td>
 							</tr>
 							<tr>
@@ -146,8 +146,8 @@
 									<div class="text-center">電話番号</div>
 								</td>
 								<td>
-									<span th:errors="*{destinationTel}" style="color:red"></span>
-									<input type="text" name="destinationTel" th:field="*{destinationTel}">
+									<div th:errors="*{destinationTel}" style="color:red"></div>
+									<input type="text" name="destinationTel" th:field="*{destinationTel}" placeholder="○○○-○○○-○○○○">
 								</td>
 							</tr>
 							<tr>
@@ -158,17 +158,17 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-12">
-												<label class="control-label" style="color: red" for="inputPeriod">配達日時を入力してください</label>
+												<label class="control-label" style="color: red" for="inputPeriod">配達日時を選択してください</label>
 											</div>
 											<div class="col-sm-5">
-												<span th:errors="*{deliveryDate}" style="color:red"></span>
+												<div th:errors="*{deliveryDate}" style="color:red"></div>
 												<input type="date" name="deliveryDate" id="name" class="form-control input-sm" />
 											</div>
 
 										</div>
 										<div class="row">
 											<div class="col-sm-12">
-												<span th:errors="*{deliveryTime}" style="color:red"></span>
+												<div th:errors="*{deliveryTime}" style="color:red"></div>
 												<label class="radio-inline">
 												<input type="radio" name="deliveryTime" checked="checked" value="10">10時</label>
 												<label class="radio-inline">
