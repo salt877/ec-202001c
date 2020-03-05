@@ -124,7 +124,7 @@ public class ShowItemListController {
 	 * @param model リクエストスコープ
 	 * @return 商品一覧画面
 	 */
-	@RequestMapping("/LowerPriceM")
+	@RequestMapping("/lower-price-m")
 	public String LowerMsize(Model model) {
 		List<Item> itemList = showItemListService.orderByLowerMsizePrice();
 
@@ -150,7 +150,7 @@ public class ShowItemListController {
 	 * @param model リクエストスコープ
 	 * @return 商品一覧画面
 	 */
-	@RequestMapping("/HigherPriceM")
+	@RequestMapping("/higher-price-m")
 	public String HigherMsize(Model model) {
 		List<Item> itemList = showItemListService.orderByHigherMsizePrice();
 
@@ -176,7 +176,7 @@ public class ShowItemListController {
 	 * @param model リクエストスコープ
 	 * @return 商品一覧画面
 	 */
-	@RequestMapping("/LowerPriceL")
+	@RequestMapping("/lower-price-l")
 	public String LowerLsize(Model model) {
 		List<Item> itemList = showItemListService.orderByLowerLsizePrice();
 
@@ -202,7 +202,7 @@ public class ShowItemListController {
 	 * @param model リクエストスコープ
 	 * @return 商品一覧画面
 	 */
-	@RequestMapping("/HigherPriceL")
+	@RequestMapping("/higher-price-l")
 	public String HigherLsize(Model model) {
 		List<Item> itemList = showItemListService.orderByHigherLsizePrice();
 
