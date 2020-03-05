@@ -15,5 +15,15 @@ span.price {
 }
 /* 合計金額の文字の大きさを変える */
 span#total-price {
-	font-size: 35px;
+	font-size: 25px;
+}
+
+/* listの・を消す */
+li{
+	list-style : none;
+}
+
+#inputZipcode{
+	width:80px;
+	height:30px;
 }

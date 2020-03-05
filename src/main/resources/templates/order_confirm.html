@@ -109,7 +109,7 @@
 									<div class="text-center">お名前</div>
 								</td>
 								<td>
- 									<span th:errors="*{destinationName}" style="color:red"></span>
+ 									<div th:errors="*{destinationName}" style="color:red"></div>
  									<input type="text" name="destinationName" th:field="*{destinationName}">
 								</td>
 							</tr>
@@ -118,7 +118,7 @@
 									<div class="text-center">メールアドレス</div>
 								</td>
 								<td>
-									<span th:errors="*{destinationEmail}" style="color:red"></span>
+									<div th:errors="*{destinationEmail}" style="color:red"></div>
 									<input type="text" name="destinationEmail" th:field="*{destinationEmail}">
 								</td>
 							</tr>
@@ -127,9 +127,9 @@
 									<div class="text-center">郵便番号</div>
 								</td>
 								<td>
-									<span th:errors="*{destinationZipcode}" style="color:red"></span>
-									<input type="text" name="destinationZipcode" th:field="*{destinationZipcode}">&nbsp;&nbsp;
-									<button type="button" id="inputZipcode" class="form-control" name="destinationZipcode">住所検索</button>
+									<div th:errors="*{destinationZipcode}" style="color:red"></div>
+									<input type="text" name="destinationZipcode" th:field="*{destinationZipcode}" placeholder="○○○-○○○○">&nbsp;&nbsp;
+									<button class="zip_button" type="button" id="inputZipcode" name="destinationZipcode">住所検索</button>
 								</td>
 							</tr>
 							<tr>
@@ -137,8 +137,8 @@
 									<div class="text-center">住所</div>
 								</td>
 								<td>
-									<span th:errors="*{destinationAddress}" style="color:red"></span>
-									<input name="destinationAddress"  th:field="*{destinationAddress}">
+									<div th:errors="*{destinationAddress}" style="color:red"></div>
+									<input size="60" name="destinationAddress"  th:field="*{destinationAddress}" >
 								</td>
 							</tr>
 							<tr>
@@ -146,8 +146,8 @@
 									<div class="text-center">電話番号</div>
 								</td>
 								<td>
-									<span th:errors="*{destinationTel}" style="color:red"></span>
-									<input type="text" name="destinationTel" th:field="*{destinationTel}">
+									<div th:errors="*{destinationTel}" style="color:red"></div>
+									<input type="text" name="destinationTel" th:field="*{destinationTel}" placeholder="○○○-○○○-○○○○">
 								</td>
 							</tr>
 							<tr>
@@ -158,17 +158,17 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-12">
-												<label class="control-label" style="color: red" for="inputPeriod">配達日時を入力してください</label>
+												<label class="control-label" style="color: red" for="inputPeriod">配達日時を選択してください</label>
 											</div>
 											<div class="col-sm-5">
-												<span th:errors="*{deliveryDate}" style="color:red"></span>
+												<div th:errors="*{deliveryDate}" style="color:red"></div>
 												<input type="date" name="deliveryDate" id="name" class="form-control input-sm" />
 											</div>
-
 										</div>
+										<br>
 										<div class="row">
 											<div class="col-sm-12">
-												<span th:errors="*{deliveryTime}" style="color:red"></span>
+												<div th:errors="*{deliveryTime}" style="color:red"></div>
 												<label class="radio-inline">
 												<input type="radio" name="deliveryTime" checked="checked" value="10">10時</label>
 												<label class="radio-inline">
@@ -206,12 +206,64 @@
 							<tr>
 								<td class="text-center">
 									<label class="radio-inline">
-									<input type="radio" name="paymentMethod" value="1" checked="checked">クレジットカード</label>
-									<label class="radio-inline"> <input type="radio" name="paymentMethod" value="2">代金引換</label>
+										<input class="pay-method" type="radio" name="paymentMethod" value="1" checked="checked">クレジットカード
+									</label>
+									<label class="radio-inline">
+										<input class="pay-method" type="radio" name="paymentMethod" value="2">代金引換
+									</label>
 								</td>
 							</tr>
 							<tr>
-								
+								<td class="text-left" id="creditForm">
+								<div class="creditForm">
+									<span>クレジットカード番号：</span>
+									<input type="text" name="creditCardNumber"><br>
+									<br>
+									<span>有効期限：</span>
+									<select name="expireMonth">
+										<option value="01">01</option>
+										<option value="02">02</option>
+										<option value="03">03</option>
+										<option value="04">04</option>
+										<option value="05">05</option>
+										<option value="06">06</option>
+										<option value="07">07</option>
+										<option value="08">08</option>
+										<option value="09">09</option>
+										<option value="10">10</option>
+										<option value="11">11</option>
+										<option value="12">12</option>
+									</select>　
+									<select name="expireYear">
+										<option value="2020">2020</option>
+										<option value="2021">2021</option>
+										<option value="2022">2022</option>
+										<option value="2023">2023</option>
+										<option value="2024">2024</option>
+										<option value="2025">2025</option>
+										<option value="2026">2026</option>
+										<option value="2027">2027</option>
+										<option value="2028">2028</option>
+										<option value="2029">2029</option>
+										<option value="2030">2030</option>
+										<option value="2031">2031</option>
+										<option value="2032">2032</option>
+										<option value="2033">2033</option>
+										<option value="2034">2034</option>
+										<option value="2035">2035</option>
+										<option value="2036">2036</option>
+										<option value="2037">2037</option>
+										<option value="2038">2038</option>
+										<option value="2039">2039</option>
+										<option value="2040">2040</option>
+									</select><br>
+									<br>
+									<span>カード名義人：</span>
+									<input type="text" name="cardsName"><br>
+									<br>
+									セキュリティコード：<input type="text" name="securityCode">
+									</div>
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -230,6 +282,7 @@
 	<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+	<script src="../static/js/creditcard_form.js" th:src="@{/js/creditcard_form.js}"></script>
 	<script src="../static/js/search_address.js" th:src="@{/js/search_address_confirm.js}"></script>
 </body>
 </html>

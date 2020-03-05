@@ -38,7 +38,7 @@ public class OrderForm {
 	
 	/** 宛先郵便番号 */
 	@NotBlank(message="入力必須です")
-	//@Pattern(regexp="[0-9]{3}-[0-9]{4}$", message="xxx-xxxxで入力して下さい")
+	@Pattern(regexp="[0-9]{3}-[0-9]{4}$", message="○○○-○○○○で入力して下さい")
 	private String destinationZipcode;
 	
 	/** 宛先住所 */
@@ -47,7 +47,7 @@ public class OrderForm {
 	
 	/** 宛先電話TEL */
 	@NotBlank(message="入力必須です")
-	@Pattern(regexp="[0-9]{3}-[0-9]{3}-[0-9]{4}$", message="xxx-xxx-xxxxで入力して下さい")
+	@Pattern(regexp="[0-9]{3}-[0-9]{3}-[0-9]{4}$", message="○○○-○○○-○○○○で入力して下さい")
 	private String destinationTel;	
 
 	/** 配送希望日 */
