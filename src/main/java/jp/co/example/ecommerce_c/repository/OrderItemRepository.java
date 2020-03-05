@@ -4,6 +4,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -11,6 +12,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import jp.co.example.ecommerce_c.domain.Item;
 import jp.co.example.ecommerce_c.domain.OrderItem;
 
 /**
@@ -26,6 +28,18 @@ public class OrderItemRepository {
 	private NamedParameterJdbcTemplate template;
 
 	private SimpleJdbcInsert insert;
+	
+	private static final RowMapper<OrderItem> ORDERITEM_ROW_MAPPER = (rs, i) -> {
+		OrderItem orderItem = new OrderItem();
+		orderItem.setId(rs.getInt("id"));
+		orderItem.setItemId(rs.getInt("item_id"));
+		orderItem.setOrderId(rs.getInt("order_id"));
+		orderItem.setQuantity(rs.getInt("quantity"));
+		String size = rs.getString("size");
+		char[] charSize = size.toCharArray();
+		orderItem.setSize(charSize[0]);
+		return orderItem;
+	};
 
 	/**
 	 * テーブルにデータ挿入時、挿入したオブジェクトのidを取得する為に必要なメソッド.
@@ -71,5 +85,11 @@ public class OrderItemRepository {
 		String sql = "DELETE FROM order_items WHERE id = :orderItemId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
 		template.update(sql, param);
+	}
+	
+	public OrderItem findByOrderItemId(Integer orderItemId) {
+		String sql = "SELECT id, item_id, order_id, quantity, size FROM order_items WHERE id = :orderItemId;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
+		return template.queryForObject(sql, param, ORDERITEM_ROW_MAPPER);
 	}
 }

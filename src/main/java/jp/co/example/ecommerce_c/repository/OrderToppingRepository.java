@@ -1,16 +1,16 @@
 package jp.co.example.ecommerce_c.repository;
 
-import javax.annotation.PostConstruct;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import jp.co.example.ecommerce_c.domain.OrderItem;
 import jp.co.example.ecommerce_c.domain.OrderTopping;
 
 /**
@@ -22,6 +22,13 @@ import jp.co.example.ecommerce_c.domain.OrderTopping;
 @Repository
 public class OrderToppingRepository {
 
+	private static final RowMapper<OrderTopping> ORDERTOPPING_ROW_MAPPER = (rs, i) -> {
+		OrderTopping orderTopping = new OrderTopping();
+		orderTopping.setId(rs.getInt("id"));
+		orderTopping.setToppingId(rs.getInt("topping_id"));
+		orderTopping.setOrderItemId(rs.getInt("order_item_id"));
+		return orderTopping;
+	};
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 
@@ -45,5 +52,11 @@ public class OrderToppingRepository {
 		String sql = "DELETE FROM order_toppings WHERE order_item_id = :orderItemId";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
 		template.update(sql, param);
+	}
+	
+	public List<OrderTopping> findByOrderItemId(Integer orderItemId){
+		String sql = "SELECT id, topping_id, order_item_id FROM order_toppings WHERE order_item_id = :orderItemId;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
+		return template.query(sql, param, ORDERTOPPING_ROW_MAPPER);
 	}
 }
