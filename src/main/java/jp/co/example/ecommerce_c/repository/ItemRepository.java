@@ -75,7 +75,7 @@ public class ItemRepository {
 	}
 
 	/**
-	 * Mサイズの価格が安い順番で商品一覧を表示します.
+	 * Mサイズの価格が安い順番で取得します.
 	 * 
 	 * @param priceM Mサイズの価格
 	 * @return 商品一覧
@@ -89,7 +89,7 @@ public class ItemRepository {
 	}
 
 	/**
-	 * Mサイズの価格が高い順番で商品一覧を表示します.
+	 * Mサイズの価格が高い順番で取得します.
 	 * 
 	 * @param priceM Mサイズの価格
 	 * @return 商品一覧
@@ -103,7 +103,7 @@ public class ItemRepository {
 	}
 
 	/**
-	 * Lサイズの価格が安い順番で商品一覧を表示します.
+	 * Lサイズの価格が安い順番で取得します.
 	 * 
 	 * @param priceL Lサイズの価格
 	 * @return 商品一覧
@@ -117,7 +117,7 @@ public class ItemRepository {
 	}
 
 	/**
-	 * Lサイズの価格が高い順番で商品一覧を表示します.
+	 * Lサイズの価格が高い順番で取得します.
 	 * 
 	 * @param priceL Lサイズの価格
 	 * @return 商品一覧

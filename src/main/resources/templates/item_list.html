@@ -94,15 +94,6 @@ $(function() {
 			</div>
 		</div>
 		
-		<form method="post" th:action="@{/sort}">
-		<select name="sort">		
-		<option>並び順を変更する</option>
-		<option th:value="1">Mサイズの価格が安い順</option>
-		<option th:value="2">Mサイズの価格が高い順</option>
-		<option th:value="3">Lサイズの価格が安い順</option>
-		<option th:value="4">Lサイズの価格が高い順</option>
-		</select>
-		</form>
 
 		<!-- table -->
 		<div class="row">
@@ -116,8 +107,22 @@ $(function() {
 						th:class="${pageNumber==itemPage.number+1}?active"></a>
 				</div>
 
-				<table class="table table-striped">
-
+				  <div  th:each="pageNumber:${pageNumbers}">
+				    <a th:href="@{/(size=${itemPage.size}, page=${pageNumber})}"
+				        th:text=${pageNumber}
+				        th:class="${pageNumber==itemPage.number+1}?active"></a>
+				</div>
+		<div align="right" th:if="${AllItemList.size()}">
+		<select onChange="location.href=value;">		
+		<option>並び替える</option>
+		<option value="/LowerPriceM" th:href="@{/LowerPriceM}">Mサイズの価格が安い順</option>
+		<option value="/HigherPriceM" th:href="@{/HigherPriceM}">Mサイズの価格が高い順</option>
+		<option value="/LowerPriceL" th:href="@{/LowerPriceL}">Lサイズの価格が安い順</option>
+		<option value="/HigherPriceL" th:href="@{/HigherPriceL}">Lサイズの価格が高い順</option>
+		</select>
+		</div>
+			<table class="table table-striped"> 
+				
 					<tbody>
 						<tr th:each="itemList : ${AllItemList}">
 							<th th:each="item : ${itemList}">
