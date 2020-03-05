@@ -1,11 +1,6 @@
 package jp.co.example.ecommerce_c.form;
 
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.List;
-
-import jp.co.example.ecommerce_c.domain.OrderItem;
-import jp.co.example.ecommerce_c.domain.User;
 
 /**
  * 注文確定時に使用するフォーム.
