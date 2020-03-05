@@ -72,6 +72,7 @@ public class AddItemToCartService {
 		OrderItem OrderItemForGetId = orderItemRepository.save(orderItem);
 		//商品をセット
 		orderItem.setItem(itemRepository.findById(orderItem.getItemId()));
+		
 		//orderToppingのリストを作成する
 		//商品詳細画面でクリックされたチェックボックスのトッピングidをformToppingListに格納する
 		List<Integer> formToppingList = addItemToCartForm.getToppingList();
@@ -100,7 +101,6 @@ public class AddItemToCartService {
 		}else {
 			itemPrice = orderItem.getItem().getPriceL() + orderItem.getSubTotal();
 		}
-		
 		Integer totalPrice = order.getTotalPrice() + itemPrice;
 		order.setTotalPrice(totalPrice);
 		orderRepository.update(order);

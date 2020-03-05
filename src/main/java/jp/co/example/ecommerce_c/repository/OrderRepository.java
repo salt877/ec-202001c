@@ -201,9 +201,9 @@ public class OrderRepository {
 	 * @param status 注文状態(0.注文前 1.未入金 2.入金済 3.発送済 4.配送完了 9.キャンセル)
 	 * @param price　金額
 	 */
-	public void subtractTotalPrice(Integer userId, Integer status, Integer price) {
-		String updateSql = "UPDATE orders SET total_price = total_price - :price WHERE user_id = :userId AND status = :status;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("price", price).addValue("userId", userId).addValue("status", 0);
+	public void subtractTotalPrice(Integer userId, Integer price) {
+		String updateSql = "UPDATE orders SET total_price = total_price - :price WHERE user_id = :userId AND status = 0";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("price", price).addValue("userId", userId);
 		template.update(updateSql, param);
 	}
 }
