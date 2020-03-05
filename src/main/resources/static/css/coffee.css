@@ -22,3 +22,8 @@ span#total-price {
 li{
 	list-style : none;
 }
+
+#inputZipcode{
+	width:80px;
+	height:30px;
+}

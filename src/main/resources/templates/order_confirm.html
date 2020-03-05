@@ -129,7 +129,7 @@
 								<td>
 									<div th:errors="*{destinationZipcode}" style="color:red"></div>
 									<input type="text" name="destinationZipcode" th:field="*{destinationZipcode}" placeholder="○○○-○○○○">&nbsp;&nbsp;
-									<button type="button" id="inputZipcode" class="form-control" name="destinationZipcode">住所検索</button>
+									<button class="zip_button" type="button" id="inputZipcode" name="destinationZipcode">住所検索</button>
 								</td>
 							</tr>
 							<tr>
@@ -164,8 +164,8 @@
 												<div th:errors="*{deliveryDate}" style="color:red"></div>
 												<input type="date" name="deliveryDate" id="name" class="form-control input-sm" />
 											</div>
-
 										</div>
+										<br>
 										<div class="row">
 											<div class="col-sm-12">
 												<div th:errors="*{deliveryTime}" style="color:red"></div>
