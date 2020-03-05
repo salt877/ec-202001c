@@ -101,6 +101,8 @@ public class AddItemToCartService {
 		}else {
 			itemPrice = orderItem.getItem().getPriceL() + orderItem.getSubTotal();
 		}
+		
+		itemPrice = itemPrice * orderItem.getQuantity();
 		Integer totalPrice = order.getTotalPrice() + itemPrice;
 		order.setTotalPrice(totalPrice);
 		orderRepository.update(order);

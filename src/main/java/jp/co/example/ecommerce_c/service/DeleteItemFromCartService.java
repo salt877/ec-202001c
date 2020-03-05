@@ -50,8 +50,8 @@ public class DeleteItemFromCartService {
 			Integer lPrice = itemRepository.findById(itemId).getPriceL();
 			price = lPrice + orderToppingRepository.findByOrderItemId(orderItemId).size() * 300;
 		}
+		price = price * orderItem.getQuantity();
 		
-		System.out.println(price);
 		orderRepository.subtractTotalPrice(1, price);
 		orderItemRepository.deleteItemById(orderItemId);
 		orderToppingRepository.deleteItemById(orderItemId);
