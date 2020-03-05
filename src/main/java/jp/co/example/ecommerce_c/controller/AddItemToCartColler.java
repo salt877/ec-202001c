@@ -16,7 +16,6 @@ import jp.co.example.ecommerce_c.service.AddItemToCartService;
  *
  */
 @Controller
-@RequestMapping("/addItemToCart")
 public class AddItemToCartColler {
 
 	@Autowired
@@ -29,9 +28,9 @@ public class AddItemToCartColler {
 	 * @param loginUser ログイン中のユーザーid
 	 * @return ショッピングカート一覧画面
 	 */
-	@RequestMapping("")
+	@RequestMapping("/add_item_to_cart")
 	public String addItem(AddItemToCartForm addItemToCartForm, @AuthenticationPrincipal LoginUser loginUser) {
 		addItemToCartService.addItem(addItemToCartForm, 1); //userIdに変更する
-		return "redirect:/show-item-in-cart";
+		return "redirect:/show_item_in_cart";
 	}
 }

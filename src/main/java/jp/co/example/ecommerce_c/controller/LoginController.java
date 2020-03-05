@@ -21,7 +21,7 @@ public class LoginController {
 	 * @param error エラー
 	 * @return ログイン画面
 	 */
-	@RequestMapping("/showLogin")
+	@RequestMapping("/show_login")
 	public String showLogin(Model model, @RequestParam(required = false) String error) {
 		System.err.println("login error:" + error);
 		if (error != null) {

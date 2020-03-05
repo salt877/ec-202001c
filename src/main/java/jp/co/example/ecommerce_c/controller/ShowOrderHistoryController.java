@@ -15,13 +15,12 @@ import jp.co.example.ecommerce_c.service.ShowOrderHistoryService;
  *
  */
 @Controller
-@RequestMapping("/show-order-history")
 public class ShowOrderHistoryController {
 
 	@Autowired
 	private ShowOrderHistoryService showOrderHistoryService;
 
-	@RequestMapping("")
+	@RequestMapping("/show_order_history")
 	public String showOrderHistory(Model model) {
 		Integer userId = 1;
 		Order orderHistory = null;

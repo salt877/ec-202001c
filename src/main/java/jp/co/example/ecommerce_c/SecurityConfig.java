@@ -55,9 +55,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //			.anyRequest().authenticated(); // それ以外のパスは認証が必要
 
 		http.formLogin() // ログインに関する設定
-			.loginPage("/showLogin") // ログイン画面に遷移させるパス(ログイン認証が必要なパスを指定してかつログインされていないとこのパスに遷移される)
+			.loginPage("/show_login") // ログイン画面に遷移させるパス(ログイン認証が必要なパスを指定してかつログインされていないとこのパスに遷移される)
 			.loginProcessingUrl("/login") // ログインボタンを押した際に遷移させるパス
-			.failureUrl("/showLogin?error=true") //ログイン失敗に遷移させるパス
+			.failureUrl("/show_login?error=true") //ログイン失敗に遷移させるパス
 			.defaultSuccessUrl("/", false) // 第1引数:デフォルトでログイン成功時に遷移させるパス
 			                                        // 第2引数: true :認証後常に第1引数のパスに遷移 
 			                                        //         false:認証されてなくて一度ログイン画面に飛ばされてもログインしたら指定したURLに遷移

@@ -17,13 +17,12 @@ import jp.co.example.ecommerce_c.service.ShowOrderConfirmService;
  *
  */
 @Controller
-@RequestMapping("/show-order-confirm")
 public class ShowOrderConfirmController {
 	
 	@Autowired
 	private ShowOrderConfirmService showOrderConfirmService;
 
-	@RequestMapping("")
+	@RequestMapping("/show_order_confirm")
 	public String showOrderConfirm(Model model) {
 		Integer userId = 1; //あとでuserIdに変える
 		List<Order> orderList = showOrderConfirmService.showInCart(userId);
