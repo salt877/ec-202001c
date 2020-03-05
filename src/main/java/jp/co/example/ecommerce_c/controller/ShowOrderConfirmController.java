@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_c.domain.Order;
+import jp.co.example.ecommerce_c.domain.User;
 import jp.co.example.ecommerce_c.form.OrderForm;
+import jp.co.example.ecommerce_c.repository.UserRepository;
 import jp.co.example.ecommerce_c.service.ShowOrderConfirmService;
 
 /**
@@ -24,6 +26,9 @@ public class ShowOrderConfirmController {
 	
 	@Autowired
 	private ShowOrderConfirmService showOrderConfirmService;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
@@ -41,6 +46,16 @@ public class ShowOrderConfirmController {
 		List<Order> orderList = showOrderConfirmService.showInCart(userId);
 		Order order = orderList.get(0);
 		model.addAttribute("order", order);
+		
+		User user = userRepository.findByEmail("test@test.co.jp");
+		StringBuilder sb = new StringBuilder(user.getZipcode());
+		sb.insert(3, "-");
+		user.setZipcode(sb.toString());
+		sb = new StringBuilder(user.getTelephone());
+		sb.insert(3, "-");
+		sb.insert(7, "-");
+		user.setTelephone(sb.toString());
+		model.addAttribute("user", user);
 		return "order_confirm";
 	}
 }
