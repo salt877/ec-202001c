@@ -98,7 +98,7 @@
 		</div>
 
 		<!-- table -->
-		<form action="order_finished.html" th:action="@{/order}" method="post">
+		<form th:action="@{/order}" th:object="${orderForm}" method="post">
 			<div class="row">
 				<div class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 					<h3 class="text-center">お届け先情報</h3>
@@ -108,32 +108,47 @@
 								<td>
 									<div class="text-center">お名前</div>
 								</td>
-								<td><input type="text" name="destinationName"></td>
+								<td>
+ 									<span th:errors="*{destinationName}" style="color:red"></span>
+ 									<input type="text" name="destinationName" th:field="*{destinationName}">
+								</td>
 							</tr>
 							<tr>
 								<td>
 									<div class="text-center">メールアドレス</div>
 								</td>
-								<td><input type="text" name="destinationEmail"></td>
+								<td>
+									<span th:errors="*{destinationEmail}" style="color:red"></span>
+									<input type="text" name="destinationEmail" th:field="*{destinationEmail}">
+								</td>
 							</tr>
 							<tr>
 								<td>
 									<div class="text-center">郵便番号</div>
 								</td>
-								<td><input type="text" name="destinationZipcode">&nbsp;&nbsp;
-									<button>住所検索</button></td>
+								<td>
+									<span th:errors="*{destinationZipcode}" style="color:red"></span>
+									<input type="text" name="destinationZipcode" th:field="*{destinationZipcode}">&nbsp;&nbsp;
+									<button>住所検索</button>
+								</td>
 							</tr>
 							<tr>
 								<td>
 									<div class="text-center">住所</div>
 								</td>
-								<td><input type="text" name="destinationAddress"></td>
+								<td>
+									<span th:errors="*{destinationAddress}" style="color:red"></span>
+									<input type="text" name="destinationAddress"  th:field="*{destinationAddress}">
+								</td>
 							</tr>
 							<tr>
 								<td>
 									<div class="text-center">電話番号</div>
 								</td>
-								<td><input type="text" name="destinationTel"></td>
+								<td>
+									<span th:errors="*{destinationTel}" style="color:red"></span>
+									<input type="text" name="destinationTel" th:field="*{destinationTel}">
+								</td>
 							</tr>
 							<tr>
 								<td>
@@ -146,12 +161,14 @@
 												<label class="control-label" style="color: red" for="inputPeriod">配達日時を入力してください</label>
 											</div>
 											<div class="col-sm-5">
+												<span th:errors="*{deliveryDate}" style="color:red"></span>
 												<input type="date" name="deliveryDate" id="name" class="form-control input-sm" />
 											</div>
 
 										</div>
 										<div class="row">
 											<div class="col-sm-12">
+												<span th:errors="*{deliveryTime}" style="color:red"></span>
 												<label class="radio-inline">
 												<input type="radio" name="deliveryTime" checked="checked" value="10">10時</label>
 												<label class="radio-inline">
