@@ -57,13 +57,22 @@
 									<div class="text-center">商品名</div>
 								</th>
 								<th>
-									<div class="text-center">サイズ、価格(税抜)、数量</div>
+									<div class="text-center">サイズ</div>
 								</th>
 								<th>
-									<div class="text-center">トッピング、価格(税抜)</div>
+									<div class="text-center">価格(税抜)</div>
 								</th>
 								<th>
-									<div class="text-center">小計</div>
+									<div class="text-center">数量</div>
+								</th>
+								<th>
+									<div class="text-center">トッピング：価格(税抜)</div>
+								</th>
+								<th>
+									<div class="text-center">小計(税込)</div>
+								</th>
+								<th>
+									<div class="text-center">注文状況</div>
 								</th>
 							</tr>
 						</tbody>
@@ -79,19 +88,32 @@
 									</div>
 								</td>
 								<td class="text-center">
-									<span class="price" th:text="${orderItem.size}">&nbsp;Ｌ</span>&nbsp;&nbsp;、
+									<span class="price" th:text="${orderItem.size}">&nbsp;Ｌ</span>&nbsp;&nbsp;
+								</td>
+								<td class="text-center">
 									<span th:switch="${orderItem.size}">
-									<span th:case="M" th:text="${orderItem.item.priceM} + '円、'"></span>
-									<span th:case="L" th:text="${orderItem.item.priceL} + '円、'"></span></span>&nbsp;&nbsp;
+									<span th:case="M" th:text="${orderItem.item.priceM} + '円'"></span>
+									<span th:case="L" th:text="${orderItem.item.priceL} + '円'"></span></span>&nbsp;&nbsp;
+								</td>
+								<td class="text-center">
 									<span th:text="${orderItem.quantity} + '個'">1個</span>
 								</td>
 								<td>
-									<ul class="text-center" th:each="orderTopping : ${orderItem.list}">
-										<li class="text-left" th:text="${orderTopping.topping.name} + '　' + ${orderTopping.topping.priceM} + '円'">ピーマン300円</li>
+									<ul style="list-style: none;" th:each="orderTopping : ${orderItem.list}">
+										<li th:text="${orderTopping.topping.name} + '：' + ${orderTopping.topping.priceM} + '円'">ピーマン300円</li>
 									</ul>
 								</td>
 								<td>
-									<div class="text-center" th:text="${orderItem.quantity} * ${orderItem.item.priceM} + ${orderItem.getSubTotal()} + '円'">3,280円</div>
+									<div class="text-center" th:text="${#numbers.formatInteger((orderItem.quantity * orderItem.item.priceM + orderItem.getSubTotal()) * 1.1, 3, 'COMMA')} + '円'">3,280円</div>
+								</td>
+								<td class="text-center">
+									<span th:switch="${order.status}">
+									<span th:case="1" th:text="未入金"></span>
+									<span th:case="2" th:text="入金済み"></span>
+									<span th:case="3" th:text="発送済み"></span>
+									<span th:case="4" th:text="配送完了"></span>
+									<span th:case="9" th:text="キャンセル"></span>
+									</span>
 								</td>
 							</tr>
 						</tbody>
