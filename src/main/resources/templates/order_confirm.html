@@ -206,12 +206,16 @@
 							<tr>
 								<td class="text-center">
 									<label class="radio-inline">
-									<input id="payMethod" type="radio" name="paymentMethod" value="1" checked="checked">クレジットカード</label>
-									<label class="radio-inline"> <input id="payMethod" type="radio" name="paymentMethod" value="2">代金引換</label>
+										<input class="pay-method" type="radio" name="paymentMethod" value="1" checked="checked">クレジットカード
+									</label>
+									<label class="radio-inline">
+										<input class="pay-method" type="radio" name="paymentMethod" value="2">代金引換
+									</label>
 								</td>
 							</tr>
 							<tr>
 								<td class="text-left" id="creditForm">
+								<div class="creditForm">
 									<span>クレジットカード番号：</span>
 									<input type="text" name="creditCardNumber"><br>
 									<br>
@@ -258,6 +262,7 @@
 									<input type="text" name="cardsName"><br>
 									<br>
 									セキュリティコード：<input type="text" name="securityCode">
+									</div>
 								</td>
 							</tr>
 						</tbody>
@@ -277,7 +282,7 @@
 	<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
-	<script src="../static/js/search_address.js" th:src="@{/js/search_address_confirm.js}"></script>
 	<script src="../static/js/creditcard_form.js" th:src="@{/js/creditcard_form.js}"></script>
+	<script src="../static/js/search_address.js" th:src="@{/js/search_address_confirm.js}"></script>
 </body>
 </html>
