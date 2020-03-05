@@ -78,7 +78,7 @@ public class OrderService {
 			}
 		}
 		order.setTotalPrice(totalPrice);
-	
+		order.setUserId(1); //userIdあとで帰る
 		//ordersテーブルの情報を更新する
 		orderRepository.updateOrder(order);
 	}	

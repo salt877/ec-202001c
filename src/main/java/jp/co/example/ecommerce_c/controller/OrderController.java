@@ -27,6 +27,11 @@ public class OrderController {
 	@Autowired
 	private ShowOrderConfirmController showOrderConfirmController;
 	
+	@Autowired
+	public OrderForm setUpForm() {
+		return new OrderForm();
+	}
+	
 	/**
 	 * 注文確定を行う.
 	 * 
