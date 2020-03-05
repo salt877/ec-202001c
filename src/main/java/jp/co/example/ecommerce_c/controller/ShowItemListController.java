@@ -86,23 +86,34 @@ public class ShowItemListController {
 	
 	@RequestMapping("/paging")
 	public String paging(Integer page,Model model) {
-		
-		List<Item> itemList = showItemListService.showList();
-		//OFFSETの値が0,9,18,27など9で割り切れる時にページ遷移	
-		if (itemList.size() % 9 == 0) {
-			List<Item> itemList2 = showItemListService.paging(page);
-			
-			List<List<Item>> AllItemList = new ArrayList<>();
-			List<Item> threeItem = new ArrayList<>();
-			for (int i = 1; i <= itemList2.size(); i++) {
-				threeItem.add(itemList2.get(i - 1));
-				if (i % 3 == 0 || i == itemList2.size()) {
-					AllItemList.add(threeItem);
-					threeItem = new ArrayList<>();
-				}
-				model.addAttribute("AllItemList", AllItemList);
+		System.out.println(page);
+		List<Item> itemList = showItemListService.paging(page);
+//		//OFFSETの値が0,9,18,27など9で割り切れる時にページ遷移	
+		List<List<Item>> AllItemList = new ArrayList<>();
+		List<Item> threeItem = new ArrayList<>();
+		for (int i = 1; i <= itemList.size(); i++) {
+			threeItem.add(itemList.get(i - 1));
+			if (i % 3 == 0 || i == itemList.size()) {
+				AllItemList.add(threeItem);
+				threeItem = new ArrayList<>();
 			}
-	}
+			model.addAttribute("AllItemList", AllItemList);
+		}
+		
+//		if (itemList.size() % 9 == 0) {
+//			List<Item> itemList2 = showItemListService.paging(page);
+//			
+//			List<List<Item>> AllItemList = new ArrayList<>();
+//			List<Item> threeItem = new ArrayList<>();
+//			for (int i = 1; i <= itemList2.size(); i++) {
+//				threeItem.add(itemList2.get(i - 1));
+//				if (i % 3 == 0 || i == itemList2.size()) {
+//					AllItemList.add(threeItem);
+//					threeItem = new ArrayList<>();
+//				}
+//				model.addAttribute("AllItemList", AllItemList);
+//			}
+//	}
 		return "item_list";
 	}
 	

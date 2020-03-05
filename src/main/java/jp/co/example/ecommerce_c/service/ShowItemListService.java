@@ -100,7 +100,7 @@ public class ShowItemListService {
 //		}
 //	}
 	public List<Item> paging(Integer page){
-		System.out.println("page= "+page);
+		//ystem.out.println("page= "+page);
 		return itemRepository.showPage(page);
 	}
 	

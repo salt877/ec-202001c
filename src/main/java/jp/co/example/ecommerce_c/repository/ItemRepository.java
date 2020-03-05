@@ -59,13 +59,13 @@ public class ItemRepository {
 	 */
 	public List<Item> showPage(Integer page){
 		
-		List<Item> itemList = findAll();
+		//List<Item> itemList = findAll();
 		//OFFSETの値が0,9,18,27など9で割り切れる時にページ遷移	
 			String sql = SQL + "LIMIT 9 OFFSET " + page;
 			List<Item> itemList2 = template.query(sql, ITEM_ROW_MAPPER);
-			System.out.println("--itemList2はここから------------------------");			
-			System.out.println(itemList2);
-			System.out.println("----------------------------");
+			//System.out.println("--itemList2はここから------------------------");			
+			//System.out.println(itemList2);
+			//System.out.println("----------------------------");
 			return itemList2;
 		}
 
