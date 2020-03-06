@@ -65,5 +65,15 @@ public class UserRepository {
 		}
 		return userList.get(0);
 	}
+	
+	/**
+	 * ユーザー情報を全件取得sルウ
+	 * 
+	 * @return 全てのユーザー情報
+	 */
+	public List<User> findAll(){
+		String sql = "SELECT id,name,email,password,zipcode,address,telephone from users ORDER BY id";
+		return template.query(sql, USER_ROW_MAPPER);
+	}
 
 }
