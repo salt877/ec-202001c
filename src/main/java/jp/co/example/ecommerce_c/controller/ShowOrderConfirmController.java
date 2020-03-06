@@ -48,13 +48,6 @@ public class ShowOrderConfirmController {
 		model.addAttribute("order", order);
 		
 		User user = userRepository.findByEmail("test@test.co.jp");
-		StringBuilder sb = new StringBuilder(user.getZipcode());
-		sb.insert(3, "-");
-		user.setZipcode(sb.toString());
-		sb = new StringBuilder(user.getTelephone());
-		sb.insert(3, "-");
-		sb.insert(7, "-");
-		user.setTelephone(sb.toString());
 		model.addAttribute("user", user);
 		return "order_confirm";
 	}
