@@ -37,9 +37,8 @@ public class ItemRepository {
 
 	@Autowired
 	private NamedParameterJdbcTemplate template;
-	
+
 	private static final String SQL = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ";
-	
 
 	/**
 	 * 商品一覧情報をID順で取得します.
@@ -51,23 +50,19 @@ public class ItemRepository {
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 		return itemList;
 	}
-	
+
 	/**
 	 * ページング機能を実装します.
+	 * 
 	 * @param pageNumber
 	 * @return
 	 */
-	public List<Item> showPage(Integer page){
-		
-		//List<Item> itemList = findAll();
-		//OFFSETの値が0,9,18,27など9で割り切れる時にページ遷移	
-			String sql = SQL + "LIMIT 9 OFFSET " + page;
-			List<Item> itemList2 = template.query(sql, ITEM_ROW_MAPPER);
-			//System.out.println("--itemList2はここから------------------------");			
-			//System.out.println(itemList2);
-			//System.out.println("----------------------------");
-			return itemList2;
-		}
+	public List<Item> showPage(Integer page) {
+		// OFFSETの値が0,9,18,27など9で割り切れる時にページ遷移
+		String sql = SQL + "LIMIT 9 OFFSET " + page;
+		List<Item> itemList2 = template.query(sql, ITEM_ROW_MAPPER);
+		return itemList2;
+	}
 
 	/**
 	 * 商品名から商品を(曖昧)検索します.
@@ -76,7 +71,7 @@ public class ItemRepository {
 	 * @return 検索された商品の一覧
 	 */
 	public List<Item> findByItemName(String name) {
-		String sql = SQL + "WHERE name LIKE :name ORDER BY id DESC";
+		String sql = SQL + "WHERE name LIKE :name ORDER BY id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 		return itemList;
