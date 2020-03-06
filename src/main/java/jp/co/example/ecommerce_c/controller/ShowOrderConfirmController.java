@@ -3,11 +3,13 @@ package jp.co.example.ecommerce_c.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jp.co.example.ecommerce_c.domain.LoginUser;
 import jp.co.example.ecommerce_c.domain.Order;
 import jp.co.example.ecommerce_c.domain.User;
 import jp.co.example.ecommerce_c.form.OrderForm;
@@ -42,19 +44,19 @@ public class ShowOrderConfirmController {
 	
 	@RequestMapping("")
 	public String showOrderConfirm(Model model) {
-		Integer userId = 1; //あとでuserIdに変える
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user1 = new User();
+		if(principal instanceof LoginUser) {
+			user1 = ((LoginUser)principal).getUser();
+		}else {
+			String error = principal.toString(); //あってるかわからない
+		}
+		Integer userId = user1.getId();
 		List<Order> orderList = showOrderConfirmService.showInCart(userId);
 		Order order = orderList.get(0);
 		model.addAttribute("order", order);
 		
 		User user = userRepository.findByEmail("test@test.co.jp");
-		StringBuilder sb = new StringBuilder(user.getZipcode());
-		sb.insert(3, "-");
-		user.setZipcode(sb.toString());
-		sb = new StringBuilder(user.getTelephone());
-		sb.insert(3, "-");
-		sb.insert(7, "-");
-		user.setTelephone(sb.toString());
 		model.addAttribute("user", user);
 		return "order_confirm";
 	}
