@@ -40,8 +40,8 @@ public class AddItemToCartColler {
 		}else {
 			String error = principal.toString(); //あってるかわからない
 		}
-		System.out.println(user);
-		addItemToCartService.addItem(addItemToCartForm, 1); //userIdに変更する
+		Integer userId = user.getId();
+		addItemToCartService.addItem(addItemToCartForm, userId); //userIdに変更する
 		return "redirect:/show-item-in-cart";
 	}
 }
