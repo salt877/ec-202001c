@@ -87,8 +87,8 @@
 								<span th:text="${orderItem.quantity} + '個'">1個</span>
 							</td>
 							<td>
-								<ul th:each="orderTopping : ${orderItem.list}">
-									<li th:text="${orderTopping.topping.name} + '　' + ${orderTopping.topping.priceM} + '円'">ピーマン300円</li>
+								<ul style="list-style: none;" th:each="orderTopping : ${orderItem.list}">
+									<li th:text="${orderTopping.topping.name} + '：' + ${orderTopping.topping.priceM} + '円'">ピーマン300円</li>
 								</ul>
 							</td>
 							<td>

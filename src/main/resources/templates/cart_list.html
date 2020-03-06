@@ -92,11 +92,11 @@
 									<span th:text="${orderItem.quantity} + '個'">1個</span>
 								</td>
 								<td>
-									<ul th:each="orderTopping : ${orderItem.list}">
+									<ul style="list-style: none;" th:each="orderTopping : ${orderItem.list}">
 										<li>
 											<span th:switch="${orderItem.size}">
-											<span th:case="M" th:text="${orderTopping.topping.name} + '　' + ${orderTopping.topping.priceM} + '円'"></span>
-											<span th:case="L" th:text="${orderTopping.topping.name} + '　' + ${orderTopping.topping.priceL} + '円'"></span>
+											<span th:case="M" th:text="${orderTopping.topping.name} + '：' + ${orderTopping.topping.priceM} + '円'"></span>
+											<span th:case="L" th:text="${orderTopping.topping.name} + '：' + ${orderTopping.topping.priceL} + '円'"></span>
 											</span>
 										</li>
 									</ul>
