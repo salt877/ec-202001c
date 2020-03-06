@@ -40,21 +40,21 @@ public class ShowItemListController {
 	@RequestMapping("/")
 	public String showItemList(Model model, Integer page, String searchName) {
 
-		//itemList =　商品数
-		List<Item> itemList = showItemListService.showList();
-
-		// 一覧を揃える
+		//↓ページング機能により使わなくなりました
+		//List<Item> itemList = showItemListService.showList();
+		
+		List<Item> itemList = showItemListService.paging(page);
 		List<List<Item>> AllItemList = new ArrayList<>();
 		List<Item> threeItem = new ArrayList<>();
-
 		for (int i = 1; i <= itemList.size(); i++) {
 			threeItem.add(itemList.get(i - 1));
 			if (i % 3 == 0 || i == itemList.size()) {
 				AllItemList.add(threeItem);
 				threeItem = new ArrayList<>();
 			}
-			model.addAttribute("AllItemList", AllItemList);	
+			model.addAttribute("AllItemList", AllItemList);
 		}
+	
 		// 商品名検索機能
 		if (searchName != null) {
 			itemList = showItemListService.searchByItemName(searchName);
@@ -65,7 +65,7 @@ public class ShowItemListController {
 			for (int i = 1; i <= itemList.size(); i++) {
 				threeItem.add(itemList.get(i - 1));
 				if (i % 3 == 0 || i == itemList.size()) {
-					AllItemList.add(threeItem);
+					searchItemList.add(threeItem);
 					threeItem = new ArrayList<>();
 				}
 			}
@@ -100,20 +100,6 @@ public class ShowItemListController {
 			model.addAttribute("AllItemList", AllItemList);
 		}
 		
-//		if (itemList.size() % 9 == 0) {
-//			List<Item> itemList2 = showItemListService.paging(page);
-//			
-//			List<List<Item>> AllItemList = new ArrayList<>();
-//			List<Item> threeItem = new ArrayList<>();
-//			for (int i = 1; i <= itemList2.size(); i++) {
-//				threeItem.add(itemList2.get(i - 1));
-//				if (i % 3 == 0 || i == itemList2.size()) {
-//					AllItemList.add(threeItem);
-//					threeItem = new ArrayList<>();
-//				}
-//				model.addAttribute("AllItemList", AllItemList);
-//			}
-//	}
 		return "item_list";
 	}
 	

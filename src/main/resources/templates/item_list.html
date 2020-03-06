@@ -106,7 +106,7 @@ $(function() {
 						th:text=${pageNumber}
 						th:class="${pageNumber==itemPage.number + 1 } ? active"></a>
 				</div>  -->
-					<a th:href="@{'/paging?page=' + 0}">1ページ目</a>				
+					<a th:href="@{'/?page=' + 0}">1ページ目	</a>		
 					<a th:href="@{'/paging?page=' + 9}">2ページ目</a>
 		<div align="right" th:if="${AllItemList.size()}">
 		<select onChange="location.href=value;">		
