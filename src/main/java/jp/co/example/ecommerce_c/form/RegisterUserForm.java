@@ -2,6 +2,8 @@ package jp.co.example.ecommerce_c.form;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * ユーザ情報登録時に使用するフォーム.
@@ -22,12 +24,15 @@ public class RegisterUserForm {
 	@NotBlank(message = "パスワードを入力して下さい")
 	private String password;
 	/** 郵便番号 */
+	@Size(min=7, max=7, message="7桁で入力して下さい")
+	@Pattern(regexp="[0-9]+", message="ハイフンなしで入力して下さい")
 	private String zipcode;
 	/** 住所 */
 	@NotBlank(message = "住所を入力して下さい")
 	private String address;
 	/** 電話番号 */
-	@NotBlank(message = "電話番号を入力して下さい")
+	@Size(min=10, max=11, message="10桁以上11桁以下で入力して下さい")
+	@Pattern(regexp="[0-9]+", message="ハイフンなしで入力してください")
 	private String telephone;
 	/** 確認用パスワード */
 	@NotBlank(message = "確認用パスワードを入力して下さい")

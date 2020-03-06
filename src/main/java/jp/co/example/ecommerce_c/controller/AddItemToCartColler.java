@@ -2,10 +2,12 @@ package jp.co.example.ecommerce_c.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_c.domain.LoginUser;
+import jp.co.example.ecommerce_c.domain.User;
 import jp.co.example.ecommerce_c.form.AddItemToCartForm;
 import jp.co.example.ecommerce_c.service.AddItemToCartService;
 
@@ -31,8 +33,15 @@ public class AddItemToCartColler {
 	 */
 	@RequestMapping("")
 	public String addItem(AddItemToCartForm addItemToCartForm, @AuthenticationPrincipal LoginUser loginUser) {
-		
-		addItemToCartService.addItem(addItemToCartForm, 1); //userIdに変更する
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = new User();
+		if(principal instanceof LoginUser) {
+			user = ((LoginUser)principal).getUser();
+		}else {
+			String error = principal.toString(); //あってるかわからない
+		}
+		Integer userId = user.getId();
+		addItemToCartService.addItem(addItemToCartForm, userId); //userIdに変更する
 		return "redirect:/show-item-in-cart";
 	}
 }
