@@ -31,6 +31,7 @@ public class AddItemToCartColler {
 	 */
 	@RequestMapping("")
 	public String addItem(AddItemToCartForm addItemToCartForm, @AuthenticationPrincipal LoginUser loginUser) {
+		
 		addItemToCartService.addItem(addItemToCartForm, 1); //userIdに変更する
 		return "redirect:/show-item-in-cart";
 	}
