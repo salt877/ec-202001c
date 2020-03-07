@@ -15,6 +15,7 @@ import jp.co.example.ecommerce_c.repository.ItemRepository;
 
 /**
  * 商品一覧画面を操作するサービス.
+ * 
  * @author rinashioda
  *
  */
@@ -48,29 +49,35 @@ public class ShowItemListService {
 	/**
 	 * ページング機能.
 	 * 
-	 * @param page     表示させたいページ数
-	 * @param size     1ページに表示させる商品数
-	 * @param itemList 絞り込み対象リスト
+	 * @param page 表示させたいページ数
+	 * @param size 1ページに表示させる商品数
+	 * @return
 	 * @return 1ページに表示されるサイズ分の商品一覧情報
 	 */
-//	public Page<List<Item>> showListPaging(int page, int size, List<List<Item>> AllItemList) {
-//
-//		page--;
-//
-//		int startItemCount = page * size;
-//
-//		List<List<Item>> list;
-//
-//		if (AllItemList.size() < startItemCount) {
-//			list = Collections.emptyList();
-//		} else {
-//			int toIndex = Math.min(startItemCount + size, AllItemList.size());
-//			list = AllItemList.subList(startItemCount, toIndex);
-//		}
-//
-//		Page<List<Item>> itemPage = new PageImpl<List<Item>>(list, PageRequest.of(page, size), AllItemList.size());
-//		return itemPage;
-//	}
+	public Page<List<Item>> showItemListPaging(int page, int size, List<List<Item>> itemList) {
+		// 表示させたいページ数を-1しないと動作しない
+		page--;
+		// どの商品から表示させるかというカウント値
+		int startItemCount = page * size;
+		// 絞り込んだ後の商品リストが入る変数
+		List<List<Item>> list;
+
+		if (itemList.size() < startItemCount) {
+			// (ありえないが)もし表示させたい商品カウントがサイズよりも大きい場合は空のリストを返す
+			list = Collections.emptyList();
+		} else {
+			// 該当ページに表示させる商品一覧を作成
+			int toIndex = Math.min(startItemCount + size, itemList.size());
+			list = itemList.subList(startItemCount, toIndex);
+		}
+		// 上記で作成した該当ページに表示させる従業員一覧をページングできる形に変換して返す
+		Page<List<Item>> itemPage = new PageImpl<List<Item>>(list, PageRequest.of(page, size), itemList.size());
+		return itemPage;
+	}
+
+	public List<Item> paging(Integer page) {
+		return itemRepository.showPage(page);
+	}
 
 	/**
 	 * オートコンプリート機能.

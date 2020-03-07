@@ -52,7 +52,13 @@
 								<div class="text-center">商品名</div>
 							</th>
 							<th>
-								<div class="text-center">サイズ、価格(税抜)、数量</div>
+								<div class="text-center">サイズ</div>
+							</th>
+							<th>
+								<div class="text-center">価格(税抜)</div>
+							</th>
+							<th>
+								<div class="text-center">数量</div>
 							</th>
 							<th>
 								<div class="text-center">トッピング、価格(税抜)</div>
@@ -63,20 +69,26 @@
 						</tr>
 						<tr th:each="orderItem : ${order.orderItemList}">
 							<td>
-								<div class="center">
-									<img src="../static/img_coffee/1.jpg" class="img-responsive img-rounded" width="100" height="300" th:src="${'/img_coffee/' + orderItem.item.imagePath}"><br>
+								<div class="text-center">
+									<img src="../static/img_coffee/1.jpg" class="img-responsive img-rounded blockcenter" width="100" height="300" th:src="${'/img_coffee/' + orderItem.item.imagePath}"><br>
 									<span th:text="${orderItem.item.name}">じゃがバターベーコン</span>
 								</div>
 							</td>
-							<td><span class="price" th:text="${orderItem.size}">&nbsp;Ｌ</span>&nbsp;&nbsp;
+							<td class="text-center">
+								<span class="price" th:text="${orderItem.size}">&nbsp;Ｌ</span>&nbsp;&nbsp;
+							</td>
+							<td class="text-center">
 								<span th:switch="${orderItem.size}">
-								<span th:case="M" th:text="${orderItem.item.priceM}"></span>
-								<span th:case="L" th:text="${orderItem.item.priceL}"></span></span>&nbsp;&nbsp;
+								<span th:case="M" th:text="${orderItem.item.priceM} + '円'"></span>
+								<span th:case="L" th:text="${orderItem.item.priceL} + '円'"></span>
+								</span>&nbsp;&nbsp;
+							</td>
+							<td class="text-center">
 								<span th:text="${orderItem.quantity} + '個'">1個</span>
 							</td>
 							<td>
-								<ul th:each="orderTopping : ${orderItem.list}">
-									<li th:text="${orderTopping.topping.name} + '　' + ${orderTopping.topping.priceM} + '円'">ピーマン300円</li>
+								<ul style="list-style: none;" th:each="orderTopping : ${orderItem.list}">
+									<li th:text="${orderTopping.topping.name} + '：' + ${orderTopping.topping.priceM} + '円'">ピーマン300円</li>
 								</ul>
 							</td>
 							<td>
@@ -91,14 +103,13 @@
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 				<div class="form-group text-center">
-					<span id="total-price" th:text="'消費税：' + ${#numbers.formatInteger(order.totalPrice * 0.1, 3, 'COMMA')} + '円'">消費税：8,000円</span><br>
 					<span id="total-price" th:text="'ご注文金額合計：' + ${#numbers.formatInteger(order.totalPrice * 1.1, 3, 'COMMA')} + '円（税込）'">ご注文金額合計：38,000円(税込)</span>
 				</div>
 			</div>
 		</div>
 
 		<!-- table -->
-		<form action="order_finished.html" th:action="@{/order}" method="post">
+		<form th:action="@{/order}" th:object="${orderForm}" method="post">
 			<div class="row">
 				<div class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 					<h3 class="text-center">お届け先情報</h3>
@@ -108,32 +119,47 @@
 								<td>
 									<div class="text-center">お名前</div>
 								</td>
-								<td><input type="text" name="destinationName"></td>
+								<td>
+ 									<div th:errors="*{destinationName}" style="color:red"></div>
+ 									<input type="text" name="destinationName" th:value="${user.name}">
+								</td>
 							</tr>
 							<tr>
 								<td>
 									<div class="text-center">メールアドレス</div>
 								</td>
-								<td><input type="text" name="destinationEmail"></td>
+								<td>
+									<div th:errors="*{destinationEmail}" style="color:red"></div>
+									<input type="text" name="destinationEmail" th:value="${user.email}">
+								</td>
 							</tr>
 							<tr>
 								<td>
 									<div class="text-center">郵便番号</div>
 								</td>
-								<td><input type="text" name="destinationZipcode">&nbsp;&nbsp;
-									<button>住所検索</button></td>
+								<td>
+									<div th:errors="*{destinationZipcode}" style="color:red"></div>
+									<input type="text" name="destinationZipcode" th:value="${user.zipcode}" placeholder="○○○-○○○○">&nbsp;&nbsp;
+									<button class="zip_button" type="button" id="inputZipcode" name="destinationZipcode">住所検索</button>
+								</td>
 							</tr>
 							<tr>
 								<td>
 									<div class="text-center">住所</div>
 								</td>
-								<td><input type="text" name="destinationAddress"></td>
+								<td>
+									<div th:errors="*{destinationAddress}" style="color:red"></div>
+									<input size="60" name="destinationAddress"  th:value="${user.address}" >
+								</td>
 							</tr>
 							<tr>
 								<td>
 									<div class="text-center">電話番号</div>
 								</td>
-								<td><input type="text" name="destinationTel"></td>
+								<td>
+									<div th:errors="*{destinationTel}" style="color:red"></div>
+									<input type="text" name="destinationTel" th:value="${user.telephone}" placeholder="○○○-○○○-○○○○">
+								</td>
 							</tr>
 							<tr>
 								<td>
@@ -143,15 +169,17 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-12">
-												<label class="control-label" style="color: red" for="inputPeriod">配達日時を入力してください</label>
+												<label class="control-label" style="color: red" for="inputPeriod">配達日時を選択してください</label>
 											</div>
 											<div class="col-sm-5">
+												<div th:errors="*{deliveryDate}" style="color:red"></div>
 												<input type="date" name="deliveryDate" id="name" class="form-control input-sm" />
 											</div>
-
 										</div>
+										<br>
 										<div class="row">
 											<div class="col-sm-12">
+												<div th:errors="*{deliveryTime}" style="color:red"></div>
 												<label class="radio-inline">
 												<input type="radio" name="deliveryTime" checked="checked" value="10">10時</label>
 												<label class="radio-inline">
@@ -187,29 +215,64 @@
 					<table class="table table-striped">
 						<tbody>
 							<tr>
-								<td>
-									<div class="text-center">代金引換</div>
-								</td>
-								<td>
-									<div class="row">
-										<div class="col-sm-12">
-											<label class="radio-inline"> <input type="radio" name="paymentMethod" checked="checked" value="2"> 代金引換
-											</label>
-										</div>
-									</div>
+								<td class="text-center">
+									<label class="radio-inline">
+										<input class="pay-method" type="radio" name="paymentMethod" value="1" checked="checked">クレジットカード
+									</label>
+									<label class="radio-inline">
+										<input class="pay-method" type="radio" name="paymentMethod" value="2">代金引換
+									</label>
 								</td>
 							</tr>
 							<tr>
-								<td>
-									<div class="text-center">クレジットカード決済</div>
-								</td>
-								<td align="center">
-									<div class="row">
-										<div class="col-sm-12">
-											<label class="radio-inline">
-											<input type="radio" name="paymentMethod" checked="checked" value="1">クレジットカード</label><br>
-											<br>
-										</div>
+								<td class="text-left" id="creditForm">
+								<div class="creditForm">
+									<span>クレジットカード番号：</span>
+									<input type="text" name="creditCardNumber"><br>
+									<br>
+									<span>有効期限：</span>
+									<select name="expireMonth">
+										<option value="01">01</option>
+										<option value="02">02</option>
+										<option value="03">03</option>
+										<option value="04">04</option>
+										<option value="05">05</option>
+										<option value="06">06</option>
+										<option value="07">07</option>
+										<option value="08">08</option>
+										<option value="09">09</option>
+										<option value="10">10</option>
+										<option value="11">11</option>
+										<option value="12">12</option>
+									</select>　
+									<select name="expireYear">
+										<option value="2020">2020</option>
+										<option value="2021">2021</option>
+										<option value="2022">2022</option>
+										<option value="2023">2023</option>
+										<option value="2024">2024</option>
+										<option value="2025">2025</option>
+										<option value="2026">2026</option>
+										<option value="2027">2027</option>
+										<option value="2028">2028</option>
+										<option value="2029">2029</option>
+										<option value="2030">2030</option>
+										<option value="2031">2031</option>
+										<option value="2032">2032</option>
+										<option value="2033">2033</option>
+										<option value="2034">2034</option>
+										<option value="2035">2035</option>
+										<option value="2036">2036</option>
+										<option value="2037">2037</option>
+										<option value="2038">2038</option>
+										<option value="2039">2039</option>
+										<option value="2040">2040</option>
+									</select><br>
+									<br>
+									<span>カード名義人：</span>
+									<input type="text" name="cardsName"><br>
+									<br>
+									セキュリティコード：<input type="text" name="securityCode">
 									</div>
 								</td>
 							</tr>
@@ -227,7 +290,10 @@
 		</form>
 	</div>
 	<!-- end container -->
+	<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+	<script src="../static/js/creditcard_form.js" th:src="@{/js/creditcard_form.js}"></script>
+	<script src="../static/js/search_address.js" th:src="@{/js/search_address_confirm.js}"></script>
 </body>
 </html>

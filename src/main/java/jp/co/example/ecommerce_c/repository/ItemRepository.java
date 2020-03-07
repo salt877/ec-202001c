@@ -38,15 +38,30 @@ public class ItemRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 
+	private static final String SQL = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ";
+
 	/**
 	 * 商品一覧情報をID順で取得します.
 	 * 
 	 * @return 商品一覧
 	 */
 	public List<Item> findAll() {
-		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY id";
+		String sql = SQL + "ORDER BY id";
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 		return itemList;
+	}
+
+	/**
+	 * ページング機能を実装します.
+	 * 
+	 * @param pageNumber
+	 * @return
+	 */
+	public List<Item> showPage(Integer page) {
+		// OFFSETの値が0,9,18,27など9で割り切れる時にページ遷移
+		String sql = SQL + "LIMIT 9 OFFSET " + page;
+		List<Item> itemList2 = template.query(sql, ITEM_ROW_MAPPER);
+		return itemList2;
 	}
 
 	/**
@@ -56,7 +71,7 @@ public class ItemRepository {
 	 * @return 検索された商品の一覧
 	 */
 	public List<Item> findByItemName(String name) {
-		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name LIKE :name ORDER BY id DESC";
+		String sql = SQL + "WHERE name LIKE :name ORDER BY id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 		return itemList;
@@ -69,7 +84,7 @@ public class ItemRepository {
 	 * @return IDに一致した商品詳細情報
 	 */
 	public Item findById(Integer id) {
-		String sql = "SELECT id, name, description, price_m, price_l, image_path, deleted FROM items WHERE id=:id";
+		String sql = SQL + "WHERE id=:id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		return template.queryForObject(sql, param, ITEM_ROW_MAPPER);
 	}
@@ -82,7 +97,7 @@ public class ItemRepository {
 	 */
 	public List<Item> orderByLowerMsizePrice() {
 
-		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY price_m";
+		String sql = SQL + "ORDER BY price_m";
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 
 		return itemList;
@@ -96,7 +111,7 @@ public class ItemRepository {
 	 */
 	public List<Item> orderByHigherMsizePrice() {
 
-		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY price_m DESC";
+		String sql = SQL + "ORDER BY price_m DESC";
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 
 		return itemList;
@@ -110,7 +125,7 @@ public class ItemRepository {
 	 */
 	public List<Item> orderByLowerLsizePrice() {
 
-		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY price_l";
+		String sql = SQL + "ORDER BY price_l";
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 
 		return itemList;
@@ -124,7 +139,7 @@ public class ItemRepository {
 	 */
 	public List<Item> orderByHigherLsizePrice() {
 
-		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY price_l DESC";
+		String sql = SQL + "ORDER BY price_l DESC";
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 
 		return itemList;

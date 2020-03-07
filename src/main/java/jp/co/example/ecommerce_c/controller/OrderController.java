@@ -2,7 +2,9 @@ package jp.co.example.ecommerce_c.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -18,19 +20,17 @@ import jp.co.example.ecommerce_c.service.OrderService;
 @RequestMapping("/order")
 @Controller
 public class OrderController {
-
-	/**
-	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
-	 * 
-	 * @return フォーム
-	 */
-	@ModelAttribute
-	public OrderForm setUpForm() {
-		return new OrderForm();
-	}
 	
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private ShowOrderConfirmController showOrderConfirmController;
+	
+	@Autowired
+	public OrderForm setUpForm() {
+		return new OrderForm();
+	}
 	
 	/**
 	 * 注文確定を行う.
@@ -40,7 +40,10 @@ public class OrderController {
 	 * @return 注文完了画面へリダイレクト
 	 */
 	@RequestMapping("")
-	public String order(OrderForm orderForm, BindingResult result) {
+	public String order(@Validated OrderForm orderForm, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			return showOrderConfirmController.showOrderConfirm(model);
+		}
 		orderService.order(orderForm);
 		return "redirect:/order/toFinished";
 	}

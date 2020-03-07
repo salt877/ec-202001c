@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests() // 認可に関する設定
-			.antMatchers("/").permitAll(); //「/」などのパスは全てのユーザに許可
+			.antMatchers("/","/showUserInsert").permitAll(); //「/」などのパスは全てのユーザに許可
 //			.anyRequest().authenticated(); // それ以外のパスは認証が必要
 
 		http.formLogin() // ログインに関する設定

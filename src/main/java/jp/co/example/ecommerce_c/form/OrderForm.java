@@ -2,6 +2,12 @@ package jp.co.example.ecommerce_c.form;
 
 import java.sql.Date;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 /**
  * 注文確定時に使用するフォーム.
  * 
@@ -20,26 +26,35 @@ public class OrderForm {
 	private Integer totalPrice;
 	
 	/** 宛先氏名 */
+	@NotBlank(message="入力必須です")
 	private String destinationName;
 	
 	/** 注文日 */
 	private Date orderDate;
 	
 	/** 宛先Eメール */
+	@NotBlank(message="入力必須です")
+	@Email(message="メールアドレスの形式ではありません")
 	private String destinationEmail;
 	
 	/** 宛先郵便番号 */
+	@Size(min=7, max=7, message="7桁で入力して下さい")
+	@Pattern(regexp="[0-9]+", message="ハイフンなしで入力して下さい")
 	private String destinationZipcode;
 	
 	/** 宛先住所 */
+	@NotBlank(message="入力必須です")
 	private String destinationAddress;
 	
 	/** 宛先電話TEL */
+	@Size(min=10, max=11, message="10桁以上11桁以下で入力して下さい")
+	@Pattern(regexp="[0-9]+", message="ハイフンなしで入力してください")
 	private String destinationTel;	
 
 	/** 配送希望日 */
+	@NotNull(message="入力必須です")
 	private Date deliveryDate;
-	
+
 	/** 配送時間 */
 	private Integer deliveryTime;
 	
@@ -150,6 +165,4 @@ public class OrderForm {
 				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryDate=" + deliveryDate
 				+ ", deliveryTime=" + deliveryTime + ", paymentMethod=" + paymentMethod + "]";
 	}
-
-	
 }

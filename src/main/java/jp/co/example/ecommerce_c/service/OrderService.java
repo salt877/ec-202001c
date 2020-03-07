@@ -61,6 +61,7 @@ public class OrderService {
 		
 		//注文確認画面にて送られたリクエストパラメータの値をorderにセットする
 		BeanUtils.copyProperties(orderForm, order);
+		order.setDestinationZipcode(order.getDestinationZipcode().replace("-", ""));
 		//注文日を現在日で取得しセットする
 		order.setOrderDate(Date.valueOf(LocalDate.now()));
 		//配送日時をセットする
@@ -78,7 +79,7 @@ public class OrderService {
 			}
 		}
 		order.setTotalPrice(totalPrice);
-	
+		order.setUserId(1); //userIdあとで帰る
 		//ordersテーブルの情報を更新する
 		orderRepository.updateOrder(order);
 	}	

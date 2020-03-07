@@ -99,19 +99,15 @@ $(function() {
 		<div class="row">
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
-				<!-- 	<!-- ページング機能 -->
-				<div th:if="${itemPage.totalPages > 0}" class="pagination"
+				<!-- 	<!-- ページング機能 -->			
+				<!-- <div th:if="${itemPage.totalPages > 0}" class="pagination"
 					th:each="pageNumber:${pageNumbers}">
-					<a th:href="@{/(size=${itemPage.size}, page=${pageNumber})}"
+					<a th:href="@{/(size=${itemPage.size}, page=${pageNumber}, searchName=${searchName})}"
 						th:text=${pageNumber}
-						th:class="${pageNumber==itemPage.number+1}?active"></a>
-				</div>
-
-				  <div  th:each="pageNumber:${pageNumbers}">
-				    <a th:href="@{/(size=${itemPage.size}, page=${pageNumber})}"
-				        th:text=${pageNumber}
-				        th:class="${pageNumber==itemPage.number+1}?active"></a>
-				</div>
+						th:class="${pageNumber==itemPage.number + 1 } ? active"></a>
+				</div>  -->
+					<a th:href="@{'/?page=' + 0}">1ページ目	</a>		
+					<a th:href="@{'/paging?page=' + 9}">2ページ目</a>
 		<div align="right" th:if="${AllItemList.size()}">
 		<select onChange="location.href=value;">		
 		<option>並び替える</option>
@@ -125,10 +121,10 @@ $(function() {
 				
 					<tbody>
 						<tr th:each="itemList : ${AllItemList}">
-							<th th:each="item : ${itemList}">
+							<th class="text-center" th:each="item : ${itemList}">
 								<a href="item_detail.html" th:href="@{'/showDetail?id=' + ${item.id}}">
 								<img src="../static/img_coffee/1.jpg" th:src="${'/img_coffee/'+item.imagePath}"
-										class="img-responsive img-rounded" width="200" height="600">
+										class="img-responsive img-rounded blockcenter" width="200" height="600">
 								</a><br>
 								<a href="item_detail.html" th:text="${item.name}" th:href="@{'/showDetail?id=' + ${item.id}}">じゃがバターベーコン</a><br>
 								<span class="price">&nbsp;М&nbsp;</span> <span th:text="${item.priceM}+'円(税抜)'">&nbsp;&nbsp;1,380円(税抜)</span><br>

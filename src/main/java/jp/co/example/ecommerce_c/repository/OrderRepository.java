@@ -206,7 +206,7 @@ public class OrderRepository {
 	 */
 	public void insert(Order order) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
-		String insertSql = "INSERT INTO orders(user_id, status, total_price, order_date, destination_name, destination_email, destination_zipcode, destination_address, destination_tel, delivery_time, payment_method) VALUES(:userId, :status, :totalPrice, :orderDate, :destinationName, :destinationEmail, :destinationZipcode, :destinationAddress, :destinationTel, :deliveryTime, :paymentMethod)";
+		String insertSql = "INSERT INTO orders(user_id, status, total_price, order_date, destination_name, destination_email, destination_zipcode, destination_address, destination_tel, delivery_time, payment_method) VALUES(:userId, 0, :totalPrice, :orderDate, :destinationName, :destinationEmail, :destinationZipcode, :destinationAddress, :destinationTel, :deliveryTime, :paymentMethod)";
 		template.update(insertSql, param);
 	}
 
@@ -253,6 +253,7 @@ public class OrderRepository {
 	 * @param order orderインスタンス
 	 */
 	public void updateOrder(Order order) {
+		System.out.println(order);
 		if (order.getPaymentMethod() == 1) {
 			SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 			String insertSql = "UPDATE orders SET status = 1, total_price = :totalPrice, order_date = :orderDate, destination_name = :destinationName, destination_email = :destinationEmail, destination_zipcode = :destinationZipcode, destination_address = :destinationAddress, destination_tel = :destinationTel, delivery_time = :deliveryTime, payment_method = :paymentMethod WHERE user_id = :userId AND status = 0;";
@@ -271,10 +272,9 @@ public class OrderRepository {
 	 * @param status 注文状態(0.注文前 1.未入金 2.入金済 3.発送済 4.配送完了 9.キャンセル)
 	 * @param price  金額
 	 */
-	public void subtractTotalPrice(Integer userId, Integer status, Integer price) {
-		String updateSql = "UPDATE orders SET total_price = total_price - :price WHERE user_id = :userId AND status = :status;";
-		SqlParameterSource param = new MapSqlParameterSource().addValue("price", price).addValue("userId", userId)
-				.addValue("status", 0);
+	public void subtractTotalPrice(Integer userId, Integer price) {
+		String updateSql = "UPDATE orders SET total_price = total_price - :price WHERE user_id = :userId AND status = 0";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("price", price).addValue("userId", userId);
 		template.update(updateSql, param);
 	}
 }
