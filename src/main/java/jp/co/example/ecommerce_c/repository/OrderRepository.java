@@ -169,6 +169,7 @@ public class OrderRepository {
 		}
 		return orderList;
 	};
+	
 	private static final RowMapper<Order> ORDER_ROW_MAPPER = (rs, i) -> {
 		Order order = new Order();
 		order.setId(rs.getInt("id"));

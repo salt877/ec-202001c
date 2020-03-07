@@ -18,13 +18,12 @@ import jp.co.example.ecommerce_c.service.ShowItemInCartService;
  *
  */
 @Controller
-@RequestMapping("/show-item-in-cart")
 public class ShowItemInCartController {
 
 	@Autowired
 	private ShowItemInCartService showItemInCartService;
 
-	@RequestMapping("")
+	@RequestMapping("/show_item_in_cart")
 	public String showItemInCart(Model model) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = new User();

@@ -20,8 +20,12 @@
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-						<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" 
+					data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
 					</button>
 					<a class="navbar-brand" href="item_list.html" th:href="@{/}"> <!-- 企業ロゴ --> 
 						<img alt="main log" src="../static/img_coffee/header_logo.png" 
@@ -31,23 +35,28 @@
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<p class="navbar-text navbar-right">
-						<a href="cart_list.html" th:href="@{/show-item-in-cart}" class="navbar-link">ショッピングカート</a>&nbsp;&nbsp;
-						<a href="order_history.html" th:href="@{/show-order-history}" class="navbar-link">注文履歴</a>&nbsp;&nbsp;
-						<a href="login.html" th:href="@{/showLogin}" class="navbar-link" sec:authorize="isAnonymous()">ログイン</a>
-						<a href="item_list.html" th:href="@{/logout}" class="navbar-link" sec:authorize="isAuthenticated()">ログアウト</a>
+						<a href="cart_list.html" th:href="@{/show_item_in_cart}" 
+						class="navbar-link">ショッピングカート</a>&nbsp;&nbsp;
+						<a href="order_history.html" th:href="@{/show_order_history}" 
+						class="navbar-link">注文履歴</a>&nbsp;&nbsp;
+						<a href="login.html" th:href="@{/show_login}" 
+						class="navbar-link" sec:authorize="isAnonymous()">ログイン</a>
+						<a href="item_list.html" th:href="@{/logout}" 
+						class="navbar-link" sec:authorize="isAuthenticated()">ログアウト</a>
 					</p>
 				</div>
 				<!-- /.navbar-collapse -->
 			</div>
 			<!-- /.container-fluid -->
 		</nav>
-		<form action="cart_list.html" th:action="@{/addItemToCart}" method="post">
+		<form action="cart_list.html" th:action="@{/add_item_to_cart}" method="post">
 		<div class="row">
 			<div class="col-xs-offset-2 col-xs-8">
 				<h3 class="text-center">商品詳細</h3>
 				<div class="row">
 					<div class="col-xs-5">
-						<img th:src="${'/img_coffee/' + item.imagePath}" src="/img_coffee/1.jpg" class="img-responsive img-rounded">
+						<img th:src="${'/img_coffee/' + item.imagePath}" 
+						src="/img_coffee/1.jpg" class="img-responsive img-rounded">
 					</div>
 					<div class="col-xs-5">
 						<div class="bs-component">
@@ -66,11 +75,13 @@
 								<div class="col-sm-12">
 									<label class="radio-inline">
 										<input type="radio" name="size" checked="checked" class="size" th:value='M'>
-										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;<span id="sizeM" th:text="${item.priceM}">1,380円(税抜)</span>円(税抜)
+										<span class="price">&nbsp;М&nbsp;</span>&nbsp;&nbsp;
+										<span id="sizeM" th:text="${item.priceM}">1,380円(税抜)</span>円(税抜)
 									</label>
 									<label class="radio-inline">
 										<input type="radio" name="size" class="size" th:value='L'>
-										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;<span id="sizeL" th:text="${item.priceL}">2,380円(税抜)</span>円(税抜)
+										<span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;
+										<span id="sizeL" th:text="${item.priceL}">2,380円(税抜)</span>円(税抜)
 									</label>
 								</div>
 							</div>
@@ -91,7 +102,8 @@
 								<div id="topping">
 									<span th:each="topping : ${item.toppingList}">
 									<label class="checkbox-inline">
-										<input type="checkbox" th:text="*{topping.name}" th:value="*{topping.id}" class="checkbox" name="toppingList">
+										<input type="checkbox" th:text="*{topping.name}" 
+										th:value="*{topping.id}" class="checkbox" name="toppingList">
 									</label>
 									</span>
 								</div>
@@ -151,8 +163,7 @@
 
 	</div>
 	<!-- end container -->
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 	<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="/js/item_detail.js?vs=001" th:src="@{/js/item_detail.js}"></script>

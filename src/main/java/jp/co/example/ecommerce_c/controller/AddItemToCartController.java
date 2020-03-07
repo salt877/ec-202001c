@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_c.domain.LoginUser;
-import jp.co.example.ecommerce_c.domain.Order;
 import jp.co.example.ecommerce_c.domain.User;
 import jp.co.example.ecommerce_c.form.AddItemToCartForm;
 import jp.co.example.ecommerce_c.repository.OrderRepository;
@@ -23,7 +22,6 @@ import jp.co.example.ecommerce_c.service.AddItemToCartService;
  *
  */
 @Controller
-@RequestMapping("/addItemToCart")
 public class AddItemToCartController {
 
 	@Autowired
@@ -42,7 +40,7 @@ public class AddItemToCartController {
 	 * @param loginUser ログイン中のユーザーid
 	 * @return ショッピングカート一覧画面
 	 */
-	@RequestMapping("")
+	@RequestMapping("/add_item_to_cart")
 	public String addItem(AddItemToCartForm addItemToCartForm, @AuthenticationPrincipal LoginUser loginUser) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Integer userId = 0;
@@ -57,6 +55,6 @@ public class AddItemToCartController {
 			}			
 		}
 		addItemToCartService.addItem(addItemToCartForm, userId);
-		return "redirect:/show-item-in-cart";
+		return "redirect:/show_item_in_cart";
 	}
 }

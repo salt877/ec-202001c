@@ -18,13 +18,12 @@ import jp.co.example.ecommerce_c.service.ShowOrderHistoryService;
  *
  */
 @Controller
-@RequestMapping("/show-order-history")
 public class ShowOrderHistoryController {
 
 	@Autowired
 	private ShowOrderHistoryService showOrderHistoryService;
 
-	@RequestMapping("")
+	@RequestMapping("/show_order_history")
 	public String showOrderHistory(Model model) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = new User();

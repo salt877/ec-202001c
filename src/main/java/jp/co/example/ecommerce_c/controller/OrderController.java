@@ -17,7 +17,6 @@ import jp.co.example.ecommerce_c.service.OrderService;
  * @author hatakeyamakouta
  *
  */
-@RequestMapping("/order")
 @Controller
 public class OrderController {
 	
@@ -39,13 +38,13 @@ public class OrderController {
 	 * @param result エラーチェック
 	 * @return 注文完了画面へリダイレクト
 	 */
-	@RequestMapping("")
+	@RequestMapping("/order")
 	public String order(@Validated OrderForm orderForm, BindingResult result, Model model) {
 		if(result.hasErrors()) {
 			return showOrderConfirmController.showOrderConfirm(model);
 		}
 		orderService.order(orderForm);
-		return "redirect:/order/toFinished";
+		return "redirect:/to_order_finished";
 	}
 	
 	/**
@@ -53,7 +52,7 @@ public class OrderController {
 	 * 
 	 * @return 注文完了画面
 	 */
-	@RequestMapping("/toFinished")
+	@RequestMapping("/to_order_finished")
 	public String toFinished() {
 		return "order_finished";
 	}

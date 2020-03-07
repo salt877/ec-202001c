@@ -18,8 +18,7 @@ import jp.co.example.ecommerce_c.service.ShowDetailService;
  *
  */
 @Controller
-@RequestMapping("/showDetail")
-public class ShowDetailController {
+public class ShowItemDetailController {
 
 	@Autowired
 	private ShowDetailService showDetailService;
@@ -31,7 +30,7 @@ public class ShowDetailController {
 	 * @param model モデル
 	 * @return 商品詳細画面
 	 */
-	@RequestMapping("")
+	@RequestMapping("/show_item_detail")
 	public String showDetail(Integer id, Model model) {
 		Item item = showDetailService.showDetail(id);
 		List<Topping> toppingList = showDetailService.showTopping();

@@ -19,7 +19,6 @@ import jp.co.example.ecommerce_c.service.RegisterUserService;
  *
  */
 @Controller
-@RequestMapping("/")
 public class RegisterUserController {
 
 	@Autowired
@@ -40,7 +39,7 @@ public class RegisterUserController {
 	 * 
 	 * @return ユーザ登録画面
 	 */
-	@RequestMapping("/showRegisterUser")
+	@RequestMapping("/show_register_user")
 	public String showRegisterUser() {
 		return "register_user";
 	}
@@ -52,7 +51,7 @@ public class RegisterUserController {
 	 * @param result　エラー格納オブジェクト
 	 * @return　ログイン画面へリダイレクト
 	 */
-	@RequestMapping("/registerUser")
+	@RequestMapping("/register_user")
 	public String registerUser(@Validated RegisterUserForm form, BindingResult result) {
 
 		// メールアドレスが重複している場合
@@ -70,7 +69,7 @@ public class RegisterUserController {
 		BeanUtils.copyProperties(form, user);
 		registerUserService.registerUser(user);
 
-		return "redirect:/showLogin";
+		return "redirect:/show_login";
 
 	}
 
