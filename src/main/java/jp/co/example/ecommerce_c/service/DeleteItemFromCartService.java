@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.example.ecommerce_c.repository.OrderItemRepository;
-import jp.co.example.ecommerce_c.repository.OrderRepository;
 import jp.co.example.ecommerce_c.repository.OrderToppingRepository;
 
 /**
