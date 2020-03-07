@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -42,10 +41,9 @@ public class AddItemToCartController {
 	 */
 	@RequestMapping("/add_item_to_cart")
 	public String addItem(AddItemToCartForm addItemToCartForm, @AuthenticationPrincipal LoginUser loginUser) {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Integer userId = 0;
-		if(principal instanceof LoginUser) {
-			userId = ((LoginUser)principal).getUser().getId();
+		if(loginUser != null) {
+			userId = loginUser.getUser().getId();
 		}else {
 			List<User> userList = userRepository.findAll();
 			for(User userForId : userList) {
