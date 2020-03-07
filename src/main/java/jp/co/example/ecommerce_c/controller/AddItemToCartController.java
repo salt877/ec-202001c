@@ -48,9 +48,10 @@ public class AddItemToCartController {
 			List<User> userList = userRepository.findAll();
 			for(User userForId : userList) {
 				if(userForId.getId() > userId) {
-					userId = userForId.getId() + 1;
+					userId = userForId.getId();
 				}
 			}			
+			userId++;
 		}
 		addItemToCartService.addItem(addItemToCartForm, userId);
 		return "redirect:/show_item_in_cart";
