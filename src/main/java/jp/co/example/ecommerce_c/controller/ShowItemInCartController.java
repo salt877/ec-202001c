@@ -1,5 +1,7 @@
 package jp.co.example.ecommerce_c.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -8,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_c.domain.LoginUser;
 import jp.co.example.ecommerce_c.domain.Order;
-import jp.co.example.ecommerce_c.domain.User;
 import jp.co.example.ecommerce_c.service.ShowItemInCartService;
 
 /**
@@ -22,17 +23,19 @@ public class ShowItemInCartController {
 
 	@Autowired
 	private ShowItemInCartService showItemInCartService;
+	
+	@Autowired
+	private HttpSession session;
 
 	@RequestMapping("/show_item_in_cart")
 	public String showItemInCart(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		User user = new User();
+		Integer userId = 0;
 		if(loginUser != null) {
-			user = loginUser.getUser();
+			userId = loginUser.getUser().getId();
 		}else {
-			//　この中の記述要検討
-		}
-		Integer userId = user.getId();
-		
+			userId = session.getId().hashCode();
+			System.out.println(userId);
+		}		
 		Order order = null;
 		try {
 			order = showItemInCartService.showItemInCart(userId).get(0);

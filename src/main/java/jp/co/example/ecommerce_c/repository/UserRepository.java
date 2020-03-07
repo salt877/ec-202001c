@@ -75,5 +75,10 @@ public class UserRepository {
 		String sql = "SELECT id,name,email,password,zipcode,address,telephone from users ORDER BY id";
 		return template.query(sql, USER_ROW_MAPPER);
 	}
-
-}
+	
+	public List<User> findById(Integer id) {
+		String sql = "SELECT id,name,email,password,zipcode,address,telephone from users where id = :id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+		return template.query(sql, param, USER_ROW_MAPPER);
+		}
+	}

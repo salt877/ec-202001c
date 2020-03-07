@@ -2,6 +2,8 @@ package jp.co.example.ecommerce_c.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,9 @@ public class ShowOrderConfirmController {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private HttpSession session;
+	
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
 	 * 
@@ -43,13 +48,15 @@ public class ShowOrderConfirmController {
 	
 	@RequestMapping("/show_order_confirm")
 	public String showOrderConfirm(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		User user1 = new User();
+		Integer userId = 0;
 		if(loginUser != null) {
-			user1 = loginUser.getUser();
+			userId = loginUser.getUser().getId();
 		}else {
-			//　この中の記述要検討
-		}
-		Integer userId = user1.getId();
+			List<Order> orderList = showOrderConfirmService.showInCart(userId);
+			Order order = orderList.get(0);
+			session.setAttribute("order", order);
+			return "redirect:/showLogin";
+		}		
 		List<Order> orderList = showOrderConfirmService.showInCart(userId);
 		Order order = orderList.get(0);
 		model.addAttribute("order", order);

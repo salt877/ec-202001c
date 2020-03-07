@@ -1,12 +1,14 @@
 package jp.co.example.ecommerce_c.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jp.co.example.ecommerce_c.domain.LoginUser;
 import jp.co.example.ecommerce_c.form.OrderForm;
 import jp.co.example.ecommerce_c.service.OrderService;
 
@@ -38,9 +40,9 @@ public class OrderController {
 	 * @return 注文完了画面へリダイレクト
 	 */
 	@RequestMapping("/order")
-	public String order(@Validated OrderForm orderForm, BindingResult result, Model model) {
+	public String order(@Validated OrderForm orderForm, BindingResult result, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		if(result.hasErrors()) {
-			return showOrderConfirmController.showOrderConfirm(model);
+			return showOrderConfirmController.showOrderConfirm(model, loginUser);
 		}
 		orderService.order(orderForm);
 		return "redirect:/to_order_finished";

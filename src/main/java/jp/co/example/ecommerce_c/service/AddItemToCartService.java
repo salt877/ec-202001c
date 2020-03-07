@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jp.co.example.ecommerce_c.domain.LoginUser;
 import jp.co.example.ecommerce_c.domain.Order;
 import jp.co.example.ecommerce_c.domain.OrderItem;
 import jp.co.example.ecommerce_c.domain.OrderTopping;
@@ -17,6 +19,7 @@ import jp.co.example.ecommerce_c.repository.OrderItemRepository;
 import jp.co.example.ecommerce_c.repository.OrderRepository;
 import jp.co.example.ecommerce_c.repository.OrderToppingRepository;
 import jp.co.example.ecommerce_c.repository.ToppingRepository;
+import jp.co.example.ecommerce_c.repository.UserRepository;
 
 @Service
 @Transactional
@@ -37,6 +40,9 @@ public class AddItemToCartService {
 	
 	@Autowired
 	private OrderToppingRepository orderToppingRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	/**
 	 * ショッピングカートに商品を追加するメソッド.
@@ -105,6 +111,7 @@ public class AddItemToCartService {
 		itemPrice = itemPrice * orderItem.getQuantity();
 		Integer totalPrice = order.getTotalPrice() + itemPrice;
 		order.setTotalPrice(totalPrice);
-		orderRepository.update(order);
+		System.out.println(order);
+		orderRepository.update(order);		
 	}
 }
