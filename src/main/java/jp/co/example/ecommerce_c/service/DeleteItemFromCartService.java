@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import jp.co.example.ecommerce_c.domain.OrderItem;
 import jp.co.example.ecommerce_c.repository.ItemRepository;
 import jp.co.example.ecommerce_c.repository.OrderItemRepository;
+import jp.co.example.ecommerce_c.repository.OrderRepository;
 import jp.co.example.ecommerce_c.repository.OrderToppingRepository;
 
 /**
