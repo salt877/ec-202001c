@@ -41,7 +41,7 @@ public class OrderController {
 	@RequestMapping("/order")
 	public String order(OrderForm orderForm, BindingResult result) {
 		orderService.order(orderForm);
-		return "redirect:/to_finished";
+		return "redirect:/to_order_finished";
 	}
 	
 	/**
@@ -49,7 +49,7 @@ public class OrderController {
 	 * 
 	 * @return 注文完了画面
 	 */
-	@RequestMapping("/to_finished")
+	@RequestMapping("/to_order_finished")
 	public String toFinished() {
 		return "order_finished";
 	}
