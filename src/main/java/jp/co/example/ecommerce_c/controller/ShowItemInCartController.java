@@ -1,6 +1,6 @@
 package jp.co.example.ecommerce_c.controller;
 
-import java.util.List;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,17 +25,21 @@ public class ShowItemInCartController {
 
 	@Autowired
 	private ShowItemInCartService showItemInCartService;
+	
+	@Autowired
+	private HttpSession session;
+
 
 	@RequestMapping("")
 	public String showItemInCart(Model model) {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = new User();
+		Integer userId = 0;
 		if(principal instanceof LoginUser) {
-			user = ((LoginUser)principal).getUser();
+			userId = ((LoginUser)principal).getUser().getId();
 		}else {
-			String error = principal.toString(); //あってるかわからない
+			userId = session.getId().hashCode();
+			System.out.println(userId);
 		}
-		Integer userId = user.getId();
 		
 		Order order = null;
 		try {

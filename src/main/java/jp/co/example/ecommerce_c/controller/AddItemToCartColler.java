@@ -2,6 +2,8 @@ package jp.co.example.ecommerce_c.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_c.domain.LoginUser;
-import jp.co.example.ecommerce_c.domain.Order;
 import jp.co.example.ecommerce_c.domain.User;
 import jp.co.example.ecommerce_c.form.AddItemToCartForm;
 import jp.co.example.ecommerce_c.repository.OrderRepository;
@@ -35,6 +36,9 @@ public class AddItemToCartColler {
 	@Autowired
 	private OrderRepository orderRepository;
 	
+	@Autowired
+	private HttpSession session;
+	
 	/**
 	 * カートに商品を追加するメソッド.
 	 * 
@@ -50,12 +54,8 @@ public class AddItemToCartColler {
 		if(principal instanceof LoginUser) {
 			userId = ((LoginUser)principal).getUser().getId();
 		}else {
-			List<User> userList = userRepository.findAll();
-			for(User userForId : userList) {
-				if(userForId.getId() > userId) {
-					userId = userForId.getId() + 1;
-				}
-			}			
+			userId = session.getId().hashCode();
+			System.out.println(userId);
 		}
 		addItemToCartService.addItem(addItemToCartForm, userId);
 		return "redirect:/show-item-in-cart";
