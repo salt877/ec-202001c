@@ -3,7 +3,7 @@ package jp.co.example.ecommerce_c.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,7 +23,6 @@ import jp.co.example.ecommerce_c.service.ShowOrderConfirmService;
  *
  */
 @Controller
-@RequestMapping("/show-order-confirm")
 public class ShowOrderConfirmController {
 	
 	@Autowired
@@ -42,20 +41,19 @@ public class ShowOrderConfirmController {
 		return new OrderForm();
 	}
 	
-	@RequestMapping("")
-	public String showOrderConfirm(Model model) {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	@RequestMapping("/show_order_confirm")
+	public String showOrderConfirm(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		User user1 = new User();
-		if(principal instanceof LoginUser) {
-			user1 = ((LoginUser)principal).getUser();
+		if(loginUser != null) {
+			user1 = loginUser.getUser();
 		}else {
-			String error = principal.toString(); //あってるかわからない
+			//　この中の記述要検討
 		}
 		Integer userId = user1.getId();
 		List<Order> orderList = showOrderConfirmService.showInCart(userId);
 		Order order = orderList.get(0);
 		model.addAttribute("order", order);
-		
+
 		User user = userRepository.findByEmail("test@test.co.jp");
 		model.addAttribute("user", user);
 		return "order_confirm";

@@ -1,14 +1,17 @@
 package jp.co.example.ecommerce_c.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_c.domain.LoginUser;
 import jp.co.example.ecommerce_c.domain.User;
 import jp.co.example.ecommerce_c.form.AddItemToCartForm;
+import jp.co.example.ecommerce_c.repository.OrderRepository;
+import jp.co.example.ecommerce_c.repository.UserRepository;
 import jp.co.example.ecommerce_c.service.AddItemToCartService;
 
 /**
@@ -18,12 +21,17 @@ import jp.co.example.ecommerce_c.service.AddItemToCartService;
  *
  */
 @Controller
-@RequestMapping("/addItemToCart")
-public class AddItemToCartColler {
+public class AddItemToCartController {
 
 	@Autowired
 	private AddItemToCartService addItemToCartService;
-		
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private OrderRepository orderRepository;
+	
 	/**
 	 * カートに商品を追加するメソッド.
 	 * 
@@ -31,17 +39,21 @@ public class AddItemToCartColler {
 	 * @param loginUser ログイン中のユーザーid
 	 * @return ショッピングカート一覧画面
 	 */
-	@RequestMapping("")
+	@RequestMapping("/add_item_to_cart")
 	public String addItem(AddItemToCartForm addItemToCartForm, @AuthenticationPrincipal LoginUser loginUser) {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = new User();
-		if(principal instanceof LoginUser) {
-			user = ((LoginUser)principal).getUser();
+		Integer userId = 0;
+		if(loginUser != null) {
+			userId = loginUser.getUser().getId();
 		}else {
-			String error = principal.toString(); //あってるかわからない
+			List<User> userList = userRepository.findAll();
+			for(User userForId : userList) {
+				if(userForId.getId() > userId) {
+					userId = userForId.getId();
+				}
+			}			
+			userId++;
 		}
-		Integer userId = user.getId();
-		addItemToCartService.addItem(addItemToCartForm, userId); //userIdに変更する
-		return "redirect:/show-item-in-cart";
+		addItemToCartService.addItem(addItemToCartForm, userId);
+		return "redirect:/show_item_in_cart";
 	}
 }

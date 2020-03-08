@@ -1,9 +1,7 @@
 package jp.co.example.ecommerce_c.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,20 +18,18 @@ import jp.co.example.ecommerce_c.service.ShowItemInCartService;
  *
  */
 @Controller
-@RequestMapping("/show-item-in-cart")
 public class ShowItemInCartController {
 
 	@Autowired
 	private ShowItemInCartService showItemInCartService;
 
-	@RequestMapping("")
-	public String showItemInCart(Model model) {
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	@RequestMapping("/show_item_in_cart")
+	public String showItemInCart(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		User user = new User();
-		if(principal instanceof LoginUser) {
-			user = ((LoginUser)principal).getUser();
+		if(loginUser != null) {
+			user = loginUser.getUser();
 		}else {
-			String error = principal.toString(); //あってるかわからない
+			//　この中の記述要検討
 		}
 		Integer userId = user.getId();
 		
