@@ -36,29 +36,9 @@ public class OrderService {
 	@Autowired
 	private OrderRepository orderRepository;
 	
-	/**
-	 * 注文完了メールを送信するメソッド.
-	 * 
-	 * @param order 注文情報
-	 */
-	public void sendMailForOrder(Order order) {
-
-		SimpleMailMessage msg = new SimpleMailMessage();
-		msg.setFrom("rakuraku.coffee.202001c@gmail.com");
-		msg.setTo(order.getDestinationEmail());
-		msg.setSubject("【RakuRaku Coffee】ご注文の確認");
-		msg.setText(
-				order.getUser().getName() + "様\n"
-				+ "\n"
-				+ "この度は「RakuRaku Coffee」をご利用いただきまして、誠にありがとうございます。\n"
-				+ "お客様のご注文を承りましたのでお知らせいたします。"
-				);
-		try {
-			this.sender.send(msg);
-		}catch(MailException ex){
-			System.err.println(ex.getMessage());
-		}
-	}
+	/** オーダーした際にIDを格納してメール送信の際に使用する変数 */
+	private Integer orderedId = null;
+	
 	
 	/**
 	 * 注文確定をする為、ordersテーブルを更新する.
@@ -91,7 +71,34 @@ public class OrderService {
 		}
 		order.setTotalPrice(totalPrice);
 		order.setUserId(loginUser.getUser().getId());
+		orderedId = order.getId();
 		//ordersテーブルの情報を更新する
 		orderRepository.updateOrder(order);
 	}	
+	
+	/**
+	 * 注文完了メールを送信するメソッド.
+	 * 
+	 * @param order 注文情報
+	 */
+	public void sendMailForOrder() {
+		
+		Order order = orderRepository.findByOrderId(orderedId);
+		
+		SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setFrom("rakuraku.coffee.202001c@gmail.com");
+		msg.setTo(order.getDestinationEmail());
+		msg.setSubject("【RakuRaku Coffee】ご注文の確認");
+		msg.setText(
+				order.getUser().getName() + "様\n"
+						+ "\n"
+						+ "この度は「RakuRaku Coffee」をご利用いただきまして、誠にありがとうございます。\n"
+						+ "お客様のご注文を承りましたのでお知らせいたします。"
+				);
+		try {
+			this.sender.send(msg);
+		}catch(MailException ex){
+			System.err.println(ex.getMessage());
+		}
+	}
 }
