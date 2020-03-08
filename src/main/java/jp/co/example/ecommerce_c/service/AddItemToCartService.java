@@ -3,6 +3,8 @@ package jp.co.example.ecommerce_c.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -40,9 +42,9 @@ public class AddItemToCartService {
 	
 	@Autowired
 	private OrderToppingRepository orderToppingRepository;
-	
+		
 	@Autowired
-	private UserRepository userRepository;
+	private HttpSession session;
 	
 	/**
 	 * ショッピングカートに商品を追加するメソッド.
@@ -50,9 +52,9 @@ public class AddItemToCartService {
 	 * @param addItemToCartForm リクエストパラメータから送られてくる値
 	 * @param userId ログイン中のユーザーid
 	 */
-	public void addItem(AddItemToCartForm addItemToCartForm, Integer userId) {
+	public void addItem(AddItemToCartForm addItemToCartForm, Integer userId, @AuthenticationPrincipal LoginUser loginUser) {
 		
-		//ordersテーブルからログイン中のユーザーidを元にstatusが0(注文前)のデータを検索する
+		//ordersテーブルからログイン中のユーザーid(ログインしていない場合はセッションidをハッシュ化)を元にstatusが0(注文前)のデータを検索する
 		//データがなければ必要条件をセットしデータを挿入する、再度ログイン中のユーザーidを元にstatusが0(注文前)のデータを検索する
 		//orderListに入った1件のオブジェクトを取得する
 		List<Order> orderList = orderRepository.findByUserIdAndStatusForOrder(userId, 0);
@@ -64,8 +66,7 @@ public class AddItemToCartService {
 			orderRepository.insert(order);
 			orderList = orderRepository.findByUserIdAndStatusForOrder(userId, 0);
 		}
-		Order order = orderList.get(0);
-		
+		Order order = orderList.get(0);		
 		
 		//注文された商品(orderItem)をorder_itemsテーブルに挿入しorderにセットする
 		//orderItemの情報を入れる(商品id, サイズ, 数量はaddItemToCartFormから取得可能) 注文id, 商品, 注文したトッピングリストを取得しorderにセットする
@@ -100,18 +101,24 @@ public class AddItemToCartService {
 		orderItem.setList(orderToppingList);
 		
 		//注文商品の合計金額を計算する
-		Integer itemPrice;	
-		
+		Integer itemPrice;			
 		if(orderItem.getSize() == 'M') {
 			itemPrice = orderItem.getItem().getPriceM() + orderItem.getSubTotal();
 		}else {
 			itemPrice = orderItem.getItem().getPriceL() + orderItem.getSubTotal();
-		}
-		
+		}		
 		itemPrice = itemPrice * orderItem.getQuantity();
 		Integer totalPrice = order.getTotalPrice() + itemPrice;
 		order.setTotalPrice(totalPrice);
-		System.out.println(order);
-		orderRepository.update(order);		
+		
+		//ordersテーブルのデータを更新する
+		orderRepository.update(order);
+		
+		//ログインしていない場合は更新したorder情報をsessionスコープに格納する
+		if(loginUser == null) {
+			List<Order> sessionOrderList = orderRepository.findByUserIdAndStatusForOrder(userId, 0);
+			Order sessionOrder = sessionOrderList.get(0);
+			session.setAttribute("sessionOrder", sessionOrder);
+		}
 	}
 }
