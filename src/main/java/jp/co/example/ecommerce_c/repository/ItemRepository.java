@@ -71,7 +71,7 @@ public class ItemRepository {
 	 * @return 検索された商品の一覧
 	 */
 	public List<Item> findByItemName(String name) {
-		String sql = SQL + "WHERE name LIKE :name ORDER BY id";
+		String sql = SQL + "WHERE (name) ILIKE :name ORDER BY id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 		return itemList;
