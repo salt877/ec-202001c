@@ -277,4 +277,27 @@ public class OrderRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("price", price).addValue("userId", userId);
 		template.update(updateSql, param);
 	}
+	
+	/**
+	 * ユーザーidに一致したデータを削除するメソッド.
+	 * 
+	 * @param userId ユーザーid
+	 */
+	public void deleteByUserId(Integer userId) {
+		String deleteSql = "DELETE FROM orders WHERE user_id = :userId";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
+		template.update(deleteSql, param);
+	}
+	
+	/**
+	 * 合計金額を変更するメソッド.
+	 * 
+	 * @param totalPrice 合計金額
+	 * @param id id
+	 */
+	public void updateTotalPrice(Integer totalPrice, Integer id) {
+		String updateSql = "UPDATE orders SET total_price = total_price + :totalPrice WHERE id = :id";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("totalPrice", totalPrice).addValue("id", id);
+		template.update(updateSql, param);
+	}
 }
