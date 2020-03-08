@@ -33,6 +33,11 @@ public class OrderService {
 	@Autowired
 	private OrderRepository orderRepository;
 	
+	/**
+	 * 注文完了メールを送信するメソッド.
+	 * 
+	 * @param order 注文情報
+	 */
 	public void sendMail(Order order) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		
