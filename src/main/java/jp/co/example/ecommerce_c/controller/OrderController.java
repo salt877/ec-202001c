@@ -58,7 +58,7 @@ public class OrderController {
 		if (result.hasErrors()) {
 			return showOrderConfirmController.showOrderConfirm(model, loginUser);
 		}
-		orderService.order(orderForm);
+		orderService.order(orderForm, loginUser);
 		return "redirect:/to_order_finished";
 	}
 

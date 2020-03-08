@@ -34,11 +34,11 @@ public class ShowItemInCartController {
 			userId = loginUser.getUser().getId();
 		}else {
 			userId = session.getId().hashCode();
-			System.out.println(userId);
 		}		
+		
 		Order order = null;
 		try {
-			order = showItemInCartService.showItemInCart(userId).get(0);
+			order = showItemInCartService.showItemInCart(userId, loginUser).get(0);
 		}catch(Exception e) {
 			model.addAttribute("orderSize", 0);
 			model.addAttribute("order", order);
