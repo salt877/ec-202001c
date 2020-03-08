@@ -71,6 +71,7 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-commons</artifactId>
 		</dependency>
+		
 		<!-- メール送信で使用 -->
 		<dependency>
             <groupId>org.springframework.boot</groupId>
