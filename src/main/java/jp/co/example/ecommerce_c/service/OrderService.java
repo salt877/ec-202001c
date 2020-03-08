@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
@@ -38,9 +39,9 @@ public class OrderService {
 	 * 
 	 * @param order 注文情報
 	 */
-	public void sendMail(Order order) {
+	public void sendMailForOrder(Order order) {
+
 		SimpleMailMessage msg = new SimpleMailMessage();
-		
 		msg.setFrom("rakuraku.coffee.202001c@gmail.com");
 		msg.setTo(order.getDestinationEmail());
 		msg.setSubject("【RakuRaku Coffee】ご注文の確認");
@@ -50,7 +51,11 @@ public class OrderService {
 				+ "この度は「RakuRaku Coffee」をご利用いただきまして、誠にありがとうございます。\n"
 				+ "お客様のご注文を承りましたのでお知らせいたします。"
 				);
-		this.sender.send(msg);
+		try {
+			this.sender.send(msg);
+		}catch(MailException ex){
+			System.err.println(ex.getMessage());
+		}
 	}
 	
 	/**
