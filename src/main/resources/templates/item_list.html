@@ -100,10 +100,10 @@
 		<div align="right" th:if="${AllItemList.size()}">
 		<select onChange="location.href=value;">		
 		<option>並び替える</option>
-		<option value="/lower-price-m" th:href="@{/lower_price_m}">Mサイズの価格が安い順</option>
-		<option value="/higher-price-m" th:href="@{/higher_price_m}">Mサイズの価格が高い順</option>
-		<option value="/lower-price-l" th:href="@{/lower_price_l}">Lサイズの価格が安い順</option>
-		<option value="/higher-price-l" th:href="@{/higher_price_l}">Lサイズの価格が高い順</option>
+		<option value="/lower_price_m">Mサイズの価格が安い順</option>
+		<option value="/higher_price_m">Mサイズの価格が高い順</option>
+		<option value="/lower_price_l">Lサイズの価格が安い順</option>
+		<option value="/higher_price_l">Lサイズの価格が高い順</option>
 		</select>
 		</div>
 			<table class="table table-striped"> 
