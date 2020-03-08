@@ -86,9 +86,27 @@ public class OrderItemRepository {
 		template.update(sql, param);
 	}
 	
+	/**
+	 * idが一致する注文商品を取得するメソッド.
+	 * 
+	 * @param orderItemId 注文商品ID
+	 * @return idが一致した注文商品
+	 */
 	public OrderItem findByOrderItemId(Integer orderItemId) {
 		String sql = "SELECT id, item_id, order_id, quantity, size FROM order_items WHERE id = :orderItemId;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
 		return template.queryForObject(sql, param, ORDERITEM_ROW_MAPPER);
+	}
+	
+	/**
+	 * 注文idを変更するメソッド.
+	 * 
+	 * @param sessionOrderId 変更前の注文id
+	 * @param orderId 変更後の注文id
+	 */
+	public void updateOrderId(Integer sessionOrderId, Integer orderId) {
+		String updateSql = "UPDATE order_items SET order_id = :orderId WHERE order_id = :sessionOrderId;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId).addValue("sessionOrderId", sessionOrderId);
+		template.update(updateSql, param);
 	}
 }

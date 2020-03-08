@@ -5,12 +5,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jp.co.example.ecommerce_c.domain.LoginUser;
 import jp.co.example.ecommerce_c.form.OrderForm;
 import jp.co.example.ecommerce_c.service.OrderService;
 
@@ -43,7 +45,7 @@ public class OrderController {
 	 * @throws ParseException
 	 */
 	@RequestMapping("/order")
-	public String order(@Validated OrderForm orderForm, BindingResult result, Model model) {
+	public String order(@Validated OrderForm orderForm, BindingResult result, Model model,  @AuthenticationPrincipal LoginUser loginUser) {
 		Date nowDate = new Date(); // 現在の日時を取得
 		Date deriveryDate = orderForm.getDeliveryDate(); // 配達日時を取得
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -54,9 +56,9 @@ public class OrderController {
 			result.rejectValue("deliveryDate", null, "翌日以降の日時を選択してください");
 		}
 		if (result.hasErrors()) {
-			return showOrderConfirmController.showOrderConfirm(model);
+			return showOrderConfirmController.showOrderConfirm(model, loginUser);
 		}
-		orderService.order(orderForm);
+		orderService.order(orderForm, loginUser);
 		return "redirect:/to_order_finished";
 	}
 

@@ -9,9 +9,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jp.co.example.ecommerce_c.domain.LoginUser;
 import jp.co.example.ecommerce_c.domain.Order;
 import jp.co.example.ecommerce_c.domain.OrderItem;
 import jp.co.example.ecommerce_c.form.OrderForm;
@@ -58,15 +60,14 @@ public class OrderService {
 	 * 
 	 * @param orderForm 注文確認画面にてリクエストパラメータから送られた値
 	 */
-	public void order(OrderForm orderForm) {
+	public void order(OrderForm orderForm, @AuthenticationPrincipal LoginUser loginUser) {
 		
 		//ordersテーブルからログインしているユーザーのid、statusが0(未入金)のデータを取得(1件)
-		List<Order> orderList = orderRepository.findByUserIdAndStatusForOrder(1, 0); //userIdに今後変える
+		List<Order> orderList = orderRepository.findByUserIdAndStatusForOrder(loginUser.getUser().getId(), 0);
 		Order order = orderList.get(0);
 		
 		//注文確認画面にて送られたリクエストパラメータの値をorderにセットする
 		BeanUtils.copyProperties(orderForm, order);
-		order.setDestinationZipcode(order.getDestinationZipcode().replace("-", ""));
 		//注文日を現在日で取得しセットする
 		order.setOrderDate(Date.valueOf(LocalDate.now()));
 		//配送日時をセットする
@@ -84,7 +85,7 @@ public class OrderService {
 			}
 		}
 		order.setTotalPrice(totalPrice);
-		order.setUserId(1); //userIdあとで帰る
+		order.setUserId(loginUser.getUser().getId());
 		//ordersテーブルの情報を更新する
 		orderRepository.updateOrder(order);
 	}	

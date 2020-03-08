@@ -1,6 +1,9 @@
 package jp.co.example.ecommerce_c.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -11,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_c.domain.LoginUser;
 import jp.co.example.ecommerce_c.domain.Order;
+import jp.co.example.ecommerce_c.domain.OrderItem;
 import jp.co.example.ecommerce_c.domain.User;
 import jp.co.example.ecommerce_c.form.OrderForm;
+import jp.co.example.ecommerce_c.repository.OrderRepository;
 import jp.co.example.ecommerce_c.repository.UserRepository;
 import jp.co.example.ecommerce_c.service.ShowOrderConfirmService;
 
@@ -30,7 +35,7 @@ public class ShowOrderConfirmController {
 	
 	@Autowired
 	private UserRepository userRepository;
-
+	
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
 	 * 
@@ -43,18 +48,34 @@ public class ShowOrderConfirmController {
 	
 	@RequestMapping("/show_order_confirm")
 	public String showOrderConfirm(Model model, @AuthenticationPrincipal LoginUser loginUser) {
-		User user1 = new User();
+		Integer userId = 0;
+		List<OrderItem> orderItemList = new ArrayList<>();
 		if(loginUser != null) {
-			user1 = loginUser.getUser();
-		}else {
-			//　この中の記述要検討
+			userId = loginUser.getUser().getId();
 		}
-		Integer userId = user1.getId();
-		List<Order> orderList = showOrderConfirmService.showInCart(userId);
-		Order order = orderList.get(0);
+		List<Order> orderList = showOrderConfirmService.showInCart(userId, loginUser);
+		
+		//カートの中身に商品がない場合は商品一覧画面に遷移させる
+		Order order = new Order();
+		try {
+			order = orderList.get(0);
+		}catch(Exception e){
+			return "redirect:/";
+		}
+		
+		
+		//この記述いらない？コメントアウト後動作に問題なければ削除
+//		List<OrderItem> idOrderItemList = order.getOrderItemList();
+//		for(int i = 0; i < orderItemList.size(); i++) {
+//			idOrderItemList.add(orderItemList.get(i));
+//		}
+//		order.setOrderItemList(idOrderItemList);
 		model.addAttribute("order", order);
 
-		User user = userRepository.findByEmail("test@test.co.jp");
+		
+		//届け先フォームに事前にユーザー情報を入力しておく為、ログインユーザーのメールアドレスにてユーザーを特定し
+		//リクエストスコープに格納
+		User user = userRepository.findByEmail(loginUser.getUser().getEmail());
 		model.addAttribute("user", user);
 		return "order_confirm";
 	}

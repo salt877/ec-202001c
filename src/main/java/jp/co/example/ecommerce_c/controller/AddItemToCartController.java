@@ -1,6 +1,6 @@
 package jp.co.example.ecommerce_c.controller;
 
-import java.util.List;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -8,10 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_c.domain.LoginUser;
-import jp.co.example.ecommerce_c.domain.User;
 import jp.co.example.ecommerce_c.form.AddItemToCartForm;
-import jp.co.example.ecommerce_c.repository.OrderRepository;
-import jp.co.example.ecommerce_c.repository.UserRepository;
 import jp.co.example.ecommerce_c.service.AddItemToCartService;
 
 /**
@@ -27,10 +24,7 @@ public class AddItemToCartController {
 	private AddItemToCartService addItemToCartService;
 	
 	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
-	private OrderRepository orderRepository;
+	private HttpSession session;
 	
 	/**
 	 * カートに商品を追加するメソッド.
@@ -45,15 +39,9 @@ public class AddItemToCartController {
 		if(loginUser != null) {
 			userId = loginUser.getUser().getId();
 		}else {
-			List<User> userList = userRepository.findAll();
-			for(User userForId : userList) {
-				if(userForId.getId() > userId) {
-					userId = userForId.getId();
-				}
-			}			
-			userId++;
+			userId = session.getId().hashCode();
 		}
-		addItemToCartService.addItem(addItemToCartForm, userId);
+		addItemToCartService.addItem(addItemToCartForm, userId, loginUser);
 		return "redirect:/show_item_in_cart";
 	}
 }
