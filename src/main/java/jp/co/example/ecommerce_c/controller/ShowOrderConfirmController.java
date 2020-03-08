@@ -46,7 +46,7 @@ public class ShowOrderConfirmController {
 		List<Order> orderList = showOrderConfirmService.showInCart(userId);
 		Order order = orderList.get(0);
 		model.addAttribute("order", order);
-		
+
 		User user = userRepository.findByEmail("test@test.co.jp");
 		StringBuilder sb = new StringBuilder(user.getZipcode());
 		sb.insert(3, "-");
