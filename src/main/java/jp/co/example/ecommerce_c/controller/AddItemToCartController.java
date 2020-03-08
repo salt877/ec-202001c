@@ -1,7 +1,5 @@
 package jp.co.example.ecommerce_c.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_c.domain.LoginUser;
-import jp.co.example.ecommerce_c.domain.User;
 import jp.co.example.ecommerce_c.form.AddItemToCartForm;
-import jp.co.example.ecommerce_c.repository.OrderRepository;
-import jp.co.example.ecommerce_c.repository.UserRepository;
 import jp.co.example.ecommerce_c.service.AddItemToCartService;
 
 /**
@@ -27,12 +22,6 @@ public class AddItemToCartController {
 
 	@Autowired
 	private AddItemToCartService addItemToCartService;
-	
-	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
-	private OrderRepository orderRepository;
 	
 	@Autowired
 	private HttpSession session;
@@ -51,9 +40,8 @@ public class AddItemToCartController {
 			userId = loginUser.getUser().getId();
 		}else {
 			userId = session.getId().hashCode();
-			System.out.println(userId);
 		}
-		addItemToCartService.addItem(addItemToCartForm, userId);
+		addItemToCartService.addItem(addItemToCartForm, userId, loginUser);
 		return "redirect:/show_item_in_cart";
 	}
 }
