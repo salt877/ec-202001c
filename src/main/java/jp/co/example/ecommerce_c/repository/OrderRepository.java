@@ -300,4 +300,12 @@ public class OrderRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("totalPrice", totalPrice).addValue("id", id);
 		template.update(updateSql, param);
 	}
+	
+//	public Order findByOrderId(Integer id) {
+//		String loadsql = "SELECT id, user_id, status, total_price, order_date, destination_name, destination_email, "
+//				+ "destination_zipcode, destination_address, destination_tel, delivery_time, payment_method "
+//				+ "FROM orders WHERE id = :id;";
+//		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id); 
+//		return template.queryForObject(loadsql, param, ORDER_ROW_MAPPER);
+//	}
 }
