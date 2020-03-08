@@ -1,9 +1,14 @@
 package jp.co.example.ecommerce_c.service;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jp.co.example.ecommerce_c.domain.LoginUser;
+import jp.co.example.ecommerce_c.domain.Order;
 import jp.co.example.ecommerce_c.domain.OrderItem;
 import jp.co.example.ecommerce_c.repository.ItemRepository;
 import jp.co.example.ecommerce_c.repository.OrderItemRepository;
@@ -32,12 +37,15 @@ public class DeleteItemFromCartService {
 	@Autowired
 	private ItemRepository itemRepository;
 	
+	@Autowired
+	private HttpSession session;
+	
 	/**
 	 * カートの中から商品を削除するメソッド.
 	 * 
 	 * @param orderItemId カート内の商品ID
 	 */
-	public void deleteItemFromCart(Integer orderItemId) {
+	public void deleteItemFromCart(Integer orderItemId, @AuthenticationPrincipal LoginUser loginUser) {
 		Integer price = 0;
 		OrderItem orderItem = orderItemRepository.findByOrderItemId(orderItemId);
 		System.out.println(orderItem);
@@ -52,7 +60,12 @@ public class DeleteItemFromCartService {
 		}
 		price = price * orderItem.getQuantity();
 		
-		orderRepository.subtractTotalPrice(1, price);
+		if(loginUser != null) {
+			orderRepository.subtractTotalPrice(loginUser.getUser().getId(), price);
+		}else {
+			Order sessionOrder = (Order) session.getAttribute("sessionOrder");
+			orderRepository.subtractTotalPrice(sessionOrder.getUserId(), price);
+		}
 		orderItemRepository.deleteItemById(orderItemId);
 		orderToppingRepository.deleteItemById(orderItemId);
 
