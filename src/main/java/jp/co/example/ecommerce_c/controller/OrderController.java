@@ -59,6 +59,7 @@ public class OrderController {
 			return showOrderConfirmController.showOrderConfirm(model, loginUser);
 		}
 		orderService.order(orderForm, loginUser);
+		orderService.sendMailForOrder();
 		return "redirect:/to_order_finished";
 	}
 
