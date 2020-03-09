@@ -46,6 +46,7 @@ public class ShowItemListController {
 	@RequestMapping("/")
 	public String showItemList(SortItemListForm form, Model model, String searchName) {
 
+		System.out.println(form.getSort());
 		List<Item> allItemList = showItemListService.showList();
 		if (form.getSort() == null) {
 			form.setSort(1);
