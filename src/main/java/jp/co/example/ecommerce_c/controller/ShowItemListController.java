@@ -47,8 +47,6 @@ public class ShowItemListController {
 	public String showItemList(SortItemListForm form, Model model, String searchName) {
 
 		List<Item> allItemList = showItemListService.showList();
-
-		System.out.println(form.getSort());
 		if (form.getSort() == null) {
 			form.setSort(1);
 		}
@@ -65,7 +63,6 @@ public class ShowItemListController {
 		for (int i = 2; i <= pageNumber; i++) {
 			pageNumberList.add(i);
 		}
-		System.out.println(pageNumberList.size());
 		model.addAttribute("pageNumberList", pageNumberList);
 
 		List<List<List<Item>>> groupItemList = new ArrayList<>();
