@@ -143,11 +143,11 @@
 							</tr>
 							<tr>
 								<td>
-									<div class="text-center">郵便番号</div>
+									<div class="text-center">郵便番号(ハイフン不要)</div>
 								</td>
 								<td>
 									<div th:errors="*{destinationZipcode}" style="color: red"></div>
-									<input type="text" name="destinationZipcode" th:value="${user.zipcode}" placeholder="○○○-○○○○">&nbsp;&nbsp;
+									<input type="text" name="destinationZipcode" th:value="${user.zipcode}">&nbsp;&nbsp;
 									<button class="zip_button" type="button" id="inputZipcode" name="destinationZipcode">住所検索</button>
 								</td>
 							</tr>
@@ -162,11 +162,11 @@
 							</tr>
 							<tr>
 								<td>
-									<div class="text-center">電話番号</div>
+									<div class="text-center">電話番号(ハイフン不要)</div>
 								</td>
 								<td>
 									<div th:errors="*{destinationTel}" style="color: red"></div>
-									<input type="text" name="destinationTel" th:value="${user.telephone}" placeholder="○○○-○○○-○○○○">
+									<input type="text" name="destinationTel" th:value="${user.telephone}">
 								</td>
 							</tr>
 							<tr>
@@ -177,6 +177,7 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-12">
+												<span style="color:red">配達日時は本日より3日後まで指定出来ます。</span><br>
 												<span th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}" style="color: red"></span>
 											</div>
 											<div class="col-sm-5">

@@ -57,9 +57,9 @@ public class OrderController {
 		LocalDateTime nowLDT = LocalDateTime.now();
 		Integer nowHour = nowLDT.getHour();
 		if (completeTo > 0) {
-			result.rejectValue("deliveryDate", null, "過去の日付が選択されています");
+			result.rejectValue("deliveryDate", null, "この日時に配達することはできません");
 		} else if (completeTo == 0 && orderForm.getDeliveryTime() < nowHour) {
-			result.rejectValue("deliveryTime", null, "過去の時間が選択されています");
+			result.rejectValue("deliveryTime", null, "この日時に配達することはできません");
 		}
 		if (result.hasErrors()) {
 			return showOrderConfirmController.showOrderConfirm(model, loginUser);

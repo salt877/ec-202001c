@@ -26,33 +26,34 @@ public class OrderForm {
 	private Integer totalPrice;
 	
 	/** 宛先氏名 */
-	@NotBlank(message="入力必須です")
+	@NotBlank(message="お名前を入力して下さい")
 	private String destinationName;
 	
 	/** 注文日 */
 	private Date orderDate;
 	
 	/** 宛先Eメール */
-	@NotBlank(message="入力必須です")
+	@NotBlank(message="メールアドレスを入力して下さい")
 	@Email(message="メールアドレスの形式ではありません")
 	private String destinationEmail;
 	
 	/** 宛先郵便番号 */
 	@Size(min=7, max=7, message="7桁で入力して下さい")
-	@Pattern(regexp="[0-9]+", message="ハイフンなしで入力して下さい")
+	@Pattern(regexp="[0-9]+", message="郵便番号が不正です")
 	private String destinationZipcode;
 	
 	/** 宛先住所 */
-	@NotBlank(message="入力必須です")
+	@NotBlank(message="住所を入力して下さい")
 	private String destinationAddress;
 	
 	/** 宛先電話TEL */
+	@NotBlank(message="電話番号を入力して下さい")
 	@Size(min=10, max=11, message="10桁以上11桁以下で入力して下さい")
-	@Pattern(regexp="[0-9]+", message="ハイフンなしで入力してください")
+	@Pattern(regexp="[0-9]+", message="電話番号が不正です")
 	private String destinationTel;	
 
 	/** 配送希望日 */
-	@NotNull(message="入力必須です")
+	@NotNull(message="この日時に配達することはできません")
 	private Date deliveryDate;
 
 	/** 配送時間 */

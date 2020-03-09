@@ -67,12 +67,12 @@
 									placeholder="Email">
 							</div>
 							<div class="form-group">
-								<label for="inputZipcode">郵便番号:</label>
+								<label for="inputZipcode">郵便番号(ハイフン不要):</label>
 								<label th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}"
 									class="control-label" style="color: red" for="inputError">郵便番号を入力してください</label>
 									<!-- <input id="search" type="button" value="住所検索"> -->
 								<input type="text" id="inputZipcode" class="form-control" name="zipcode" th:field="*{zipcode}"
-									placeholder="Zipcode">
+									placeholder="ZipCode">
 								
 							</div>
 							<div class="form-group">
@@ -83,7 +83,7 @@
 									placeholder="Address">
 							</div>
 							<div class="form-group">
-								<label for="inputTel">電話番号:</label>
+								<label for="inputTel">電話番号(ハイフン不要):</label>
 								<label th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}"
 									class="control-label" style="color: red" for="inputError">電話番号を入力してください</label>
 								<input type="text" id="inputTel" class="form-control" th:field="*{telephone}"
