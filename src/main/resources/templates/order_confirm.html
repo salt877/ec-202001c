@@ -177,17 +177,16 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-12">
-												<label class="control-label" style="color: red" for="inputPeriod">配達日時を選択してください</label><br>
 												<span th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}" style="color: red"></span>
 											</div>
 											<div class="col-sm-5">
-												<input type="date" name="deliveryDate" id="name" class="form-control input-sm" />
+												<input type="date" name="deliveryDate" id="name" class="form-control input-sm" th:value="${tommorowDate}">
 											</div>
 										</div>
 										<br>
 										<div class="row">
 											<div class="col-sm-12">
-												<div th:errors="*{deliveryTime}" style="color: red"></div>
+												<div th:if="${#fields.hasErrors('deliveryTime')}" th:errors="*{deliveryTime}" style="color: red"></div>
 												<label class="radio-inline">
 												<input type="radio" name="deliveryTime" checked="checked" value="10">10時</label>
 												<label class="radio-inline">

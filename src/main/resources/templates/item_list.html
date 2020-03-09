@@ -88,24 +88,14 @@
 		<div class="row">
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
-				<!-- 	<!-- ページング機能 -->			
-				<!--  <div th:if="${itemPage.totalPages > 0}" class="pagination"
-					th:each="pageNumber:${pageNumbers}">
-					<a th:href="@{/(size=${itemPage.size}, page=${pageNumber}, searchName=${searchName})}"
-						th:text=${pageNumber}
-						th:class="${pageNumber==itemPage.number + 1 } ? active"></a>
-				</div>  -->
-					<a th:href="@{'/?page=' + 0}">1ページ目	</a>		
-					<a th:href="@{'/paging?page=' + 9}">2ページ目</a>
-					<a th:href="@{'/paging?page=' + 18}">3ページ目</a>
-					
-	<div align="right" th:if="${AllItemList.size()}">
-	<form method="post" th:action="@{/sort}" th:object="${sortItemListForm}">
-		<select th:field="*{sort}" name="sort">		
-		<option value="1">Mサイズの価格が安い順</option>
-		<option value="2">Mサイズの価格が高い順</option>
-		<option value="3">Lサイズの価格が安い順</option>
-		<option value="4">Lサイズの価格が高い順</option>
+
+	<div align="right" th:if="${nineItemList.size()}">
+	<form th:action="@{/}" method="post">
+		<select name="sortItemListForm" >		
+			<option value="1">Mサイズの価格が安い順</option>
+			<option value="2">Mサイズの価格が高い順</option>
+			<option value="3">Lサイズの価格が安い順</option>
+			<option value="4">Lサイズの価格が高い順</option>
 		</select>
 		<button>並び替える</button>
 	</form>
@@ -113,7 +103,7 @@
 			<table class="table table-striped"> 
 				
 					<tbody>
-						<tr th:each="itemList : ${AllItemList}">
+						<tr th:each="itemList : ${nineItemList}">
 							<th class="text-center" th:each="item : ${itemList}">
 								<a href="item_detail.html" th:href="@{'/show_item_detail?id=' + ${item.id}}">
 								<img src="../static/img_coffee/1.jpg" th:src="${'/img_coffee/'+item.imagePath}"
@@ -132,6 +122,11 @@
 			</div>
 		</div>
 	</div>
+				
+	<span th:each="pageNumber : ${pageNumberList}">
+					<a th:href="@{'/to_other_page?page=' + ${pageNumber}}" th:text="${pageNumber}"></a>
+				</span>
+					
 	<!-- end container -->
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

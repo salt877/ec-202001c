@@ -9,14 +9,16 @@ package jp.co.example.ecommerce_c.form;
 public class SortItemListForm {
 
 	/** 並び順 */
-	private String sort;
+	private Integer sort;
 
-	public String getSort() {
+	public Integer getSort() {
 		return sort;
 	}
 
-	public void setSort(String sort) {
+	public void setSort(Integer sort) {
 		this.sort = sort;
 	}
+
+	
 
 }

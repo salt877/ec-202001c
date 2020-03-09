@@ -3,8 +3,9 @@ package jp.co.example.ecommerce_c.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,8 +32,8 @@ public class ShowItemListController {
 		return new SortItemListForm();
 	}
 
-//	// 1ページに表示する商品数は9個
-//	private static final int VIEW_SIZE = 9;
+	@Autowired
+	private HttpSession session;
 
 	/**
 	 * 商品一覧画面を出力します.
@@ -43,131 +44,104 @@ public class ShowItemListController {
 	 * @return 商品一覧画面
 	 */
 	@RequestMapping("/")
-	public String showItemList(Model model, Integer page, String searchName) {
+	public String showItemList(SortItemListForm form, Model model, String searchName) {
 
-		List<Item> itemList = showItemListService.showList();
+		List<Item> allItemList = showItemListService.showList();
 
-		// List<Item> itemList = showItemListService.paging(page);
-		List<List<Item>> AllItemList = new ArrayList<>();
-		List<Item> threeItem = new ArrayList<>();
-		for (int i = 1; i <= itemList.size(); i++) {
-			threeItem.add(itemList.get(i - 1));
-			if (i % 3 == 0 || i == itemList.size()) {
-				AllItemList.add(threeItem);
-				threeItem = new ArrayList<>();
-			}
-			model.addAttribute("AllItemList", AllItemList);
+		System.out.println(form.getSort());
+		if (form.getSort() == null) {
+			form.setSort(1);
 		}
 
-		// 商品名検索機能
-		if (searchName != null) {
-			itemList = showItemListService.searchByItemName(searchName);
-			// ページングの数字からも検索できるように検索文字列をスコープに格納しておく
-			model.addAttribute("searchName", searchName);
-			// 検索結果を横並びにする
-			List<List<Item>> searchItemList = new ArrayList<>();
-			for (int i = 1; i <= itemList.size(); i++) {
-				threeItem.add(itemList.get(i - 1));
-				if (i % 3 == 0 || i == itemList.size()) {
-					searchItemList.add(threeItem);
-					threeItem = new ArrayList<>();
+		List<Item> itemList = showItemListService.searchBySomeway(form);
+		Integer pageNumber = 0;
+
+		if (pageNumber % 9 != 0) {
+			pageNumber = itemList.size() / 9 + 1;
+		} else {
+			pageNumber = itemList.size() / 9;
+		}
+		List<Integer> pageNumberList = new ArrayList<>();
+		for (int i = 2; i <= pageNumber; i++) {
+			pageNumberList.add(i);
+		}
+		System.out.println(pageNumberList.size());
+		model.addAttribute("pageNumberList", pageNumberList);
+
+		List<List<List<Item>>> groupItemList = new ArrayList<>();
+		List<List<Item>> nineItemList = new ArrayList<>();
+		List<Item> threeItemList = new ArrayList<>();
+		for (int i = 1; i <= itemList.size(); i++) {
+			threeItemList.add(itemList.get(i - 1));
+			if (i % 3 == 0 || i == itemList.size()) {
+				nineItemList.add(threeItemList);
+				threeItemList = new ArrayList<>();
+				if (i % 9 == 0 || i == itemList.size()) {
+					groupItemList.add(nineItemList);
+					nineItemList = new ArrayList<>();
 				}
 			}
-			model.addAttribute("AllItemList", searchItemList);
 		}
-		if (itemList.size() == 0) {
+		session.setAttribute("groupItemList", groupItemList);
+		model.addAttribute("nineItemList", groupItemList.get(0));
+
+//		// 商品名検索機能
+		if (searchName != null) {
+			itemList = showItemListService.searchByItemName(searchName);
+			System.out.println(itemList.size());
+//			// ページングの数字からも検索できるように検索文字列をスコープに格納しておく
 			model.addAttribute("searchName", searchName);
-			model.addAttribute("message", "該当する商品がありません");
-			itemList = showItemListService.showList();
+
+			// 検索結果を横並びにする
+			List<List<List<Item>>> groupItemList2 = new ArrayList<>();
+			List<List<Item>> nineItemList2 = new ArrayList<>();
+			List<Item> threeItemList2 = new ArrayList<>();
+			for (int i = 1; i <= itemList.size(); i++) {
+				threeItemList2.add(itemList.get(i - 1));
+				if (i % 3 == 0 || i == itemList.size()) {
+					nineItemList2.add(threeItemList2);
+					threeItemList2 = new ArrayList<>();
+					if (i % 9 == 0 || i == itemList.size()) {
+						groupItemList2.add(nineItemList2);
+						nineItemList2 = new ArrayList<>();
+					}
+				}
+
+			}
+			try {
+				model.addAttribute("nineItemList", groupItemList2.get(0));
+			} catch (Exception e) {
+				model.addAttribute("searchName", searchName);
+				model.addAttribute("message", "該当する商品がありません");
+				itemList = showItemListService.showList();
+			}
 		}
-
-//		// 表示させたいページ数、ページサイズ、商品リストを渡し１ページに表示させる商品リストを絞り込み
-//		Page<Item> itemPage = showItemListService.showItemListPaging(page, VIEW_SIZE, itemList);
-//		model.addAttribute("itemPage", itemPage);
-//
-//		// ページングのリンクに使うページ数をスコープに格納 (例)28件あり1ページにつき10件表示させる場合→1,2,3がpageNumbersに入る
-//		List<Integer> pageNumbers = calcPageNumbers(model, itemPage);
-//		model.addAttribute("pageNumbers", pageNumbers);
-
 		// オートコンプリート
-		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
+		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(allItemList);
 		model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
 
 		return "item_list";
 	}
 
-	/**
-	 * ページングのリンクに使うページ数をスコープに格納 (例)28件あり1ページにつき10件表示させる場合→1,2,3がpageNumbersに入る
-	 * 
-	 * @param model        モデル
-	 * @param employeePage ページング情報
-	 */
-//	private List<Integer> calcPageNumbers(Model model, Page<Item> itemPage) {
-//		int totalPages = itemPage.getTotalPages();
-//		List<Integer> pageNumbers = null;
-//		if (totalPages > 0) {
-//			pageNumbers = new ArrayList<Integer>();
-//			for (int i = 1; i <= totalPages; i++) {
-//				pageNumbers.add(i);
-//			}
-//		}
-//		return pageNumbers;
-//	}
-
-	@RequestMapping("/paging")
-	public String paging(Integer page, Model model) {
-		System.out.println(page);
-		List<Item> itemList = showItemListService.paging(page);
-//		//OFFSETの値が0,9,18,27など9で割り切れる時にページ遷移	
-		List<List<Item>> AllItemList = new ArrayList<>();
-		List<Item> threeItem = new ArrayList<>();
-		for (int i = 1; i <= itemList.size(); i++) {
-			threeItem.add(itemList.get(i - 1));
-			if (i % 3 == 0 || i == itemList.size()) {
-				AllItemList.add(threeItem);
-				threeItem = new ArrayList<>();
+	@RequestMapping("/to_other_page")
+	public String toOtherPage(Integer page, Model model) {
+		List<Item> itemList = showItemListService.showList();
+		Integer pageNumber = itemList.size() / 9;
+		List<Integer> pageNumberList = new ArrayList<>();
+		for (int i = 1; i <= pageNumber; i++) {
+			if (i == page) {
+				continue;
 			}
-			model.addAttribute("AllItemList", AllItemList);
+			pageNumberList.add(i);
 		}
+		model.addAttribute("pageNumberList", pageNumberList);
 
-		return "item_list";
-	}
+		List<List<List<Item>>> groupItemList = (List<List<List<Item>>>) session.getAttribute("groupItemList");
+		model.addAttribute("nineItemList", groupItemList.get(page - 1));
 
-	/**
-	 * 選択された並び順で商品一覧を出力します.
-	 * 
-	 * @param form 並び順選択フォーム
-	 * @param model モデル
-	 * @return　商品一覧画面
-	 */
-	@RequestMapping("/sort")
-	public String SortItemList(SortItemListForm form, Model model) {
-
-		List<Item> itemList = null;
-
-		if (form.getSort().equals("1")) {
-			itemList = showItemListService.orderByLowerMsizePrice();
-		} else if (form.getSort().equals("2")) {
-			itemList = showItemListService.orderByHigherMsizePrice();
-		} else if (form.getSort().equals("3")) {
-			itemList = showItemListService.orderByLowerLsizePrice();
-		} else if (form.getSort().equals("4")) {
-			itemList = showItemListService.orderByHigherLsizePrice();
-		}
-		List<List<Item>> AllItemList = new ArrayList<>();
-		List<Item> threeItem = new ArrayList<>();
-		for (int i = 1; i <= itemList.size(); i++) {
-			threeItem.add(itemList.get(i - 1));
-			if (i % 3 == 0 || i == itemList.size()) {
-				AllItemList.add(threeItem);
-				threeItem = new ArrayList<>();
-			}
-		}
-		model.addAttribute("AllItemList", AllItemList);
-		// オートコンプリート
-		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(itemList);
+		List<Item> allItemList = showItemListService.showList();
+		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(allItemList);
 		model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
-
 		return "item_list";
 	}
 

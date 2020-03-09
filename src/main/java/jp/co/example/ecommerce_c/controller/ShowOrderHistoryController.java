@@ -28,24 +28,23 @@ public class ShowOrderHistoryController {
 	@RequestMapping("/show_order_history")
 	public String showOrderHistory(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		User user = new User();
-		if(loginUser != null) {
+		if (loginUser != null) {
 			user = loginUser.getUser();
-		}else {
-			//　この中の記述要検討
+		} else {
+			// この中の記述要検討
 		}
 		Integer userId = user.getId();
-		
-		Order orderHistory = null;
+
+		List<Order> orderHistoryList = null;
 		try {
-			List<Order> orderHistoryList = showOrderHistoryService.searchOrderHistoryByUserId(userId);
-			orderHistory = showOrderHistoryService.searchOrderHistoryByUserId(userId).get(0);
+			orderHistoryList = showOrderHistoryService.searchOrderHistoryByUserId(userId);
 		} catch (Exception e) {
-			model.addAttribute("orderHistorySize", 0);
-			model.addAttribute("orderHistory", orderHistory);
+			model.addAttribute("orderHistoryListSize", 0);
+			model.addAttribute("orderHistoryList", orderHistoryList);
 			return "order_history";
 		}
-		model.addAttribute("orderHistorySize", orderHistory.getOrderItemList().size());
-		model.addAttribute("orderHistory", orderHistory);
+		model.addAttribute("orderHistoryListSize", orderHistoryList.size());
+		model.addAttribute("orderHistoryList", orderHistoryList);
 		return "order_history";
 	}
 }

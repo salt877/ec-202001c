@@ -2,6 +2,7 @@ package jp.co.example.ecommerce_c.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,15 +47,19 @@ public class OrderController {
 	 * @throws ParseException
 	 */
 	@RequestMapping("/order")
-	public String order(@Validated OrderForm orderForm, BindingResult result, Model model,  @AuthenticationPrincipal LoginUser loginUser) {
-		Date nowDate = new Date(); // 現在の日時を取得
+	public String order(@Validated OrderForm orderForm, BindingResult result, Model model, @AuthenticationPrincipal LoginUser loginUser) {
+		Date nowDt = new Date(); // 現在の日時を取得
 		Date deriveryDate = orderForm.getDeliveryDate(); // 配達日時を取得
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String nowDateStr = sdf.format(nowDate);
+		String nowDateStr = sdf.format(nowDt);
 		String deriveryDateStr = sdf.format(deriveryDate);
 		Integer completeTo = nowDateStr.compareTo(deriveryDateStr);
-		if (0 <= completeTo) {
-			result.rejectValue("deliveryDate", null, "翌日以降の日時を選択してください");
+		LocalDateTime nowLDT = LocalDateTime.now();
+		Integer nowHour = nowLDT.getHour();
+		if (completeTo > 0) {
+			result.rejectValue("deliveryDate", null, "過去の日付が選択されています");
+		} else if (completeTo == 0 && orderForm.getDeliveryTime() < nowHour) {
+			result.rejectValue("deliveryTime", null, "過去の時間が選択されています");
 		}
 		if (result.hasErrors()) {
 			return showOrderConfirmController.showOrderConfirm(model, loginUser);
