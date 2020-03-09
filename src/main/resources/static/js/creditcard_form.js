@@ -1,4 +1,7 @@
 $(function() {
+	$("#error_card").hide().css("color","red").css("font-weight","bold");
+	$("#error_delivery_date").hide().css("color","red").css("font-weight","bold");
+	
 	$(".pay-method").on("change", function() {
 		var num = $("input[name='paymentMethod']:checked").val();
 		if (num == '2') {
@@ -19,13 +22,16 @@ $(function() {
 		console.log($("#card_cvv").val());
 	});
 	
-	$("#error2").hide().css("color","red").css("font-weight","bold");
 	
 	$("#order-btn").on("click",function(){
+		var now = new Date();
+		var threeDaysLater = now.setDate(now.getDate() + 3);
+		var inputDate = $("#input_date").val();
+		var inputTime = $("input[name='deliveryTime']:checked").val();
 		$.ajax({
-			url:"http://192.168.2.108:8080/sample-credit-card-web-api/credit-card/payment", //送信先のWebAPIのURL
-			dataType:"json", //レスポンスデータ形式
-			data:{  //リクエストパラメータ情報
+			url:"http://192.168.2.108:8080/sample-credit-card-web-api/credit-card/payment",
+			dataType:"json",
+			data:{
 				user_id: $("#user_id").val(),
 				order_number: $("#order_number").val(),
 				amount: $("#amount").val(),
@@ -35,12 +41,21 @@ $(function() {
 				card_name: $("#card_name").val(),
 				card_cvv: $("#card_cvv").val()
 			},
-			async:false //同期処理を行う
+			async:false
 		}).done(function(data){
 			if($("#card_status").val(data.items[0].status) != "success"){
-				$("#error2").show();
+				$("#error_card").show();
 			}
-			; 
+			if(threeDaysLater.getDate() < inputDate.getDate() || inputDate.getDate() < now.getDate()){
+				$("#error_delivery_date").show();
+			}
+			if(inputDate.getDate() == now.getDate()){
+				if((now.getMinutes() == 0 && inputTime - 1 < now.getHours()) 
+						|| (now.getMinutes() != 0 && inputTime - 1 <= now.getHours())){
+					$("#error_delivery_date").show();
+				}
+			}
+			
 		});
 	});
 
