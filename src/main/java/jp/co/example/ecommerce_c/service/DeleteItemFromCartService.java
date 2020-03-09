@@ -65,6 +65,9 @@ public class DeleteItemFromCartService {
 		}else {
 			Order sessionOrder = (Order) session.getAttribute("sessionOrder");
 			orderRepository.subtractTotalPrice(sessionOrder.getUserId(), price);
+			Integer totalPrice = sessionOrder.getTotalPrice() - price;
+			sessionOrder.setTotalPrice(totalPrice);
+			session.setAttribute("sessionOrder", sessionOrder);
 		}
 		orderItemRepository.deleteItemById(orderItemId);
 		orderToppingRepository.deleteItemById(orderItemId);
