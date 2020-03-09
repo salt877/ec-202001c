@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.example.ecommerce_c.domain.Item;
+import jp.co.example.ecommerce_c.form.SortItemListForm;
 import jp.co.example.ecommerce_c.repository.ItemRepository;
 
 /**
