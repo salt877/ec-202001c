@@ -90,8 +90,8 @@
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 
 	<div align="right" th:if="${nineItemList.size()}">
-	<form th:action="@{/}" method="post">
-		<select name="sortItemListForm" >		
+	<form th:action="@{/}" th:object="${sortItemListForm}" method="post" >
+		<select name="sort" th:field="*{sort}">		
 			<option value="1">Mサイズの価格が安い順</option>
 			<option value="2">Mサイズの価格が高い順</option>
 			<option value="3">Lサイズの価格が安い順</option>

@@ -25,14 +25,15 @@ public class RegisterUserForm {
 	private String password;
 	/** 郵便番号 */
 	@Size(min=7, max=7, message="7桁で入力して下さい")
-	@Pattern(regexp="[0-9]+", message="ハイフンなしで入力して下さい")
+	@Pattern(regexp="[0-9]+", message="郵便番号が不正です")
 	private String zipcode;
 	/** 住所 */
 	@NotBlank(message = "住所を入力して下さい")
 	private String address;
 	/** 電話番号 */
+	@NotBlank(message="電話番号を入力して下さい")
 	@Size(min=10, max=11, message="10桁以上11桁以下で入力して下さい")
-	@Pattern(regexp="[0-9]+", message="ハイフンなしで入力してください")
+	@Pattern(regexp="[0-9]+", message="電話番号が不正です")
 	private String telephone;
 	/** 確認用パスワード */
 	@NotBlank(message = "確認用パスワードを入力して下さい")
