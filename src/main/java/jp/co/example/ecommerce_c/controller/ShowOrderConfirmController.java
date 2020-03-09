@@ -1,6 +1,10 @@
 package jp.co.example.ecommerce_c.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +77,14 @@ public class ShowOrderConfirmController {
 		//リクエストスコープに格納
 		User user = registerUserService.searchUserByEmail(loginUser.getUser().getEmail());
 		model.addAttribute("user", user);
+		Date nowDate = new Date();
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(nowDate);
+		calendar.add(Calendar.DATE, 1);
+		Date tomorrowDate = calendar.getTime();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String tomorrowDateStr = sdf.format(tomorrowDate);
+		model.addAttribute("tommorowDate", tomorrowDateStr);
 		return "order_confirm";
 	}
 }
