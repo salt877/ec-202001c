@@ -56,9 +56,9 @@ public class OrderController {
 		Integer completeTo = nowDateStr.compareTo(deriveryDateStr);
 		LocalDateTime nowLDT = LocalDateTime.now();
 		Integer nowHour = nowLDT.getHour();
-		if (0 < completeTo) {
+		if (completeTo > 0) {
 			result.rejectValue("deliveryDate", null, "過去の日付が選択されています");
-		} else if (orderForm.getDeliveryTime() < nowHour) {
+		} else if (completeTo == 0 && orderForm.getDeliveryTime() < nowHour) {
 			result.rejectValue("deliveryTime", null, "過去の時間が選択されています");
 		}
 		if (result.hasErrors()) {
