@@ -44,7 +44,6 @@ public class ShowOrderConfirmService {
 		Order order = new Order();
 		List<Order> orderList = new ArrayList<>();
 		if(loginUser != null) {
-			System.out.println("1.ログインは認識している");
 			orderList = orderRepository.findByUserIdAndStatusForOrder(userId, 0);
 			if(orderList.size() == 0) {
 				order = new Order();
@@ -61,7 +60,6 @@ public class ShowOrderConfirmService {
 			sessionUserId = sessionOrder.getUserId();
 			
 			Integer sessionTotalPrice = sessionOrder.getTotalPrice();
-			System.out.println(sessionTotalPrice);
 			orderRepository.updateTotalPrice(sessionTotalPrice, orderId);
 			orderItemRepository.updateOrderId(sessionOrderId, orderId);
 			//deleteで消す方法を考える
