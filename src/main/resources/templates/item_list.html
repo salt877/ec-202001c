@@ -88,6 +88,7 @@
 		<div class="row">
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+
 				<!-- 	<!-- ページング機能 -->			
 				<!--  <div th:if="${itemPage.totalPages > 0}" class="pagination"
 					th:each="pageNumber:${pageNumbers}">
@@ -95,10 +96,8 @@
 						th:text=${pageNumber}
 						th:class="${pageNumber==itemPage.number + 1 } ? active"></a>
 				</div>  -->
-					<a th:href="@{'/?page=' + 0}">1ページ目	</a>		
-					<a th:href="@{'/paging?page=' + 9}">2ページ目</a>
-					<a th:href="@{'/paging?page=' + 18}">3ページ目</a>
-					
+	
+		
 	<div align="right" th:if="${AllItemList.size()}">
 	<form method="post" th:action="@{/sort}" th:object="${sortItemListForm}">
 		<select th:field="*{sort}" name="sort">		
@@ -132,6 +131,26 @@
 			</div>
 		</div>
 	</div>
+	<!-- 	<!-- ページング機能 -->			
+				<!--  <div th:if="${itemPage.totalPages > 0}" class="pagination"
+					th:each="pageNumber:${pageNumbers}">
+					<a th:href="@{/(size=${itemPage.size}, page=${pageNumber}, searchName=${searchName})}"
+						th:text=${pageNumber}
+						th:class="${pageNumber==itemPage.number + 1 } ? active"></a>
+				</div>  -->
+				
+	<div class="pager">
+  <ul class="pagination">
+      <li class="pre"><a href="#"><span>«</span></a></li>
+      <li><a href="#" class="active"><span>1</span></a></li>
+      <li><a href="#"><span>2</span></a></li>
+      <li><a href="#"><span>3</span></a></li>
+      <li><a href="#"><span>4</span></a></li>
+      <li><a href="#"><span>5</span></a></li>
+      <li class="next"><a href="#"><span>»</span></a></li>
+  </ul>
+  </div>
+					
 	<!-- end container -->
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

@@ -136,9 +136,9 @@ public class ShowItemListController {
 	/**
 	 * 選択された並び順で商品一覧を出力します.
 	 * 
-	 * @param form 並び順選択フォーム
+	 * @param form  並び順選択フォーム
 	 * @param model モデル
-	 * @return　商品一覧画面
+	 * @return 商品一覧画面
 	 */
 	@RequestMapping("/sort")
 	public String SortItemList(SortItemListForm form, Model model) {
