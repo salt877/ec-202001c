@@ -46,7 +46,7 @@ public class OrderController {
 	 * @throws ParseException
 	 */
 	@RequestMapping("/order")
-	public String order(@Validated OrderForm orderForm, BindingResult result, Model model,  @AuthenticationPrincipal LoginUser loginUser) {
+	public String order(@Validated OrderForm orderForm, BindingResult result, Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		Date nowDate = new Date(); // 現在の日時を取得
 		Date deriveryDate = orderForm.getDeliveryDate(); // 配達日時を取得
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
