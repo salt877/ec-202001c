@@ -1,12 +1,8 @@
 package jp.co.example.ecommerce_c.service;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,37 +43,21 @@ public class ShowItemListService {
 		return itemRepository.findByItemName(name);
 	}
 
-//	/**
-//	 * ページング機能.
-//	 * 
-//	 * @param page        表示させたいページ数
-//	 * @param size        1ページに表示させる商品数
-//	 * @param AllItemList 絞り込み対象リスト
-//	 * @return 1ページに表示されるサイズ分の商品一覧情報
-//	 */
-//	public Page<Item> showItemListPaging(int page, int size, List<Item> itemList) {
-//		// 表示させたいページ数を-1しないと動作しない
-//		page--;
-//		// どの商品から表示させるかというカウント値
-//		int startItemCount = page * size;
-//		// 絞り込んだ後の商品リストが入る変数
-//		List<Item> list;
-//
-//		if (itemList.size() < startItemCount) {
-//			// (ありえないが)もし表示させたい商品カウントがサイズよりも大きい場合は空のリストを返す
-//			list = Collections.emptyList();
-//		} else {
-//			// 該当ページに表示させる商品一覧を作成
-//			int toIndex = Math.min(startItemCount + size, itemList.size());
-//			list = itemList.subList(startItemCount, toIndex);
-//		}
-////		// 上記で作成した該当ページに表示させる商品一覧をページングできる形に変換して返す
-//		Page<Item> itemPage = new PageImpl<Item>(list, PageRequest.of(page, size), itemList.size());
-//		return itemPage;
-//	}
-
-	public List<Item> paging(Integer page) {
-		return itemRepository.showPage(page);
+	/**
+	 * 
+	 * @param methodNumber
+	 * @return
+	 */
+	public List<Item> searchBySomeway(SortItemListForm form) {
+		if (form.getSort().equals(1)) {
+			return itemRepository.orderByLowerMsizePrice();
+		} else if (form.getSort().equals(2)) {
+			return itemRepository.orderByHigherMsizePrice();
+		} else if (form.getSort().equals(3)) {
+			return itemRepository.orderByLowerLsizePrice();
+		} else {
+			return itemRepository.orderByHigherLsizePrice();
+		}
 	}
 
 	/**
