@@ -44,12 +44,13 @@ public class ShowItemListService {
 	}
 
 	/**
+	 * 商品一覧情報を並び替えます.
 	 * 
-	 * @param methodNumber
-	 * @return
+	 * @param form 選択された並び替え順
+	 * @return 並び替えた商品の情報一覧
 	 */
 	public List<Item> searchBySomeway(SortItemListForm form) {
-		if (form.getSort().equals(1)) {
+		if (form.getSort().equals(0) || form.getSort().equals(1)) {
 			return itemRepository.orderByLowerMsizePrice();
 		} else if (form.getSort().equals(2)) {
 			return itemRepository.orderByHigherMsizePrice();
@@ -79,41 +80,4 @@ public class ShowItemListService {
 		}
 		return itemListForAutocomplete;
 	}
-
-	/**
-	 * Mサイズの商品の価格が安い順番で表示します.
-	 * 
-	 * @return 商品情報一覧
-	 */
-	public List<Item> orderByLowerMsizePrice() {
-		return itemRepository.orderByLowerMsizePrice();
-	}
-
-	/**
-	 * Mサイズの商品の価格が高い順番で表示します.
-	 * 
-	 * @return 商品情報一覧
-	 */
-	public List<Item> orderByHigherMsizePrice() {
-		return itemRepository.orderByHigherMsizePrice();
-	}
-
-	/**
-	 * Lサイズの商品の価格が安い順番で表示します.
-	 * 
-	 * @return 商品情報一覧
-	 */
-	public List<Item> orderByLowerLsizePrice() {
-		return itemRepository.orderByLowerLsizePrice();
-	}
-
-	/**
-	 * Lサイズの商品の価格が高い順番で表示します.
-	 * 
-	 * @return 商品情報一覧
-	 */
-	public List<Item> orderByHigherLsizePrice() {
-		return itemRepository.orderByHigherLsizePrice();
-	}
-
 }
