@@ -88,10 +88,6 @@ public class OrderService {
 	 */
 	public void sendMailForOrder() {
 		
-//		Properties prop = new Properties();
-//		prop.put("mail.smtp.auth", "true");
-//		prop.put("mail.smtp.starttls.enable", "true");
-		
 		User user = userRepository.findById(orderInfo.getUserId()).get(0);
 		
 		SimpleMailMessage msg = new SimpleMailMessage();
@@ -102,7 +98,11 @@ public class OrderService {
 			user.getName() + "様\n"
 			+ "\n"
 			+ "この度は「RakuRaku Coffee」をご利用いただきまして、誠にありがとうございます。\n"
-			+ "お客様のご注文を承りましたのでお知らせいたします。"
+			+ "お客様のご注文を承りましたのでお知らせいたします。\n"
+			+ "\n"
+			+ "またのご利用をお待ちしております。\n"
+			+ "\n"
+			+ "RakuRaku Coffee"
 		);
 		try {
 			this.sender.send(msg);
