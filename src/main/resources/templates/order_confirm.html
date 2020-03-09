@@ -178,16 +178,15 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-12">
-												<span th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}" style="color: red"></span>
+												<span id="error_delivery_date">指定できる日時は1時間後から3日後までです</span>
 											</div>
 											<div class="col-sm-5">
-												<input type="date" name="deliveryDate" id="name" class="form-control input-sm" th:value="${tommorowDate}">
+												<input type="date" name="deliveryDate" id="input_date" class="form-control input-sm" th:value="${tommorowDate}">
 											</div>
 										</div>
 										<br>
 										<div class="row">
 											<div class="col-sm-12">
-												<div th:if="${#fields.hasErrors('deliveryTime')}" th:errors="*{deliveryTime}" style="color: red"></div>
 												<label class="radio-inline">
 												<input type="radio" name="deliveryTime" checked="checked" value="10">10時</label>
 												<label class="radio-inline">
@@ -235,7 +234,7 @@
 							<tr>
 								<td class="text-left" id="creditForm">
 								<div class="creditForm">
-									<span id="error2">クレジットカード情報が不正です</span><br>
+									<span id="error_card">クレジットカード情報が不正です</span><br>
 									<label for="card_number">クレジットカード番号：</label>
 									<input id="card_number" type="text" name="card_number"><br>
 									<br>
