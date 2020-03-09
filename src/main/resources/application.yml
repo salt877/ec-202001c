@@ -9,3 +9,6 @@ spring:
     port: 587
     username: rakuraku.coffee.202001c@gmail.com
     password: kmgmmnavsbdkcqrn
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
