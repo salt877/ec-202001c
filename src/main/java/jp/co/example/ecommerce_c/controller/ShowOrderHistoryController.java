@@ -1,5 +1,7 @@
 package jp.co.example.ecommerce_c.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -35,6 +37,7 @@ public class ShowOrderHistoryController {
 		
 		Order orderHistory = null;
 		try {
+			List<Order> orderHistoryList = showOrderHistoryService.searchOrderHistoryByUserId(userId);
 			orderHistory = showOrderHistoryService.searchOrderHistoryByUserId(userId).get(0);
 		} catch (Exception e) {
 			model.addAttribute("orderHistorySize", 0);
