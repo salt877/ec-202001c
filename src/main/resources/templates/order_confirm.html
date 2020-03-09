@@ -120,7 +120,7 @@
 		<!-- table -->
 		<form th:action="@{/order}" th:object="${orderForm}" method="post">
 			<div class="row">
-				<div class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+				<div class="table-responsive col-lg-offset-2 col-lg-8 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 					<h3 class="text-center">お届け先情報</h3>
 					<table class="table table-striped">
 						<tbody>
@@ -129,8 +129,8 @@
 									<div class="text-center">お名前</div>
 								</td>
 								<td>
- 									<div th:errors="*{destinationName}" style="color: red"></div>
- 									<input type="text" name="destinationName" th:value="${user.name}">
+ 									<input id="destination_name" type="text" name="destinationName" th:value="${user.name}">
+ 									<span id="error_name">入力は必須です</span>
 								</td>
 							</tr>
 							<tr>
@@ -138,8 +138,9 @@
 									<div class="text-center">メールアドレス</div>
 								</td>
 								<td>
-									<div th:errors="*{destinationEmail}" style="color: red"></div>
-									<input type="text" name="destinationEmail" th:value="${user.email}">
+									<!-- <div th:errors="*{destinationEmail}" style="color: red"></div> -->
+									<input id="destination_email" size="35" type="email" name="destinationEmail" th:value="${user.email}">
+ 									<span id="error_email">入力は必須です</span>
 								</td>
 							</tr>
 							<tr>
@@ -147,9 +148,10 @@
 									<div class="text-center">郵便番号(ハイフン不要)</div>
 								</td>
 								<td>
-									<div th:errors="*{destinationZipcode}" style="color: red"></div>
-									<input type="text" name="destinationZipcode" th:value="${user.zipcode}">&nbsp;&nbsp;
+									<!-- <div th:errors="*{destinationZipcode}" style="color: red"></div> -->
+									<input id="destination_zipcode" type="text" name="destinationZipcode" th:value="${user.zipcode}">&nbsp;&nbsp;
 									<button class="zip_button" type="button" id="inputZipcode" name="destinationZipcode">住所検索</button>
+									<span id="error_zip">入力形式が不正です</span>
 								</td>
 							</tr>
 							<tr>
@@ -157,8 +159,8 @@
 									<div class="text-center">住所</div>
 								</td>
 								<td>
-									<div th:errors="*{destinationAddress}" style="color: red"></div>
-									<input size="60" name="destinationAddress"  th:value="${user.address}" >
+									<input id="destination_address" size="35" name="destinationAddress" th:value="${user.address}" >
+									<span id="error_address">入力は必須です</span>
 								</td>
 							</tr>
 							<tr>
@@ -166,8 +168,9 @@
 									<div class="text-center">電話番号(ハイフン不要)</div>
 								</td>
 								<td>
-									<div th:errors="*{destinationTel}" style="color: red"></div>
-									<input type="text" name="destinationTel" th:value="${user.telephone}">
+									<!-- <div th:errors="*{destinationTel}" style="color: red"></div> -->
+									<input id="destination_tel" type="text" name="destinationTel" th:value="${user.telephone}">
+									<span id="error_tel">入力形式が不正です</span>
 								</td>
 							</tr>
 							<tr>
