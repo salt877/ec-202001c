@@ -49,6 +49,7 @@ public class ShowItemListController {
 		System.out.println(form.getSort());
 		List<Item> allItemList = showItemListService.showList();
 
+		//トップページはMサイズの価格が安い順番で
 		if (form.getSort() == null) {
 			form.setSort(0);
 		}
