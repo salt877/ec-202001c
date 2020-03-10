@@ -16,16 +16,18 @@ $(function() {
 		}
 	});
 	
-	$("#order-btn").on("submit",function(){
+	$("#order-btn").submit(function(){
 		var errorCount = 0;
 		var now = new Date();
-		var threeDaysLater = now.setDate(now.getDate() + 3);
-		var inputDate = $("#input_date").val();
+		var threeDaysLater = new Date();
+		var threeDaysLaterDate = threeDaysLater.getDate() + 3;
+		var inputDate = new Date($("#input_date").val());
 		var inputTime = $("input[name='deliveryTime']:checked").val();
 		var notBlank = new Array("#destination_name", "#destination_email", "#destination_address");
 		var notBlankError = new Array("#error_name", "#error_email", "#error_address");
 		$.ajax({
 			url:"http://192.168.2.108:8080/sample-credit-card-web-api/credit-card/payment",
+			type:"POST",
 			dataType:"json",
 			data:{
 				user_id: $("#user_id").val(),
@@ -39,11 +41,23 @@ $(function() {
 			},
 			async:false
 		}).done(function(data){
-			if($("#card_status").val(data.items[0].status) != "success"){
+			$("#error_card").hide();
+			$("#error_delivery_date").hide();
+			$("#error_name").hide();
+			$("#error_email").hide();
+			$("#error_zip").hide();
+			$("#error_address").hide();
+			$("#error_tel").hide();
+			var cardStatus = $("#card_status").val(data.items[0].status);
+			if(cardStatus != "success"){
 				$("#error_card").show();
 				errorCount++;
 			}
-			if(threeDaysLater.getDate() < inputDate.getDate() || inputDate.getDate() < now.getDate()){
+			if(inputDate.getYear() != now.getYear()){
+				$("#error_delivery_date").show();
+				errorCount++;
+			}
+			if(threeDaysLaterDate < inputDate.getDate() || inputDate.getDate() < now.getDate()){
 				$("#error_delivery_date").show();
 				errorCount++;
 			}
@@ -73,16 +87,5 @@ $(function() {
 			}
 			return false;
 		});
-	});
-
-	$("#bbb").on("click",function(){
-		console.log($("#user_id").val());
-		console.log($("#order_number").val());
-		console.log($("#amount").val());
-		console.log($("#card_number").val());
-		console.log($("#card_exp_year").val());
-		console.log($("#card_exp_month").val());
-		console.log($("#card_name").val());
-		console.log($("#card_cvv").val());
 	});
 });
