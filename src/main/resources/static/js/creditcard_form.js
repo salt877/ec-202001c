@@ -16,7 +16,7 @@ $(function() {
 		}
 	});
 	
-	$("#order-btn").submit(function(){
+	$("#order-btn").on("click",function(){
 		var errorCount = 0;
 		var now = new Date();
 		var threeDaysLater = new Date();
@@ -85,7 +85,22 @@ $(function() {
 			if(errorCount == 0){
 				return true;
 			}
-			return false;
+		}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("エラーが発生しました！");
+			console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+			console.log("textStatus     : " + textStatus);
+			console.log("errorThrown    : " + errorThrown.message);
 		});
+
+	$("#bbb").on("click",function(){
+		console.log($("#user_id").val());
+		console.log($("#order_number").val());
+		console.log($("#amount").val());
+		console.log($("#card_number").val());
+		console.log($("#card_exp_year").val());
+		console.log($("#card_exp_month").val());
+		console.log($("#card_name").val());
+		console.log($("#card_cvv").val());
+	});
 	});
 });
