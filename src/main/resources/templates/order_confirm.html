@@ -177,7 +177,7 @@
 									<div class="form-group">
 										<div class="row">
 											<div class="col-sm-12">
-												<span style="color:red">配達日時は本日より3日後まで指定出来ます。</span><br>
+												<span th:unless="${#fields.hasErrors('deliveryDate') || #fields.hasErrors('deliveryTime')}" style="color:red">配達日時は本日より3日後まで指定出来ます。</span>
 												<span th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}" style="color: red"></span>
 											</div>
 											<div class="col-sm-5">

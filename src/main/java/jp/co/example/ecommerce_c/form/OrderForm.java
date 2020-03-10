@@ -4,7 +4,7 @@ import java.sql.Date;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -53,7 +53,7 @@ public class OrderForm {
 	private String destinationTel;	
 
 	/** 配送希望日 */
-	@NotNull(message="この日時に配達することはできません")
+//	@NotNull(message="この日時に配達することはできません")
 	private Date deliveryDate;
 
 	/** 配送時間 */
