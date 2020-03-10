@@ -16,7 +16,7 @@ $(function() {
 		}
 	});
 	
-	$("#order-btn").on("submit",function(){
+	$("#order-btn").on("click",function(){
 		var errorCount = 0;
 		var now = new Date();
 		var threeDaysLater = now.setDate(now.getDate() + 3);
@@ -71,9 +71,12 @@ $(function() {
 			if(errorCount == 0){
 				return true;
 			}
-			return false;
+		}).fail(function(XMLHttpRequest, textStatus, errorThrown) {
+			alert("エラーが発生しました！");
+			console.log("XMLHttpRequest : " + XMLHttpRequest.status);
+			console.log("textStatus     : " + textStatus);
+			console.log("errorThrown    : " + errorThrown.message);
 		});
-	});
 
 	$("#bbb").on("click",function(){
 		console.log($("#user_id").val());
@@ -84,5 +87,6 @@ $(function() {
 		console.log($("#card_exp_month").val());
 		console.log($("#card_name").val());
 		console.log($("#card_cvv").val());
+	});
 	});
 });
