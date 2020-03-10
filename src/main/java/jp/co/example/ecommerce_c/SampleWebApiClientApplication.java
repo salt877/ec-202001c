@@ -5,9 +5,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * クレジットカード有効性確認用.
+ * 
+ * @author hatakeyamakouta
+ *
+ */
 @SpringBootApplication
 public class SampleWebApiClientApplication {
 
+	/**
+	 * クレジットカード有効性確認用.
+	 * 
+	 * @param args args
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(SampleWebApiClientApplication.class, args);
 	}

@@ -3,7 +3,7 @@ package jp.co.example.ecommerce_c.domain;
 /**
  * クレジットカード決済APIのレスポンス情報を扱うドメインクラス.
  * 
- * @author igamasayuki
+ * @author hatakeyamakouta
  *
  */
 public class ResponseCreditCardPaymentApiDomain {

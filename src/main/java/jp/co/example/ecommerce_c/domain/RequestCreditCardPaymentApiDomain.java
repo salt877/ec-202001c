@@ -1,9 +1,9 @@
 package jp.co.example.ecommerce_c.domain;
 
 /**
- * クレジットカード決済APIのリクエスト情報を扱うドメインクラス.
+ *クレジットカード決済APIのリクエスト情報を扱うドメインクラス. 
  * 
- * @author igamasayuki
+ * @author hatakeyamakouta
  *
  */
 public class RequestCreditCardPaymentApiDomain {

@@ -12,7 +12,7 @@ import jp.co.example.ecommerce_c.form.OrderForm;
 /**
  * カード決済APIを呼び出すサービスクラス.
  * 
- * @author igamasayuki
+ * @author hatakeyamakouta
  *
  */
 @Service
@@ -22,8 +22,7 @@ public class CreditCardPaymentApiCallService {
 	private RestTemplate restTemplate;
 
 	// 外部サーバで動いているWEB-APIのURL
-	private static final String URL = "http://192.168.0.28:8080/sample-credit-card-web-api/credit-card/payment"; 
-//	private static final String URL = "http://153.126.174.131:8080/web-api-sample/credit-card/payment"; 
+	private static final String URL = "http://192.168.xx.xx:8080/sample-credit-card-web-api/credit-card/payment"; 
 
 	/**
 	 * カード決済WebAPIを呼び出し、レスポンスを返す.
@@ -37,7 +36,6 @@ public class CreditCardPaymentApiCallService {
 		requestCreditCardPaymentApiDomain.setUser_id(10);
 		requestCreditCardPaymentApiDomain.setOeder_number("12345678910123");
 		requestCreditCardPaymentApiDomain.setAmount("0");
-		System.out.println(requestCreditCardPaymentApiDomain);
 		return restTemplate.postForObject(URL, form, ResponseCreditCardPaymentApiDomain.class);
 	}
 }
