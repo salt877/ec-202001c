@@ -90,15 +90,21 @@
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 
 	<div align="right" th:if="${nineItemList.size()}">
-	<form th:action="@{/}" th:object="${sortItemListForm}" method="post" >
-		<select name="sort" th:field="*{sort}">					
+	<form id="sort_form" th:action="@{/}" th:object="${sortItemListForm}" method="post" onchange="submit(this.form)">
+		<select id="sort_select" name="sort" th:field="*{sort}">					
 			<option value="0" selected>商品の並び順を変更</option>
 			<option value="1">Mサイズの価格が安い順</option>
 			<option value="2">Mサイズの価格が高い順</option>
 			<option value="3">Lサイズの価格が安い順</option>
 			<option value="4">Lサイズの価格が高い順</option>
 		</select>
-		<button>並び替える</button>
+	<script type="text/javascript">
+	$(function(){
+  	  $("#sort_form").change(function(){
+    	$("#sort_select").submit();
+  		});
+	});
+	</script>
 	</form>
 	</div>
 			<table class="table table-striped"> 
