@@ -91,7 +91,8 @@
 
 	<div align="right" th:if="${nineItemList.size()}">
 	<form th:action="@{/}" th:object="${sortItemListForm}" method="post" >
-		<select name="sort" th:field="*{sort}">		
+		<select name="sort" th:field="*{sort}">					
+			<option value="0" selected>商品の並び順を変更</option>
 			<option value="1">Mサイズの価格が安い順</option>
 			<option value="2">Mサイズの価格が高い順</option>
 			<option value="3">Lサイズの価格が安い順</option>
@@ -123,15 +124,17 @@
 		</div>
 	</div>
 				
-	<span th:each="pageNumber : ${pageNumberList}">
-					<a th:href="@{'/to_other_page?page=' + ${pageNumber}}" th:text="${pageNumber}"></a>
-				</span>
+<div class="pager" th:each="pageNumber : ${pageNumberList}">
+  <ul  class="pagination"> 
+     <li class="active"><a th:href="@{'/to_other_page?page=' + ${pageNumber}}"><span th:text="${pageNumber}">1</span></a></li>
+  </ul>
+  </div>
+				
 					
 	<!-- end container -->
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="../static/js/bootstrap.min.js"	th:src="@{/js/bootstrap.min.js}"></script>
-	<!-- <script src="../static/js/search_item_name.js" th:src="@{/js/search_item_name.js}"></script> -->
 	<script type="text/javascript">
 		$(function() {
 			var item = [ [(${itemListForAutocomplete})] ];

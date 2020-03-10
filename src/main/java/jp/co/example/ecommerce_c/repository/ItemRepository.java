@@ -52,19 +52,6 @@ public class ItemRepository {
 	}
 
 	/**
-	 * ページング機能を実装します.
-	 * 
-	 * @param pageNumber
-	 * @return
-	 */
-	public List<Item> showPage(Integer page) {
-		// OFFSETの値が0,9,18,27など9で割り切れる時にページ遷移
-		String sql = SQL + "LIMIT 9 OFFSET " + page;
-		List<Item> itemList2 = template.query(sql, ITEM_ROW_MAPPER);
-		return itemList2;
-	}
-
-	/**
 	 * 商品名から商品を(曖昧)検索します.
 	 * 
 	 * @param name 商品名

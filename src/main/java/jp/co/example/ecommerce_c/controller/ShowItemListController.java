@@ -48,8 +48,10 @@ public class ShowItemListController {
 
 		System.out.println(form.getSort());
 		List<Item> allItemList = showItemListService.showList();
+
+		//トップページはMサイズの価格が安い順番で
 		if (form.getSort() == null) {
-			form.setSort(1);
+			form.setSort(0);
 		}
 
 		List<Item> itemList = showItemListService.searchBySomeway(form);
@@ -83,11 +85,11 @@ public class ShowItemListController {
 		session.setAttribute("groupItemList", groupItemList);
 		model.addAttribute("nineItemList", groupItemList.get(0));
 
-//		// 商品名検索機能
+		// 商品名検索機能
 		if (searchName != null) {
 			itemList = showItemListService.searchByItemName(searchName);
 			System.out.println(itemList.size());
-//			// ページングの数字からも検索できるように検索文字列をスコープに格納しておく
+			// ページングの数字からも検索できるように検索文字列をスコープに格納しておく
 			model.addAttribute("searchName", searchName);
 
 			// 検索結果を横並びにする
@@ -137,6 +139,7 @@ public class ShowItemListController {
 		List<List<List<Item>>> groupItemList = (List<List<List<Item>>>) session.getAttribute("groupItemList");
 		model.addAttribute("nineItemList", groupItemList.get(page - 1));
 
+		// オートコンプリート
 		List<Item> allItemList = showItemListService.showList();
 		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(allItemList);
 		model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
