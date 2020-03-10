@@ -25,7 +25,7 @@ $(function() {
 		var notBlank = new Array("#destination_name", "#destination_email", "#destination_address");
 		var notBlankError = new Array("#error_name", "#error_email", "#error_address");
 		$.ajax({
-			url:"http://192.168.2.108:8080/sample-credit-card-web-api/credit-card/payment",
+			url:"http://192.168.17.61:8080/sample-credit-card-web-api/credit-card/payment",
 			dataType:"json",
 			data:{
 				user_id: $("#user_id").val(),
