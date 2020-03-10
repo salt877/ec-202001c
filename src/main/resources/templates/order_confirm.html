@@ -119,7 +119,7 @@
 		<!-- table -->
 		<form th:action="@{/order}" th:object="${orderForm}" method="post">
 			<div class="row">
-				<div class="table-responsive col-lg-offset-3 col-lg-6 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
+				<div class="table-responsive col-lg-offset-2 col-lg-8 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 					<h3 class="text-center">お届け先情報</h3>
 					<table class="table table-striped">
 						<tbody>
@@ -143,7 +143,7 @@
 							</tr>
 							<tr>
 								<td>
-									<div class="text-center">郵便番号(ハイフン不要)</div>
+									<div class="text-center">郵便番号(ハイフンなしで入力)</div>
 								</td>
 								<td>
 									<div th:errors="*{destinationZipcode}" style="color: red"></div>
@@ -162,7 +162,7 @@
 							</tr>
 							<tr>
 								<td>
-									<div class="text-center">電話番号(ハイフン不要)</div>
+									<div class="text-center">電話番号(ハイフンなしで入力)</div>
 								</td>
 								<td>
 									<div th:errors="*{destinationTel}" style="color: red"></div>
