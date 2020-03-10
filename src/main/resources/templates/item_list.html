@@ -82,14 +82,7 @@
 				</div>
 			</div>
 		</div>
-		
-
-		<!-- table -->
-		<div class="row">
-			<div
-				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
-
-	<div align="right" th:if="${nineItemList.size()}">
+	<div align="right" class="cp_ipselect cp_sl04" th:if="${nineItemList.size()}">
 	<form id="sort_form" th:action="@{/}" th:object="${sortItemListForm}" method="post" onchange="submit(this.form)">
 		<select id="sort_select" name="sort" th:field="*{sort}">					
 			<option value="0" selected>商品の並び順を変更</option>
@@ -107,6 +100,10 @@
 	</script>
 	</form>
 	</div>
+		<!-- table -->
+		<div class="row">
+			<div
+				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 			<table class="table table-striped"> 
 				
 					<tbody>
