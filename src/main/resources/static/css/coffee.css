@@ -190,3 +190,7 @@ body {
 .table-striped > tbody > tr:nth-child(even) {
     background-color: #ffffff;
 }
+
+#errorimg {
+	width: 1150px;
+}
