@@ -22,7 +22,7 @@ public class RegisterUserForm {
 	private String email;
 	/** パスワード */
 	@NotBlank(message = "パスワードを入力して下さい")
-	@Size(min=6, max=18, message="パスワードは6桁以上18文字以下で入力して下さい")
+	@Size(min=6, max=18, message="パスワードは6文字以上18文字以下で入力して下さい")
 	private String password;
 	/** 郵便番号 */
 	@Size(min=7, max=7, message="7桁で入力して下さい")
