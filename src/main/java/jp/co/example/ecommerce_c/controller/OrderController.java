@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_c.domain.LoginUser;
+import jp.co.example.ecommerce_c.domain.ResponseCreditCardPaymentApiDomain;
 import jp.co.example.ecommerce_c.form.OrderForm;
+import jp.co.example.ecommerce_c.service.CreditCardPaymentApiCallService;
 import jp.co.example.ecommerce_c.service.OrderService;
 
 /**
@@ -32,6 +34,9 @@ public class OrderController {
 	
 	@Autowired
 	private ShowOrderConfirmController showOrderConfirmController;
+	
+	@Autowired
+	private CreditCardPaymentApiCallService creditCardPaymentApiCallService;
 
 	@ModelAttribute
 	public OrderForm setUpForm() {
@@ -47,7 +52,18 @@ public class OrderController {
 	 * @throws ParseException
 	 */
 	@RequestMapping("/order")
-	public String order(@Validated OrderForm orderForm, BindingResult result, Model model, @AuthenticationPrincipal LoginUser loginUser) {
+	public String order(@Validated OrderForm orderForm, BindingResult result, Model model, @AuthenticationPrincipal LoginUser loginUser) {		
+		if(orderForm.getPaymentMethod() == 1) {
+			ResponseCreditCardPaymentApiDomain responseCreditCardPaymentApiDomain = creditCardPaymentApiCallService.paymentApiService(orderForm);
+			System.out.println(responseCreditCardPaymentApiDomain.getMessage());
+			if(responseCreditCardPaymentApiDomain.getError_code().equals("E-01")) {
+				result.rejectValue("card_exp_month", null, "カードの有効期限が切れています");
+			}else if(responseCreditCardPaymentApiDomain.getError_code().equals("E-02")) {
+				result.rejectValue("card_exp_month", null, "セキュリティコードが不正です");
+			}else if(responseCreditCardPaymentApiDomain.getError_code().equals("E-03")) {
+				result.rejectValue("card_exp_month", null, "カード情報の入力に誤りがあります");
+			}
+		}
 		Date nowDt = new Date(); // 現在の日時を取得
 		Date deriveryDate = orderForm.getDeliveryDate(); // 配達日時を取得
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
