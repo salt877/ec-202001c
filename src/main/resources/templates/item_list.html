@@ -126,7 +126,7 @@
 				
 <div class="pager" th:each="pageNumber : ${pageNumberList}">
   <ul  class="pagination"> 
-     <li class="active"><a th:href="@{'/to_other_page?page=' + ${pageNumber}}"><span th:text="${pageNumber}">1</span></a></li>
+     <li class="active"><a th:href="@{/to_other_page(page=${pageNumber}, sort=${searchNumber})}"><span th:text="${pageNumber}">1</span></a></li>
   </ul>
   </div>
 				

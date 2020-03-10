@@ -46,7 +46,7 @@ public class ShowItemListController {
 	@RequestMapping("/")
 	public String showItemList(SortItemListForm form, Model model, String searchName) {
 
-		System.out.println(form.getSort());
+		Integer searchNumber = form.getSort();
 		List<Item> allItemList = showItemListService.showList();
 
 		//トップページはMサイズの価格が安い順番で
@@ -119,12 +119,13 @@ public class ShowItemListController {
 		// オートコンプリート
 		StringBuilder itemListForAutocomplete = showItemListService.getItemListForAutocomplete(allItemList);
 		model.addAttribute("itemListForAutocomplete", itemListForAutocomplete);
+		model.addAttribute("searchNumber", searchNumber);
 
 		return "item_list";
 	}
 
 	@RequestMapping("/to_other_page")
-	public String toOtherPage(Integer page, Model model) {
+	public String toOtherPage(Integer page, SortItemListForm form, Model model) {
 		List<Item> itemList = showItemListService.showList();
 		Integer pageNumber = itemList.size() / 9;
 		List<Integer> pageNumberList = new ArrayList<>();
