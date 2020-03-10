@@ -235,11 +235,12 @@
 							<tr>
 								<td class="text-left" id="creditForm">
 								<div class="creditForm">
+								<div th:errors="*{card_exp_month}" style="color: red"></div>
 									<span>クレジットカード番号：</span>
-									<input type="text" name="creditCardNumber"><br>
+									<input type="text" name="card_number"><br>
 									<br>
 									<span>有効期限：</span>
-									<select name="expireMonth">
+									<select name="card_exp_month">
 										<option value="01">01</option>
 										<option value="02">02</option>
 										<option value="03">03</option>
@@ -253,7 +254,7 @@
 										<option value="11">11</option>
 										<option value="12">12</option>
 									</select>　
-									<select name="expireYear">
+									<select name="card_exp_year">
 										<option value="2020">2020</option>
 										<option value="2021">2021</option>
 										<option value="2022">2022</option>
@@ -278,9 +279,9 @@
 									</select><br>
 									<br>
 									<span>カード名義人：</span>
-									<input type="text" name="cardsName"><br>
+									<input type="text" name="card_name"><br>
 									<br>
-									セキュリティコード：<input type="text" name="securityCode">
+									セキュリティコード：<input type="text" name="card_cvv">
 									</div>
 								</td>
 							</tr>

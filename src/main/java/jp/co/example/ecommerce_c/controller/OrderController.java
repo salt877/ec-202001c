@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.example.ecommerce_c.domain.LoginUser;
+import jp.co.example.ecommerce_c.domain.ResponseCreditCardPaymentApiDomain;
 import jp.co.example.ecommerce_c.form.OrderForm;
+import jp.co.example.ecommerce_c.service.CreditCardPaymentApiCallService;
 import jp.co.example.ecommerce_c.service.OrderService;
 
 /**
@@ -31,6 +33,9 @@ public class OrderController {
 
 	@Autowired
 	private ShowOrderConfirmController showOrderConfirmController;
+	
+	@Autowired
+	private CreditCardPaymentApiCallService creditCardPaymentApiCallService;
 
 	@ModelAttribute
 	public OrderForm setUpForm() {
@@ -46,7 +51,7 @@ public class OrderController {
 	 * @throws ParseException
 	 */
 	@RequestMapping("/order")
-	public String order(@Validated OrderForm orderForm, BindingResult result, Model model, @AuthenticationPrincipal LoginUser loginUser) {
+	public String order(@Validated OrderForm orderForm, BindingResult result, Model model, @AuthenticationPrincipal LoginUser loginUser) {		
 		LocalDate nowLD = LocalDate.now();
 		LocalDate threeDaysLaterLD = nowLD.plusDays(3);
 		LocalDateTime nowLDT = LocalDateTime.now();
@@ -61,6 +66,17 @@ public class OrderController {
 			}
 		} catch (Exception e) {
 			result.rejectValue("deliveryDate", null, "※※※配達日時を選択してください※※※");
+		}
+		if(orderForm.getPaymentMethod() == 1) {
+			ResponseCreditCardPaymentApiDomain responseCreditCardPaymentApiDomain = creditCardPaymentApiCallService.paymentApiService(orderForm);
+			System.out.println(responseCreditCardPaymentApiDomain.getMessage());
+			if(responseCreditCardPaymentApiDomain.getError_code().equals("E-01")) {
+				result.rejectValue("card_exp_month", null, "カードの有効期限が切れています");
+			}else if(responseCreditCardPaymentApiDomain.getError_code().equals("E-02")) {
+				result.rejectValue("card_exp_month", null, "セキュリティコードが不正です");
+			}else if(responseCreditCardPaymentApiDomain.getError_code().equals("E-03")) {
+				result.rejectValue("card_exp_month", null, "カード情報の入力に誤りがあります");
+			}
 		}
 		if (result.hasErrors()) {
 			return showOrderConfirmController.showOrderConfirm(model, loginUser);
