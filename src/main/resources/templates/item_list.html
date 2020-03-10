@@ -34,7 +34,6 @@
 						th:src="@{/img_coffee/header_logo.png}" height="35">
 					</a>
 				</div>
-
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse"
 					id="bs-example-navbar-collapse-1">
@@ -53,7 +52,6 @@
 			</div>
 			<!-- /.container-fluid -->
 		</nav>
-
 		<!-- search form -->
 		<div class="row">
 			<div
@@ -82,7 +80,7 @@
 				</div>
 			</div>
 		</div>
-	<div align="right" class="cp_ipselect cp_sl04" th:if="${nineItemList.size()}">
+	<div class="cp_ipselect cp_sl04" th:if="${nineItemList.size()}">
 	<form id="sort_form" th:action="@{/}" th:object="${sortItemListForm}" method="post" onchange="submit(this.form)">
 		<select id="sort_select" name="sort" th:field="*{sort}">					
 			<option value="0" selected>商品の並び順を変更</option>
@@ -100,12 +98,12 @@
 	</script>
 	</form>
 	</div>
+	<br>
 		<!-- table -->
 		<div class="row">
 			<div
 				class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12">
 			<table class="table table-striped"> 
-				
 					<tbody>
 						<tr th:each="itemList : ${nineItemList}">
 							<th class="text-center" th:each="item : ${itemList}">
@@ -125,15 +123,12 @@
 				</table>
 			</div>
 		</div>
-	</div>
-				
-<div class="pager" th:each="pageNumber : ${pageNumberList}">
+	</div>		
+<div class="pager"  th:if="${nineItemList.size()>=3 || session.groupItemList.size()>1}" th:each="pageNumber : ${pageNumberList}">
   <ul  class="pagination"> 
-     <li class="active"><a th:href="@{/to_other_page(page=${pageNumber}, sort=${searchNumber})}"><span th:text="${pageNumber}">1</span></a></li>
+     <li class="active"><a th:href="@{/to_other_page(page=${pageNumber}, sort=${searchNumber},searchName=${searchName})}"><span th:text="${pageNumber}">1</span></a></li>
   </ul>
-  </div>
-				
-					
+  </div>				
 	<!-- end container -->
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

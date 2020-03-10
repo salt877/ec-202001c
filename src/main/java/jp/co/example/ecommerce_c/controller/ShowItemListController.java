@@ -49,7 +49,7 @@ public class ShowItemListController {
 		Integer searchNumber = form.getSort();
 		List<Item> allItemList = showItemListService.showList();
 
-		//トップページはMサイズの価格が安い順番で
+		//トップページはMサイズの価格が安い順番で表示
 		if (form.getSort() == null) {
 			form.setSort(0);
 		}
@@ -88,11 +88,10 @@ public class ShowItemListController {
 		// 商品名検索機能
 		if (searchName != null) {
 			itemList = showItemListService.searchByItemName(searchName);
-			System.out.println(itemList.size());
 			// ページングの数字からも検索できるように検索文字列をスコープに格納しておく
 			model.addAttribute("searchName", searchName);
 
-			// 検索結果を横並びにする
+			// 検索結果を3×3の横並びにする
 			List<List<List<Item>>> groupItemList2 = new ArrayList<>();
 			List<List<Item>> nineItemList2 = new ArrayList<>();
 			List<Item> threeItemList2 = new ArrayList<>();
@@ -109,6 +108,7 @@ public class ShowItemListController {
 
 			}
 			try {
+				session.setAttribute("groupItemList", groupItemList2);
 				model.addAttribute("nineItemList", groupItemList2.get(0));
 			} catch (Exception e) {
 				model.addAttribute("searchName", searchName);
@@ -125,7 +125,7 @@ public class ShowItemListController {
 	}
 
 	@RequestMapping("/to_other_page")
-	public String toOtherPage(Integer page, SortItemListForm form, Model model) {
+	public String toOtherPage(SortItemListForm form,Integer page, String searchName,Model model) {
 		List<Item> itemList = showItemListService.showList();
 		Integer pageNumber = itemList.size() / 9;
 		List<Integer> pageNumberList = new ArrayList<>();
@@ -136,7 +136,8 @@ public class ShowItemListController {
 			pageNumberList.add(i);
 		}
 		model.addAttribute("pageNumberList", pageNumberList);
-
+		model.addAttribute("searchName", searchName);
+		
 		List<List<List<Item>>> groupItemList = (List<List<List<Item>>>) session.getAttribute("groupItemList");
 		model.addAttribute("nineItemList", groupItemList.get(page - 1));
 

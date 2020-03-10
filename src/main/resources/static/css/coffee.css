@@ -35,76 +35,56 @@ li {
 
 /* 繝壹�ｼ繧ｸ繝ｳ繧ｰ讖溯�ｽ  */
 .pager .pagination {
-	text-align: center;
+  text-align: center;
 }
 
 .pager .pagination li {
-	display: inline;
-	margin: 0 2px;
-	padding: 0;
-	display: inline-block;
-	background: #935100;
-	width: 50px;
-	height: 50px;
-	text-align: center;
-	position: relative;
-	border-radius: 50px;
+  display: inline;
+  margin: 0 2px;
+  padding: 0;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  position: relative;
+  border-radius: 15px;
 }
 
-.pager .pagination li a {
-	vertical-align: middle;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	text-align: center;
-	display: table;
-	color: #212121;
-	text-decoration: none;
-	-webkit-transition: all 0.3s ease;
-	-moz-transition: all 0.3s ease;
-	-o-transition: all 0.3s ease;
-	transition: all 0.3s ease;
+
+.pager .pagination li a{
+  vertical-align: middle;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display:table;
+  text-decoration: none;
 }
 
-.pager .pagination li a span {
-	display: table-cell;
-	vertical-align: middle;
+.pager .pagination li a span{
+  display:table-cell;
+  vertical-align:middle;
 }
 
-.pager .pagination li a:hover, .pager .pagination li a.active {
-	color: #000;
-	background: #941100;
-	border-radius: 50px;
+.pager .pagination li a:hover,
+.pager .pagination li a.active{
+  color: #000;
+  background: #ffd478;
+  border-radius: 10px;
 }
 
-@media only screen and (max-width: 767px) {
-	.pager .pagination li {
-		display: none;
-	}
-	.pager .pagination li.pre, .pager .pagination li.next {
-		display: inline-block;
-		width: 40%;
-		height: 50px;
-		text-align: center;
-	}
-	.pager .pagination li.pre a, .pager .pagination li.next a {
-		width: 100%;
-		text-align: center;
-	}
 }
 
 /** 並び替えで使用　*/
 .cp_ipselect {
 	overflow: hidden;
-	width: 30%;
-	margin: 2em auto;
-	text-align: right;
+	width: 90%;
+	margin: auto;
 }
 .cp_ipselect select {
 	width: 100%;
-	padding-right: 1em;
 	cursor: pointer;
 	text-indent: 0.01px;
 	text-overflow: ellipsis;
@@ -122,9 +102,9 @@ li {
 .cp_ipselect.cp_sl04 {
 	position: relative;
 	border-radius: 2px;
-	border: 2px solid #ff7d78;
-  border-radius: 50px;
-	background: #ffffff;
+	border: 1px solid #dfbd6f;
+  	border-radius: 5px;
+	background: #eedcb3;
 }
 .cp_ipselect.cp_sl04::before {
 	position: absolute;
@@ -136,14 +116,13 @@ li {
 	content: '';
 	border-left: 6px solid transparent;
 	border-right: 6px solid transparent;
-	border-top: 6px solid #000000;
+	border-top: 6px solid #941100;
 	pointer-events: none;
 }
 .cp_ipselect.cp_sl04 select {
 	padding: 8px 8px 8px 8px;
-	color: #000000;
+	color: #5d2f00;
 }
-
 
 /* 繝ｬ繧､繧｢繧ｦ繝医ｒ繧｢繝ｬ繝ｳ繧ｸ */
 body {
