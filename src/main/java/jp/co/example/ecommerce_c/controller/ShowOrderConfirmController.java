@@ -1,7 +1,6 @@
 package jp.co.example.ecommerce_c.controller;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -54,18 +53,10 @@ public class ShowOrderConfirmController {
 
 		// カートの中身に商品がない場合は商品一覧画面に遷移させる
 		Order order = new Order();
-		try {
-			order = orderList.get(0);
-		} catch (Exception e) {
-			return "redirect:/";
+		order = orderList.get(0);
+		if (order.getTotalPrice() == 0) {
+			return "redirect:/";			
 		}
-
-		// この記述いらない？コメントアウト後動作に問題なければ削除
-//		List<OrderItem> idOrderItemList = order.getOrderItemList();
-//		for(int i = 0; i < orderItemList.size(); i++) {
-//			idOrderItemList.add(orderItemList.get(i));
-//		}
-//		order.setOrderItemList(idOrderItemList);
 		model.addAttribute("order", order);
 
 		// 届け先フォームに事前にユーザー情報を入力しておく為、ログインユーザーのメールアドレスにてユーザーを特定し
@@ -73,13 +64,9 @@ public class ShowOrderConfirmController {
 		User user = registerUserService.searchUserByEmail(loginUser.getUser().getEmail());
 		model.addAttribute("user", user);
 		Date nowDate = new Date();
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(nowDate);
-		calendar.add(Calendar.DATE, 1);
-		Date tomorrowDate = calendar.getTime();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String tomorrowDateStr = sdf.format(tomorrowDate);
-		model.addAttribute("tommorowDate", tomorrowDateStr);
+		String nowDateStr = sdf.format(nowDate);
+		model.addAttribute("nowDate", nowDateStr);
 		return "order_confirm";
 	}
 }
