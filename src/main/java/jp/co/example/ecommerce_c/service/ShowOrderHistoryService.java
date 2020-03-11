@@ -8,6 +8,12 @@ import org.springframework.stereotype.Service;
 import jp.co.example.ecommerce_c.domain.Order;
 import jp.co.example.ecommerce_c.repository.OrderRepository;
 
+/**
+ * 注文履歴を表示します.
+ * 
+ * @author sota_adachi
+ *
+ */
 @Service
 public class ShowOrderHistoryService {
 	@Autowired

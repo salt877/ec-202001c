@@ -96,11 +96,19 @@
 							</td>
 							<td>
 								<ul style="list-style: none;" th:each="orderTopping : ${orderItem.list}">
-									<li th:text="${orderTopping.topping.name} + '：' + ${orderTopping.topping.priceM} + '円'">ピーマン300円</li>
+									<li>
+										<span th:switch="${orderItem.size}">
+										<span th:case="M" th:text="${orderTopping.topping.name} + '：' + ${orderTopping.topping.priceM} + '円'"></span>
+										<span th:case="L" th:text="${orderTopping.topping.name} + '：' + ${orderTopping.topping.priceL} + '円'"></span>
+										</span>
+									</li>
 								</ul>
 							</td>
 							<td>
-								<div class="text-center" th:text="${orderItem.quantity} * ${orderItem.item.priceM} + ${orderItem.getSubTotal()} + '円'">3,280円</div>
+								<div th:switch="${orderItem.size}">
+								<div th:case="M" class="text-center" th:text="${#numbers.formatInteger(orderItem.quantity * (orderItem.item.priceM + orderItem.getSubTotal()), 3, 'COMMA')} + '円'">3,280円</div>
+								<div th:case="L" class="text-center" th:text="${#numbers.formatInteger(orderItem.quantity * (orderItem.item.priceL + orderItem.getSubTotal()), 3, 'COMMA')} + '円'">3,280円</div>
+								</div>
 							</td>
 						</tr>
 					</tbody>

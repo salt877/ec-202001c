@@ -43,6 +43,13 @@ public class ShowOrderConfirmController {
 		return new OrderForm();
 	}
 
+	/**
+	 * 注文確認画面を表示します.
+	 * 
+	 * @param model モデル
+	 * @param loginUser ユーザ情報
+	 * @return 注文確認画面
+	 */
 	@RequestMapping("/show_order_confirm")
 	public String showOrderConfirm(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		Integer userId = 0;

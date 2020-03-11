@@ -25,6 +25,13 @@ public class ShowOrderHistoryController {
 	@Autowired
 	private ShowOrderHistoryService showOrderHistoryService;
 
+	/**
+	 * 注文履歴画面を表示します.
+	 * 
+	 * @param model モデル
+	 * @param loginUser ユーザ情報
+	 * @return 注文確認画面
+	 */
 	@RequestMapping("/show_order_history")
 	public String showOrderHistory(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		User user = new User();
