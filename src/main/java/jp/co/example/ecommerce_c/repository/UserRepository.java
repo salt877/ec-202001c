@@ -22,7 +22,7 @@ import jp.co.example.ecommerce_c.domain.User;
 public class UserRepository {
 
 	/**
-	 * Userオブジェクトを生成するローマッパー.
+	 * Userオブジェクトを生成するローマッパー
 	 */
 	private static final RowMapper<User> USER_ROW_MAPPER = (rs, i) -> {
 		User user = new User();
@@ -67,7 +67,7 @@ public class UserRepository {
 	}
 	
 	/**
-	 * ユーザー情報を全件取得sルウ
+	 * ユーザー情報を全件取得する.
 	 * 
 	 * @return 全てのユーザー情報
 	 */
@@ -76,6 +76,12 @@ public class UserRepository {
 		return template.query(sql, USER_ROW_MAPPER);
 	}
 	
+	/**
+	 * idからユーザーのリストを表示します.
+	 * 
+	 * @param id
+	 * @return idに一致したユーザー
+	 */
 	public List<User> findById(Integer id) {
 		String sql = "SELECT id,name,email,password,zipcode,address,telephone from users where id = :id";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);

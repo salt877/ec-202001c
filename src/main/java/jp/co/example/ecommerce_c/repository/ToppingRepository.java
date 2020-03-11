@@ -24,7 +24,7 @@ public class ToppingRepository {
 	private NamedParameterJdbcTemplate template;
 	
 	/**
-	 * Toppingオブジェクトを生成するローマッパー.
+	 * Toppingオブジェクトを生成するローマッパー
 	 */
 	private static final RowMapper<Topping> TOPPING_ROW_MAPPER = (rs, i) -> {
 		Topping topping = new Topping();

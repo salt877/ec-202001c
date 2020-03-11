@@ -16,26 +16,32 @@ public class RegisterUserForm {
 	/** 登録ユーザ名 */
 	@NotBlank(message = "お名前を入力して下さい")
 	private String name;
+	
 	/** メールアドレス */
 	@Email(message = "アドレスが不正です")
 	@NotBlank(message = "メールアドレスを入力して下さい")
 	private String email;
+	
 	/** パスワード */
 	@NotBlank(message = "パスワードを入力して下さい")
 	@Size(min=6, max=18, message="パスワードは6文字以上18文字以下で入力して下さい")
 	private String password;
+	
 	/** 郵便番号 */
 	@Size(min=7, max=7, message="7桁で入力して下さい")
 	@Pattern(regexp="[0-9]+", message="郵便番号が不正です")
 	private String zipcode;
+	
 	/** 住所 */
 	@NotBlank(message = "住所を入力して下さい")
 	private String address;
+	
 	/** 電話番号 */
 	@NotBlank(message="電話番号を入力して下さい")
 	@Size(min=10, max=11, message="10桁以上11桁以下で入力して下さい")
 	@Pattern(regexp="[0-9]+", message="電話番号が不正です")
-	private String telephone;	
+	private String telephone;
+	
 	/** 確認用パスワード */
 	@NotBlank(message = "確認用パスワードを入力して下さい")
 	private String confirmPassword;

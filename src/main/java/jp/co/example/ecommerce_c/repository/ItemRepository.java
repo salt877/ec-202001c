@@ -21,7 +21,7 @@ import jp.co.example.ecommerce_c.domain.Item;
 public class ItemRepository {
 
 	/**
-	 * Itemオブジェクトを生成するローマッパー.
+	 * Itemオブジェクトを生成するローマッパー
 	 */
 	private static final RowMapper<Item> ITEM_ROW_MAPPER = (rs, i) -> {
 		Item item = new Item();

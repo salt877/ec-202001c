@@ -27,6 +27,11 @@ public class ShowItemListController {
 	@Autowired
 	private ShowItemListService showItemListService;
 
+	/**
+	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
+	 * 
+	 * @return フォーム
+	 */
 	@ModelAttribute
 	public SortItemListForm setUpSortItemListForm() {
 		return new SortItemListForm();
@@ -38,8 +43,8 @@ public class ShowItemListController {
 	/**
 	 * 商品一覧画面を出力します.
 	 * 
+	 * @param form 並び順を変更するフォーム
 	 * @param model      モデル
-	 * @param page       出力したいページ数
 	 * @param searchName 検索文字列
 	 * @return 商品一覧画面
 	 */
@@ -124,6 +129,15 @@ public class ShowItemListController {
 		return "item_list";
 	}
 
+	/**
+	 * ページング機能を実装します.
+	 * 
+	 * @param form 並び順を選択するフォーム
+	 * @param page ページ数
+	 * @param searchName 検索文字列
+	 * @param model　モデル
+	 * @return 商品一覧画面の○ページ目
+	 */
 	@RequestMapping("/to_other_page")
 	public String toOtherPage(SortItemListForm form,Integer page, String searchName,Model model) {
 		List<Item> itemList = showItemListService.showList();

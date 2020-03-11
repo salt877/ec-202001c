@@ -10,8 +10,10 @@ public class ResponseCreditCardPaymentApiDomain {
 
 	/** ステータス情報*/
 	private String status;
+	
 	/** レスポンスメッセージ*/
 	private String message;
+	
 	/** エラーコード*/
 	private String error_code;
 	
