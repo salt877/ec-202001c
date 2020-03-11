@@ -1,18 +1,16 @@
 <!DOCTYPE html>
-<html lang="ja" 
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RakuRaku&nbsp;coffee</title>
-<link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
-<link href="../static/css/coffee.css" rel="stylesheet" th:href="@{/css/coffee.css}">
-<!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>RakuRaku&nbsp;coffee</title>
+	<link href="../static/css/bootstrap.css" rel="stylesheet" th:href="@{/css/bootstrap.css}">
+	<link href="../static/css/coffee.css" rel="stylesheet" th:href="@{/css/coffee.css}">
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
 </head>
 <body>
 	<div class="container">
@@ -20,30 +18,23 @@
 			<div class="container-fluid">
 <!-- Brand and toggle get grouped for better mobile display -->
 				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed"
-						data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-						aria-expanded="false">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="item_list.html" th:href="@{/}">
 <!-- 企業ロゴ -->
-					<img alt="main log" src="../static/img_coffee/header_logo.png" th:src="@{/img_coffee/header_logo.png}" height="35"></a>
+					<a class="navbar-brand" href="item_list.html" th:href="@{/}"><img alt="main log" src="../static/img_coffee/header_logo.png" th:src="@{/img_coffee/header_logo.png}" height="35"></a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<p class="navbar-text navbar-right">
-						<a href="cart_list.html" th:href="@{/show_item_in_cart}" 
-						class="navbar-link">ショッピングカート</a>&nbsp;&nbsp;
-						<a href="order_history.html" th:href="@{/show_order_history}"
-						class="navbar-link">注文履歴</a>&nbsp;&nbsp; 
-						<a href="login.html" th:href="@{/show_login}" 
-						class="navbar-link" sec:authorize="isAnonymous()">ログイン</a>
-						<a href="item_list.html" th:href="@{/logout}" 
-						class="navbar-link" sec:authorize="isAuthenticated()">ログアウト</a>
+						<a href="cart_list.html" th:href="@{/show_item_in_cart}" class="navbar-link">ショッピングカート</a>&nbsp;&nbsp;
+						<a href="order_history.html" th:href="@{/show_order_history}" class="navbar-link">注文履歴</a>&nbsp;&nbsp; 
+						<a href="login.html" th:href="@{/show_login}" class="navbar-link" sec:authorize="isAnonymous()">ログイン</a>
+						<a href="item_list.html" th:href="@{/logout}" class="navbar-link" sec:authorize="isAuthenticated()">ログアウト</a>
 					</p>
 				</div>
 <!-- /.navbar-collapse -->
@@ -122,8 +113,7 @@
 								<td>
 									<form th:action="@{/delete_item}" method="post">
 										<div class="text-center">
-											<button type="submit" name="orderItemId"
-											th:value="${orderItem.id}" class="btn btn-primary">削除</button>
+											<button type="submit" name="orderItemId" th:value="${orderItem.id}" class="btn btn-primary">削除</button>
 										</div>
 									</form>
 								</td>
