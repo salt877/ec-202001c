@@ -27,6 +27,11 @@ public class ShowItemListController {
 	@Autowired
 	private ShowItemListService showItemListService;
 
+	/**
+	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
+	 * 
+	 * @return フォーム
+	 */
 	@ModelAttribute
 	public SortItemListForm setUpSortItemListForm() {
 		return new SortItemListForm();

@@ -28,6 +28,9 @@ public class OrderItemRepository {
 
 	private SimpleJdbcInsert insert;
 	
+	/**
+	 * OrderItemオブジェクトを生成するローマッパー
+	 */
 	private static final RowMapper<OrderItem> ORDERITEM_ROW_MAPPER = (rs, i) -> {
 		OrderItem orderItem = new OrderItem();
 		orderItem.setId(rs.getInt("id"));

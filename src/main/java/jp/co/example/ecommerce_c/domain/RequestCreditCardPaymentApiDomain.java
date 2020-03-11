@@ -10,18 +10,25 @@ public class RequestCreditCardPaymentApiDomain {
 
 	/** ユーザID */
 	private long user_id;
+	
 	/** 決済金額(数字10桁) */
 	private String amount;
+	
 	/** カード番号(数字14桁-16桁) */
 	private String card_number;
+	
 	/** カード有効期限(年)(数字4桁) */
 	private String card_exp_year;
+	
 	/** カード有効期限(月)(数字2桁) */
 	private String card_exp_month;
+	
 	/** セキュリティコード(数字3桁-4桁) */
 	private String card_cvv;
+	
 	/** カード名義人名 */
 	private String card_name;
+	
 	/** 注文番号 */
 	private String oeder_number;
 	

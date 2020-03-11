@@ -30,6 +30,9 @@ public class OrderRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 
+	/**
+	 * List<Order>オブジェクトを生成するローマッパー
+	 */
 	private static final ResultSetExtractor<List<Order>> ORDER_RESULT_SET_EXTRACTOR = (rs) -> {
 		List<Order> orderList = new LinkedList<Order>();
 		List<OrderItem> orderItemList = null;
@@ -97,36 +100,6 @@ public class OrderRepository {
 		}
 		return orderList;
 	};
-
-//	private static final RowMapper<Order> ORDER_ROW_MAPPER = (rs, i) -> {
-//		Order order = new Order();
-//		order.setId(rs.getInt("id"));
-//		order.setUserId(rs.getInt("user_id"));
-//		order.setStatus(rs.getInt("status"));
-//		order.setTotalPrice(rs.getInt("total_price"));
-//		order.setOrderDate(rs.getDate("order_date"));
-//		order.setDestinationName(rs.getString("destination_name"));
-//		order.setDestinationEmail(rs.getString("destination_email"));
-//		order.setDestinationZipcode(rs.getString("destination_zipcode"));
-//		order.setDestinationAddress(rs.getString("destination_address"));
-//		order.setDestinationTel(rs.getString("destination_tel"));
-//		order.setDeliveryTime(rs.getTimestamp("delivery_time"));
-//		order.setPaymentMethod(rs.getInt("payment_method"));
-//		return order;
-//	};
-
-//	/**
-//	 * 引数のuserIdとstatusに一致した注文情報を取得する.
-//	 * 
-//	 * @param userId ユーザーid
-//	 * @param status 注文状態(0.注文前 1.未入金 2.入金済 3.発送済 4.配送完了 9.キャンセル)
-//	 * @return 引数のuserIdとstatusに一致した注文情報
-//	 */
-//	public List<Order> findByUserIdAndStatus(Integer userId, Integer status) {
-//		String sql = "SELECT id, user_id, status, total_price, order_date, destination_name, destination_email, destination_zipcode, destination_address, destination_tel, delivery_time, payment_method FROM orders WHERE user_id = :userId AND status = :status;";
-//		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId).addValue("status", status);
-//		return template.query(sql, param, ORDER_ROW_MAPPER);
-//	}
 
 	/**
 	 * ordersテーブルに注文情報を挿入する.
@@ -196,7 +169,7 @@ public class OrderRepository {
 	}
 
 	/**
-	 * 合計金額から引数の金額を引きデータを更新する
+	 * 合計金額から引数の金額を引きデータを更新する.
 	 * 
 	 * @param userId userId
 	 * @param status 注文状態(0.注文前 1.未入金 2.入金済 3.発送済 4.配送完了 9.キャンセル)
@@ -230,12 +203,4 @@ public class OrderRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("totalPrice", totalPrice).addValue("id", id);
 		template.update(updateSql, param);
 	}
-
-//	public Order findByOrderId(Integer id) {
-//		String loadsql = "SELECT id, user_id, status, total_price, order_date, destination_name, destination_email, "
-//				+ "destination_zipcode, destination_address, destination_tel, delivery_time, payment_method "
-//				+ "FROM orders WHERE id = :id;";
-//		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id); 
-//		return template.queryForObject(loadsql, param, ORDER_ROW_MAPPER);
-//	}
 }

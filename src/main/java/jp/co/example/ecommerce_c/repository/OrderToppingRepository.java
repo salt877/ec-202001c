@@ -21,6 +21,9 @@ import jp.co.example.ecommerce_c.domain.OrderTopping;
 @Repository
 public class OrderToppingRepository {
 
+	/**
+	 * OrderToppingオブジェクトを生成するローマッパー
+	 */
 	private static final RowMapper<OrderTopping> ORDERTOPPING_ROW_MAPPER = (rs, i) -> {
 		OrderTopping orderTopping = new OrderTopping();
 		orderTopping.setId(rs.getInt("id"));
@@ -28,6 +31,7 @@ public class OrderToppingRepository {
 		orderTopping.setOrderItemId(rs.getInt("order_item_id"));
 		return orderTopping;
 	};
+	
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 
@@ -53,6 +57,12 @@ public class OrderToppingRepository {
 		template.update(sql, param);
 	}
 	
+	/**
+	 * orderItemIdが一致するオーダートッピングを取得するメソッド.
+	 * 
+	 * @param orderItemId 注文商品ID
+	 * @return 注文したトッピングのリスト
+	 */
 	public List<OrderTopping> findByOrderItemId(Integer orderItemId){
 		String sql = "SELECT id, topping_id, order_item_id FROM order_toppings WHERE order_item_id = :orderItemId;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
