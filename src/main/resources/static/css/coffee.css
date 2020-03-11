@@ -1,23 +1,23 @@
 @CHARSET "UTF-8";
 
-/* 繧ｵ繧､繧ｺ繧偵が繝ｬ繝ｳ繧ｸ縲�縺ｧ蝗ｲ繧� */
+/* サイズをオレンジ〇で囲む */
 span.price {
-	/* 繧ｵ繧､繧ｺ謖�螳� */
+	/* サイズ指定 */
 	width: 175px;
 	height: 175px;
-	/* 閭梧勹濶ｲ */
+	/* 背景色 */
 	background-color: #ff4500;
-	/* 隗偵ｒ荳ｸ縺上☆繧� */
+	/* 角を丸くする */
 	border-radius: 50%;
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
 }
-/* 蜷郁ｨ磯�鷹｡阪�ｮ譁�蟄励�ｮ螟ｧ縺阪＆繧貞､峨∴繧� */
+/*  合計金額の文字の大きさを変える　*/
 span#total-price {
 	font-size: 25px;
 }
 
-/* list縺ｮ繝ｻ繧呈ｶ医☆ */
+/* listの・を消す */
 li {
 	list-style: none;
 }
@@ -27,13 +27,13 @@ li {
 	height: 30px;
 }
 
-/* 逕ｻ蜒上ｒ荳ｭ螟ｮ謠�縺医↓縺吶ｋ */
+/* 画像を中央揃えにする */
 .blockcenter {
 	margin-left: auto;
 	margin-right: auto;
 }
 
-/* 繝壹�ｼ繧ｸ繝ｳ繧ｰ讖溯�ｽ  */
+/* ページング機能  */
 .pager .pagination {
   text-align: center;
 }
@@ -124,7 +124,7 @@ li {
 	color: #5d2f00;
 }
 
-/* 繝ｬ繧､繧｢繧ｦ繝医ｒ繧｢繝ｬ繝ｳ繧ｸ */
+/* レイアウトをアレンジ */
 body {
 	background-image: url("/img_coffee/kabe01.jpg");
 	background-size: cover;
