@@ -27,6 +27,13 @@ public class ShowItemInCartController {
 	@Autowired
 	private HttpSession session;
 
+	/**
+	 * ショッピングカートに格納されているアイテムを表示します.
+	 * 
+	 * @param model モデル
+	 * @param loginUser 
+	 * @return
+	 */
 	@RequestMapping("/show_item_in_cart")
 	public String showItemInCart(Model model, @AuthenticationPrincipal LoginUser loginUser) {
 		Integer userId = 0;

@@ -37,6 +37,11 @@ public class OrderController {
 	@Autowired
 	private CreditCardPaymentApiCallService creditCardPaymentApiCallService;
 
+	/**
+	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
+	 * 
+	 * @return フォーム
+	 */
 	@ModelAttribute
 	public OrderForm setUpForm() {
 		return new OrderForm();
