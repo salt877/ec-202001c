@@ -78,10 +78,11 @@ li {
 }
 
 /** 並び替えで使用　*/
-.cp_ipselect {
+.cp_ipselect cp_sl04 {
 	overflow: hidden;
-	width: 90%;
-	margin: auto;
+	width: 40%;
+	text-align: right;
+	margin-left: auto;
 }
 .cp_ipselect select {
 	width: 100%;
