@@ -19,6 +19,12 @@ public class ShowOrderHistoryService {
 	@Autowired
 	private OrderRepository orderRepository;
 
+	/**
+	 * ユーザIDから注文履歴を検索する.
+	 * 
+	 * @param userId ユーザID
+	 * @return 注文履歴
+	 */
 	public List<Order> searchOrderHistoryByUserId(Integer userId) {
 		Integer status = 0;
 		return orderRepository.findByUserIdAndStatusForOrderHistory(userId, status);

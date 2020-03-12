@@ -61,7 +61,6 @@ public class ShowItemInCartService {
 			sessionUserId = sessionOrder.getUserId();
 			
 			Integer sessionTotalPrice = sessionOrder.getTotalPrice();
-			System.out.println(sessionTotalPrice + "ここの値を確認する");
 			orderRepository.updateTotalPrice(sessionTotalPrice, orderId);
 			orderItemRepository.updateOrderId(sessionOrderId, orderId);
 			//deleteで消す方法を考える

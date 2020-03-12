@@ -67,7 +67,7 @@
 				</div>
 			</div>
 		</div>
-	<div style="width:40%" align="right"  class="cp_ipselect cp_sl04" th:if="${nineItemList.size()}">
+	<div style="width:30%" class="cp_ipselect cp_sl04" th:if="${nineItemList.size()}">
 	<form id="sort_form" th:action="@{/}" th:object="${sortItemListForm}" method="post" onchange="submit(this.form)">
 		<select id="sort_select" name="sort" th:field="*{sort}">					
 			<option value="0" selected>商品の並び順を変更</option>
