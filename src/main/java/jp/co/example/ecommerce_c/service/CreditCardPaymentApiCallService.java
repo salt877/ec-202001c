@@ -33,9 +33,9 @@ public class CreditCardPaymentApiCallService {
 	public ResponseCreditCardPaymentApiDomain paymentApiService(OrderForm form) {
 		RequestCreditCardPaymentApiDomain requestCreditCardPaymentApiDomain = new RequestCreditCardPaymentApiDomain();
 		BeanUtils.copyProperties(form, requestCreditCardPaymentApiDomain);
-		requestCreditCardPaymentApiDomain.setUser_id(10);
-		requestCreditCardPaymentApiDomain.setOeder_number("12345678910123");
-		requestCreditCardPaymentApiDomain.setAmount("0");
+		requestCreditCardPaymentApiDomain.setUser_id(0);//クレジットカードの有効性を確認するために仮で値をセット
+		requestCreditCardPaymentApiDomain.setOeder_number("0");//クレジットカードの有効性を確認するために仮で値をセット
+		requestCreditCardPaymentApiDomain.setAmount("0");//クレジットカードの有効性を確認するために仮で値をセット
 		return restTemplate.postForObject(URL, form, ResponseCreditCardPaymentApiDomain.class);
 	}
 }

@@ -74,7 +74,6 @@ public class OrderController {
 		}
 		if(orderForm.getPaymentMethod() == 1) {
 			ResponseCreditCardPaymentApiDomain responseCreditCardPaymentApiDomain = creditCardPaymentApiCallService.paymentApiService(orderForm);
-			System.out.println(responseCreditCardPaymentApiDomain.getMessage());
 			if(responseCreditCardPaymentApiDomain.getError_code().equals("E-01")) {
 				result.rejectValue("card_exp_month", null, "カードの有効期限が切れています");
 			}else if(responseCreditCardPaymentApiDomain.getError_code().equals("E-02")) {

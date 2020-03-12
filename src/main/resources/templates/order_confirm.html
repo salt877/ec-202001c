@@ -137,7 +137,7 @@
 								</td>
 								<td>
 									<div th:errors="*{destinationEmail}" style="color: red"></div>
-									<input type="text" name="destinationEmail" th:value="${user.email}">
+									<input type="text" size="60" name="destinationEmail" th:value="${user.email}">
 								</td>
 							</tr>
 							<tr>
@@ -280,7 +280,7 @@
 									<span>カード名義人：</span>
 									<input type="text" name="card_name"><br>
 									<br>
-									セキュリティコード：<input type="text" name="card_cvv">
+									セキュリティコード：<input type="password" name="card_cvv">
 									</div>
 								</td>
 							</tr>
